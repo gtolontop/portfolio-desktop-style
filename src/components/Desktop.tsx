@@ -95,30 +95,6 @@ export default function Desktop() {
 
       {/* Desktop Icons */}
       <div className="relative w-full h-full">
-        <DesktopIcon
-          name="À propos"
-          icon="👤"
-          position={{ x: 30, y: 30 }}
-          onDoubleClick={() => console.log('Ouvrir À propos')}
-        />
-        <DesktopIcon
-          name="Projets"
-          icon="💼"
-          position={{ x: 30, y: 140 }}
-          onDoubleClick={() => console.log('Ouvrir Projets')}
-        />
-        <DesktopIcon
-          name="Contact"
-          icon="📧"
-          position={{ x: 30, y: 250 }}
-          onDoubleClick={() => console.log('Ouvrir Contact')}
-        />
-        <DesktopIcon
-          name="CV"
-          icon="📄"
-          position={{ x: 30, y: 360 }}
-          onDoubleClick={() => console.log('Ouvrir CV')}
-        />
       </div>
 
       <Taskbar />
