@@ -3,7 +3,14 @@
     "allow": [
       "Bash(rm:*)",
       "Bash(npx create-next-app:*)",
-      "Bash(*)"
+      "Bash(*)",
+      "Bash(npm install)",
+      "Bash(ls:*)",
+      "Bash(cd:*)", 
+      "Bash(mkdir:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(git:*)"
     ],
     "deny": []
   }
