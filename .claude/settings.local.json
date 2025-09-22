@@ -6,11 +6,12 @@
       "Bash(*)",
       "Bash(npm install)",
       "Bash(ls:*)",
-      "Bash(cd:*)", 
+      "Bash(cd:*)",
       "Bash(mkdir:*)",
       "Bash(npm:*)",
       "Bash(npx:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }
