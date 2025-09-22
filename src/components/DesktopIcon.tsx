@@ -75,10 +75,10 @@ export default function DesktopIcon({ icon, isSelected, onSelect }: DesktopIconP
       ref={iconRef}
       className={`
         absolute flex flex-col items-center justify-center
-        w-20 h-24 p-2 cursor-pointer select-none
-        transition-all duration-150
-        ${isSelected ? 'bg-pink-400/20 rounded-lg border border-pink-400/40' : ''}
-        ${isDragging ? 'opacity-70' : 'hover:bg-white/10 hover:rounded-lg'}
+        w-20 h-20 p-2 cursor-pointer select-none
+        transition-all duration-150 rounded-xl
+        ${isSelected ? 'bg-white/20 backdrop-blur-sm border border-white/30' : ''}
+        ${isDragging ? 'opacity-70' : 'hover:bg-white/10 hover:backdrop-blur-sm'}
       `}
       style={{
         left: `${icon.position.x}px`,
@@ -88,19 +88,14 @@ export default function DesktopIcon({ icon, isSelected, onSelect }: DesktopIconP
       onMouseDown={handleMouseDown}
       onDoubleClick={handleDoubleClick}
     >
-      <div className="w-12 h-12 mb-1 flex items-center justify-center">
-        {app.icon.startsWith('http') || app.icon.startsWith('/') ? (
-          <img
-            src={app.icon}
-            alt={app.name}
-            className="w-full h-full object-contain"
-            draggable={false}
-          />
+      <div className="w-12 h-12 flex items-center justify-center text-white">
+        {typeof app.icon === 'string' ? (
+          <span className="text-4xl">{app.icon}</span>
         ) : (
-          <div className="text-4xl">{app.icon}</div>
+          <app.icon className="w-12 h-12" />
         )}
       </div>
-      <span className="text-xs text-white text-center w-full truncate px-1
+      <span className="text-[10px] text-white text-center w-full truncate px-1 mt-1
                        drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
         {app.name}
       </span>

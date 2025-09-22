@@ -148,19 +148,13 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
   restoreWindow: (windowId) => set((state) => {
     const newWindows = new Map(state.windows)
-    const window = newWindows.get(windowId)
-    const app = window ? state.apps.get(window.appId) : null
+    const windowData = newWindows.get(windowId)
 
-    if (window && app) {
-      const defaultSize = app.defaultSize || { width: 800, height: 600 }
+    if (windowData) {
+      // Simply restore minimized state without changing position
       newWindows.set(windowId, {
-        ...window,
-        isMaximized: false,
-        isMinimized: false,
-        width: defaultSize.width,
-        height: defaultSize.height,
-        x: window.innerWidth / 2 - defaultSize.width / 2,
-        y: window.innerHeight / 2 - defaultSize.height / 2
+        ...windowData,
+        isMinimized: false
       })
     }
     return { windows: newWindows }

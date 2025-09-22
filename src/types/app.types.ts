@@ -21,7 +21,7 @@ export interface AppWindow {
 export interface AppConfig {
   id: string
   name: string
-  icon: string
+  icon: React.ComponentType<any> | string
   type: AppType
   component?: React.ComponentType<any>
   url?: string
