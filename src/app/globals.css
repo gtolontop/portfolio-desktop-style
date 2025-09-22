@@ -49,32 +49,32 @@ body {
   transition: transform 50ms ease-out;
 }
 
-/* Custom cursor styles - Using Kirby cursor for all states */
+/* Custom cursor styles - Using smaller pink Kirby cursor */
 .cursor-pointer {
-  cursor: url('/images/kirby_cursor.cur') 16 16, pointer !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, pointer !important;
 }
 
 .cursor-text {
-  cursor: url('/images/kirby_cursor.cur') 16 16, text !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, text !important;
 }
 
 .cursor-move {
-  cursor: url('/images/kirby_cursor.cur') 16 16, move !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, move !important;
 }
 
 .cursor-wait {
-  cursor: url('/images/kirby_cursor.cur') 16 16, wait !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, wait !important;
 }
 
 .cursor-help {
-  cursor: url('/images/kirby_cursor.cur') 16 16, help !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, help !important;
 }
 
 /* Interactive elements */
 button, a, [role="button"] {
-  cursor: url('/images/kirby_cursor.cur') 16 16, pointer !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, pointer !important;
 }
 
 input[type="text"], textarea {
-  cursor: url('/images/kirby_cursor.cur') 16 16, text !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, text !important;
 }
