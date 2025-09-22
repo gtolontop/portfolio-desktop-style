@@ -1,6 +1,10 @@
 'use client'
 
+import { useState } from 'react'
+
 export default function Taskbar() {
+  const [isHovered, setIsHovered] = useState(false)
+  const [isClicked, setIsClicked] = useState(false)
   return (
     <div className="absolute bottom-0 left-0 right-0 h-12 bg-pink-50/85 backdrop-blur-xl border-t border-pink-200/20 shadow-lg shadow-pink-200/15">
       <div className="h-full flex items-center px-1 gap-2.5">
