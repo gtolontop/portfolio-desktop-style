@@ -4,13 +4,13 @@ export default function Taskbar() {
   return (
     <div className="taskbar">
       <div className="taskbar-content">
-        <button className="start-button">
+        <div className="logo-container">
           <img 
             src="/images/logo.png" 
             alt="Logo" 
             className="logo-img"
           />
-        </button>
+        </div>
         
         <div className="taskbar-apps">
           {/* App buttons will go here */}

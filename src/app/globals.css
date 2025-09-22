@@ -56,10 +56,10 @@ body {
   left: 0;
   right: 0;
   height: 48px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 182, 217, 0.3);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 245, 250, 0.85);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 182, 217, 0.2);
+  box-shadow: 0 -4px 20px rgba(255, 182, 217, 0.15);
 }
 
 .taskbar-content {
