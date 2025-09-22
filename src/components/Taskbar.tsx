@@ -5,8 +5,11 @@ export default function Taskbar() {
     <div className="taskbar">
       <div className="taskbar-content">
         <button className="start-button">
-          <span className="start-icon">⭐</span>
-          Start
+          <img 
+            src="/images/logo.png" 
+            alt="Logo" 
+            className="logo-img"
+          />
         </button>
         
         <div className="taskbar-apps">
