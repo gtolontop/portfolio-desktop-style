@@ -27,6 +27,9 @@ export default function Window({ window, children }: WindowProps) {
   const [isResizing, setIsResizing] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
+  const [animationClass, setAnimationClass] = useState('window-opening')
+  const [isClosing, setIsClosing] = useState(false)
+  const [isMinimizing, setIsMinimizing] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
@@ -60,15 +63,49 @@ export default function Window({ window, children }: WindowProps) {
     focusWindow(window.id)
   }
 
+  const handleClose = () => {
+    setIsClosing(true)
+    setAnimationClass('window-closing')
+    setTimeout(() => {
+      closeWindow(window.id)
+    }, 200)
+  }
+
+  const handleMinimize = () => {
+    setIsMinimizing(true)
+    setAnimationClass('window-minimizing')
+    setTimeout(() => {
+      minimizeWindow(window.id)
+    }, 300)
+  }
+
   const handleMaximize = () => {
     if (!app?.maximizable) return
 
     if (window.isMaximized) {
+      setAnimationClass('window-unmaximizing')
       restoreWindow(window.id)
     } else {
+      setAnimationClass('window-maximizing')
       maximizeWindow(window.id)
     }
   }
+
+  useEffect(() => {
+    // Reset animation after opening
+    if (animationClass === 'window-opening') {
+      setTimeout(() => setAnimationClass(''), 300)
+    }
+  }, [animationClass])
+
+  useEffect(() => {
+    // Handle restore from minimize
+    if (!window.isMinimized && isMinimizing) {
+      setIsMinimizing(false)
+      setAnimationClass('window-restoring')
+      setTimeout(() => setAnimationClass(''), 300)
+    }
+  }, [window.isMinimized, isMinimizing])
 
   useEffect(() => {
     if (!isDragging) return
@@ -127,6 +164,7 @@ export default function Window({ window, children }: WindowProps) {
         absolute rounded-xl overflow-hidden
         ${isActive ? 'shadow-2xl shadow-black/50' : 'shadow-xl shadow-black/30'}
         ${isDragging || isResizing ? 'select-none' : ''}
+        ${animationClass}
       `}
       style={{
         left: window.isMaximized ? 0 : `${window.x}px`,
@@ -152,7 +190,7 @@ export default function Window({ window, children }: WindowProps) {
         {/* Traffic Lights */}
         <div className="flex items-center gap-2 mr-4">
           <button
-            onClick={() => closeWindow(window.id)}
+            onClick={handleClose}
             className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors group relative"
           >
             <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
@@ -161,7 +199,7 @@ export default function Window({ window, children }: WindowProps) {
           </button>
           {app?.minimizable !== false && (
             <button
-              onClick={() => minimizeWindow(window.id)}
+              onClick={handleMinimize}
               className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors group relative"
             >
               <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
