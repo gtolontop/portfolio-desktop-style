@@ -16,8 +16,9 @@ export default function Desktop() {
   const desktopRef = useRef<HTMLDivElement>(null)
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Only start selection if clicking on the desktop itself (not on icons or taskbar)
-    if (e.target === desktopRef.current) {
+    // Only start selection if clicking on the desktop area
+    const target = e.target as HTMLElement
+    if (target.classList.contains('desktop-area') || target === desktopRef.current) {
       setIsSelecting(true)
       setSelectionBox({
         startX: e.clientX,
@@ -81,13 +82,16 @@ export default function Desktop() {
       {/* Selection Box */}
       {isSelecting && selectionBox && (
         <div
-          className="fixed border border-pink-400 bg-pink-300/30 pointer-events-none z-50"
-          style={getSelectionStyle()}
+          className="fixed border border-blue-400/60 bg-blue-400/10 pointer-events-none"
+          style={{
+            ...getSelectionStyle(),
+            zIndex: 100
+          }}
         />
       )}
 
-      {/* Desktop Icons */}
-      <div className="relative w-full h-full">
+      {/* Desktop Area */}
+      <div className="desktop-area absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
       </div>
 
       <Taskbar />
