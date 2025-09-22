@@ -17,7 +17,7 @@ body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  cursor: url('/images/kirby_cursor.cur') 16 16, auto;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFB6D9"/><circle cx="9" cy="10" r="1.5" fill="%23000"/><circle cx="15" cy="10" r="1.5" fill="%23000"/><path d="M 8 14 Q 12 17 16 14" stroke="%23000" stroke-width="1.5" fill="none"/></svg>') 12 12, auto;
 }
 
 .desktop-gradient {
