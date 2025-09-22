@@ -1,19 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(rm:*)",
-      "Bash(npx create-next-app:*)",
-      "Bash(*)",
-      "Bash(npm install)",
-      "Bash(ls:*)",
-      "Bash(cd:*)",
-      "Bash(mkdir:*)",
-      "Bash(npm:*)",
-      "Bash(npx:*)",
-      "Bash(git:*)",
-      "Bash(npm install:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm install:*)"
     ],
-    "deny": []
+    "deny": [],
+    "ask": []
   }
 }
