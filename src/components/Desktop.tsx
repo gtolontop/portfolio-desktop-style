@@ -4,7 +4,7 @@ import Taskbar from './Taskbar'
 
 export default function Desktop() {
   return (
-    <div className="w-screen h-screen relative overflow-hidden bg-pink-300">
+    <div className="w-screen h-screen relative overflow-hidden bg-gradient-to-br from-pink-300 to-pink-100">
       {/* Texture overlay */}
       <div 
         className="absolute inset-0 opacity-[0.03]"
