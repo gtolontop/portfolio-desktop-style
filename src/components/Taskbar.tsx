@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAppStore } from '@/store/appStore'
+import TaskbarApp from './TaskbarApp'
 
 export default function Taskbar() {
   const [isHovered, setIsHovered] = useState(false)
