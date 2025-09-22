@@ -8,11 +8,23 @@ export default function Taskbar() {
   return (
     <div className="absolute bottom-0 left-0 right-0 h-12 bg-pink-50/85 backdrop-blur-xl border-t border-pink-200/20 shadow-lg shadow-pink-200/15">
       <div className="h-full flex items-center px-1 gap-2.5">
-        <div className="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-pink-300/40 rounded-md transition-all duration-75 ease-out">
-          <img 
-            src="/images/logo.png" 
-            alt="Logo" 
-            className="w-8 h-8 object-contain logo-click"
+        <div
+          className="h-10 w-10 flex items-center justify-center cursor-pointer rounded-md transition-all duration-75 ease-out"
+          style={{
+            backgroundColor: isHovered ? 'rgba(249, 168, 212, 0.4)' : 'transparent'
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onMouseDown={() => setIsClicked(true)}
+          onMouseUp={() => setIsClicked(false)}
+        >
+          <img
+            src="/images/logo.png"
+            alt="Logo"
+            className="w-8 h-8 object-contain transition-transform duration-75"
+            style={{
+              transform: isClicked ? 'scale(0.75)' : 'scale(1)'
+            }}
           />
         </div>
         
