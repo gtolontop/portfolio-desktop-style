@@ -11,7 +11,6 @@ interface SelectionBox {
 }
 
 export default function Desktop() {
-  const [showBoot, setShowBoot] = useState(true)
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null)
   const desktopRef = useRef<HTMLDivElement>(null)
