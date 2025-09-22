@@ -70,29 +70,24 @@ body {
   gap: 10px;
 }
 
-.start-button {
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 8px;
-  border: none;
-  background: linear-gradient(135deg, #FFB6D9 0%, #FFD1DC 100%);
-  color: white;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
+.logo-container {
+  height: 40px;
+  width: 40px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.start-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 182, 217, 0.4);
+.logo-container:hover {
+  transform: scale(1.1);
 }
 
-.start-icon {
-  font-size: 16px;
+.logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 .taskbar-apps {
