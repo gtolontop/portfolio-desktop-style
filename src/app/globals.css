@@ -17,6 +17,7 @@ body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  cursor: url('/cursor-default.png'), auto;
 }
 
 .desktop-gradient {
@@ -46,4 +47,34 @@ body {
 .logo-click:active {
   transform: scale(0.75);
   transition: transform 50ms ease-out;
+}
+
+/* Custom cursor styles */
+.cursor-pointer {
+  cursor: url('/cursor-pointer.png'), pointer !important;
+}
+
+.cursor-text {
+  cursor: url('/cursor-text.png'), text !important;
+}
+
+.cursor-move {
+  cursor: url('/cursor-move.png'), move !important;
+}
+
+.cursor-wait {
+  cursor: url('/cursor-wait.png'), wait !important;
+}
+
+.cursor-help {
+  cursor: url('/cursor-help.png'), help !important;
+}
+
+/* Interactive elements */
+button, a, [role="button"] {
+  cursor: url('/cursor-pointer.png'), pointer !important;
+}
+
+input[type="text"], textarea {
+  cursor: url('/cursor-text.png'), text !important;
 }
