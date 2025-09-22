@@ -38,3 +38,12 @@ body {
     background-position: 0 0, 0% 50%;
   }
 }
+
+.logo-click {
+  transition: transform 200ms ease-out;
+}
+
+.logo-click:active {
+  transform: scale(0.75);
+  transition: transform 50ms ease-out;
+}
