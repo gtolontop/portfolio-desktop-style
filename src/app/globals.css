@@ -77,11 +77,6 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.logo-container:hover {
-  transform: scale(1.1);
 }
 
 .logo-img {
