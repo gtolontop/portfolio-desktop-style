@@ -119,42 +119,6 @@ export default function Desktop() {
           position={{ x: 30, y: 360 }}
           onDoubleClick={() => console.log('Ouvrir CV')}
         />
-        <DesktopIcon
-          name="GitHub"
-          icon="🐙"
-          position={{ x: 140, y: 30 }}
-          onDoubleClick={() => window.open('https://github.com', '_blank')}
-        />
-        <DesktopIcon
-          name="LinkedIn"
-          icon="💼"
-          position={{ x: 140, y: 140 }}
-          onDoubleClick={() => window.open('https://linkedin.com', '_blank')}
-        />
-        <DesktopIcon
-          name="Jeux"
-          icon="🎮"
-          position={{ x: 140, y: 250 }}
-          onDoubleClick={() => console.log('Ouvrir Jeux')}
-        />
-        <DesktopIcon
-          name="Musique"
-          icon="🎵"
-          position={{ x: 250, y: 30 }}
-          onDoubleClick={() => console.log('Ouvrir Musique')}
-        />
-        <DesktopIcon
-          name="Photos"
-          icon="🖼️"
-          position={{ x: 250, y: 140 }}
-          onDoubleClick={() => console.log('Ouvrir Photos')}
-        />
-        <DesktopIcon
-          name="Corbeille"
-          icon="🗑️"
-          position={{ x: 30, y: 470 }}
-          onDoubleClick={() => console.log('Ouvrir Corbeille')}
-        />
       </div>
 
       <Taskbar />
