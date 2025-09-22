@@ -82,7 +82,7 @@ export default function Desktop() {
       {/* Selection Box */}
       {isSelecting && selectionBox && (
         <div
-          className="fixed border border-blue-400/60 bg-blue-400/10 pointer-events-none"
+          className="fixed border border-pink-400/60 bg-pink-400/20 pointer-events-none"
           style={{
             ...getSelectionStyle(),
             zIndex: 100
