@@ -32,11 +32,11 @@ export default function TaskbarApp({ windowId }: TaskbarAppProps) {
     <button
       onClick={handleClick}
       className={`
-        px-3 py-2 rounded-lg transition-all
-        flex items-center gap-2 min-w-[150px] max-w-[200px]
+        px-3 py-1.5 rounded-lg transition-all
+        flex items-center gap-2 min-w-[120px] max-w-[180px]
         ${isActive
-          ? 'bg-pink-600/30 border border-pink-500/50'
-          : 'bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700'
+          ? 'bg-white/20 backdrop-blur-md'
+          : 'bg-white/10 hover:bg-white/15 backdrop-blur-md'
         }
       `}
     >
@@ -47,7 +47,7 @@ export default function TaskbarApp({ windowId }: TaskbarAppProps) {
           app.icon
         )}
       </span>
-      <span className="text-sm text-white truncate">
+      <span className="text-sm text-white/90 truncate">
         {app.name}
       </span>
     </button>

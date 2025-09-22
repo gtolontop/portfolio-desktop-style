@@ -124,9 +124,8 @@ export default function Window({ window, children }: WindowProps) {
     <div
       ref={windowRef}
       className={`
-        absolute bg-gray-900 rounded-lg overflow-hidden
-        shadow-2xl border border-gray-700
-        ${isActive ? 'ring-2 ring-pink-500/50' : ''}
+        absolute rounded-xl overflow-hidden
+        ${isActive ? 'shadow-2xl shadow-black/50' : 'shadow-xl shadow-black/30'}
         ${isDragging || isResizing ? 'select-none' : ''}
       `}
       style={{
@@ -134,50 +133,69 @@ export default function Window({ window, children }: WindowProps) {
         top: window.isMaximized ? 0 : `${window.y}px`,
         width: window.isMaximized ? '100%' : `${window.width}px`,
         height: window.isMaximized ? 'calc(100% - 48px)' : `${window.height}px`,
-        zIndex: window.zIndex
+        zIndex: window.zIndex,
+        backgroundColor: 'rgba(30, 30, 30, 0.8)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)'
       }}
       onMouseDown={() => focusWindow(window.id)}
     >
-      {/* Title Bar */}
+      {/* Title Bar - macOS Style */}
       <div
-        className="h-10 bg-gray-800 flex items-center justify-between px-3 cursor-move"
+        className="h-11 flex items-center px-4 cursor-move"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(60, 60, 60, 0.8), rgba(45, 45, 45, 0.8))',
+          borderBottom: '1px solid rgba(0, 0, 0, 0.2)'
+        }}
         onMouseDown={handleTitleBarMouseDown}
       >
-        <span className="text-sm text-white font-medium select-none">
-          {window.title}
-        </span>
-        <div className="flex items-center gap-2">
+        {/* Traffic Lights */}
+        <div className="flex items-center gap-2 mr-4">
+          <button
+            onClick={() => closeWindow(window.id)}
+            className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors group relative"
+          >
+            <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <X className="w-2 h-2 text-red-900" strokeWidth={3} />
+            </span>
+          </button>
           {app?.minimizable !== false && (
             <button
               onClick={() => minimizeWindow(window.id)}
-              className="w-6 h-6 rounded hover:bg-gray-700 flex items-center justify-center"
+              className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors group relative"
             >
-              <Minus className="w-3 h-3 text-gray-300" />
+              <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <Minus className="w-2 h-2 text-yellow-900" strokeWidth={3} />
+              </span>
             </button>
           )}
           {app?.maximizable !== false && (
             <button
               onClick={handleMaximize}
-              className="w-6 h-6 rounded hover:bg-gray-700 flex items-center justify-center"
+              className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors group relative"
             >
-              {window.isMaximized ? (
-                <Square className="w-3 h-3 text-gray-300" />
-              ) : (
-                <Maximize2 className="w-3 h-3 text-gray-300" />
-              )}
+              <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                {window.isMaximized ? (
+                  <Square className="w-2 h-2 text-green-900" strokeWidth={3} />
+                ) : (
+                  <Maximize2 className="w-2 h-2 text-green-900" strokeWidth={3} />
+                )}
+              </span>
             </button>
           )}
-          <button
-            onClick={() => closeWindow(window.id)}
-            className="w-6 h-6 rounded hover:bg-red-600 flex items-center justify-center"
-          >
-            <X className="w-3 h-3 text-gray-300" />
-          </button>
         </div>
+
+        {/* Title */}
+        <span className="flex-1 text-center text-sm font-medium text-white/90 select-none">
+          {window.title}
+        </span>
+
+        {/* Spacer for balance */}
+        <div className="w-16" />
       </div>
 
       {/* Content */}
-      <div className="h-[calc(100%-40px)] bg-gray-950 overflow-auto">
+      <div className="h-[calc(100%-44px)] overflow-auto" style={{ backgroundColor: 'rgba(20, 20, 20, 0.95)' }}>
         {children}
       </div>
 

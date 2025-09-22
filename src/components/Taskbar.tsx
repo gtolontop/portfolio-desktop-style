@@ -17,14 +17,22 @@ export default function Taskbar() {
     return () => clearInterval(timer)
   }, [])
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-12 bg-pink-50/85 backdrop-blur-xl border-t border-pink-200/20 shadow-lg shadow-pink-200/15" style={{ zIndex: 1000 }}>
+    <div
+      className="absolute bottom-0 left-0 right-0 h-12 border-t shadow-lg"
+      style={{
+        zIndex: 1000,
+        backgroundColor: 'rgba(30, 30, 30, 0.7)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 -2px 20px rgba(0, 0, 0, 0.3)'
+      }}>
       <div className="h-full flex items-center px-1 gap-2.5">
         <div
-          className="h-10 w-10 flex items-center justify-center rounded-md"
+          className="h-10 w-10 flex items-center justify-center rounded-lg"
           style={{
-            backgroundColor: isHovered ? 'rgba(249, 168, 212, 0.4)' : 'transparent',
-            transform: isClicked ? 'scale(0.9)' : 'scale(1)',
-            transition: 'all 75ms ease-out',
+            backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+            transform: isClicked ? 'scale(0.95)' : 'scale(1)',
+            transition: 'all 100ms ease-out',
             position: 'relative',
             zIndex: 1001
           }}
@@ -47,7 +55,7 @@ export default function Taskbar() {
           ))}
         </div>
         
-        <div className="px-3 text-[13px] text-gray-600 font-medium">
+        <div className="px-3 text-[13px] text-white/80 font-medium">
           {currentTime.toLocaleTimeString('fr-FR', {
             hour: '2-digit',
             minute: '2-digit'
