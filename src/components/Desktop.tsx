@@ -69,10 +69,6 @@ export default function Desktop() {
     }
   }
 
-  if (showBoot) {
-    return <BootAnimation onComplete={() => setShowBoot(false)} />
-  }
-
   return (
     <div
       ref={desktopRef}
