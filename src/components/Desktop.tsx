@@ -2,6 +2,10 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Taskbar from './Taskbar'
+import DesktopIcons from './DesktopIcons'
+import WindowManager from './WindowManager'
+import { useAppStore } from '@/store/appStore'
+import { defaultApps } from '@/config/apps.registry'
 
 interface SelectionBox {
   startX: number
@@ -14,6 +18,18 @@ export default function Desktop() {
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null)
   const desktopRef = useRef<HTMLDivElement>(null)
+  const { registerApp, addDesktopIcon } = useAppStore()
+
+  useEffect(() => {
+    // Register all default apps
+    defaultApps.forEach(app => {
+      registerApp(app)
+      // Add desktop icons for internal apps
+      if (app.type === 'internal' || app.type === 'link') {
+        addDesktopIcon(app.id)
+      }
+    })
+  }, [])
 
   const handleMouseDown = (e: React.MouseEvent) => {
     // Only start selection if clicking on the desktop area
@@ -92,7 +108,11 @@ export default function Desktop() {
 
       {/* Desktop Area */}
       <div className="desktop-area absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+        <DesktopIcons />
       </div>
+
+      {/* Window Manager */}
+      <WindowManager />
 
       <Taskbar />
     </div>
