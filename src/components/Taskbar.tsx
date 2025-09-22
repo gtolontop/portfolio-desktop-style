@@ -14,7 +14,6 @@ export default function Taskbar() {
             backgroundColor: isHovered ? 'rgba(249, 168, 212, 0.4)' : 'transparent',
             transform: isClicked ? 'scale(0.9)' : 'scale(1)',
             transition: 'all 75ms ease-out',
-            cursor: 'pointer',
             position: 'relative',
             zIndex: 1001
           }}
