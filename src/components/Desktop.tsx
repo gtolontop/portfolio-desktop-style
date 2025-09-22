@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Taskbar from './Taskbar'
-import DesktopIcon from './DesktopIcon'
 import BootAnimation from './BootAnimation'
 
 interface SelectionBox {
