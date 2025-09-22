@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Taskbar from './Taskbar'
 import DesktopIcon from './DesktopIcon'
+import BootAnimation from './BootAnimation'
 
 interface SelectionBox {
   startX: number
@@ -12,6 +13,7 @@ interface SelectionBox {
 }
 
 export default function Desktop() {
+  const [showBoot, setShowBoot] = useState(true)
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null)
   const desktopRef = useRef<HTMLDivElement>(null)
@@ -68,6 +70,10 @@ export default function Desktop() {
       width: `${width}px`,
       height: `${height}px`
     }
+  }
+
+  if (showBoot) {
+    return <BootAnimation onComplete={() => setShowBoot(false)} />
   }
 
   return (
