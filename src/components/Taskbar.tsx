@@ -8,7 +8,7 @@ export default function Taskbar() {
           <img 
             src="/images/logo.png" 
             alt="Logo" 
-            className="w-8 h-8 object-contain transition-transform duration-300 active:scale-75"
+            className="w-8 h-8 object-contain transition-transform duration-200 active:scale-75"
           />
         </div>
         
