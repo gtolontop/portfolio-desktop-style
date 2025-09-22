@@ -62,16 +62,41 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
     const windowId = `${appId}-${Date.now()}`
 
-    // Fullscreen by default
+    // Responsive sizing based on screen size
+    const screenWidth = window.innerWidth
+    const screenHeight = window.innerHeight
+    const taskbarHeight = 48
+
+    let width = 900
+    let height = 600
+
+    // Adapt to screen size
+    if (screenWidth <= 1366) {
+      width = screenWidth * 0.85
+      height = (screenHeight - taskbarHeight) * 0.85
+    } else if (screenWidth <= 1920) {
+      width = screenWidth * 0.7
+      height = (screenHeight - taskbarHeight) * 0.8
+    } else {
+      width = 1400
+      height = 900
+    }
+
+    // Use app default size if specified and smaller than calculated
+    if (app.defaultSize) {
+      width = Math.min(width, app.defaultSize.width)
+      height = Math.min(height, app.defaultSize.height)
+    }
+
     const newWindow: AppWindow = {
       id: windowId,
       appId,
       title: app.name,
-      width: window.innerWidth,
-      height: window.innerHeight - 48, // minus taskbar height
-      x: 0,
-      y: 0,
-      isMaximized: true,
+      width,
+      height,
+      x: (screenWidth - width) / 2,
+      y: ((screenHeight - taskbarHeight) - height) / 2,
+      isMaximized: false,
       isMinimized: false,
       zIndex: state.nextZIndex
     }
