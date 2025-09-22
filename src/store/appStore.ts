@@ -61,17 +61,17 @@ export const useAppStore = create<AppStore>((set, get) => ({
     }
 
     const windowId = `${appId}-${Date.now()}`
-    const defaultSize = app.defaultSize || { width: 800, height: 600 }
 
+    // Fullscreen by default
     const newWindow: AppWindow = {
       id: windowId,
       appId,
       title: app.name,
-      width: defaultSize.width,
-      height: defaultSize.height,
-      x: window.innerWidth / 2 - defaultSize.width / 2,
-      y: window.innerHeight / 2 - defaultSize.height / 2,
-      isMaximized: false,
+      width: window.innerWidth,
+      height: window.innerHeight - 48, // minus taskbar height
+      x: 0,
+      y: 0,
+      isMaximized: true,
       isMinimized: false,
       zIndex: state.nextZIndex
     }
