@@ -109,6 +109,7 @@ export default function Window({ window, children }: WindowProps) {
     if (!isResizing) return
 
     const handleMouseMove = (e: MouseEvent) => {
+      e.preventDefault()
       const deltaX = e.clientX - resizeStart.x
       const deltaY = e.clientY - resizeStart.y
 
@@ -120,14 +121,17 @@ export default function Window({ window, children }: WindowProps) {
 
     const handleMouseUp = () => {
       setIsResizing(false)
+      document.body.style.userSelect = ''
     }
 
+    document.body.style.userSelect = 'none'
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
+      document.body.style.userSelect = ''
     }
   }, [isResizing, resizeStart, window.id, updateWindowSize])
 
