@@ -55,7 +55,7 @@ export default function Taskbar() {
           <img
             src="/images/home.png"
             alt="Start"
-            className="w-full h-full object-contain"
+            className="w-10 h-10 object-contain"
           />
         </button>
 
