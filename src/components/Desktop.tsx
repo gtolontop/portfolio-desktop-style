@@ -38,8 +38,12 @@ export default function Desktop() {
   }, [])
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Start selection if left mouse button is clicked AND we're clicking on the desktop itself
-    if (e.button === 0 && e.target === desktopRef.current) {
+    // Start selection if left mouse button is clicked on desktop area (not on windows)
+    const target = e.target as HTMLElement
+    const isDesktopArea = target.closest('.desktop-area') || target === desktopRef.current
+    const isWindow = target.closest('[style*="zIndex"]') && !target.closest('.desktop-area')
+    
+    if (e.button === 0 && isDesktopArea && !isWindow) {
       e.preventDefault()
       setIsSelecting(true)
       setSelectionBox({
