@@ -137,11 +137,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     if (window) {
       newWindows.set(windowId, {
         ...window,
-        isMaximized: true,
-        x: 0,
-        y: 0,
-        width: window.innerWidth,
-        height: window.innerHeight - 48
+        isMaximized: true
       })
     }
     return { windows: newWindows }
