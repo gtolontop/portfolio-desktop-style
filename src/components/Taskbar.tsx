@@ -23,7 +23,6 @@ export default function Taskbar() {
     backdropFilter: 'blur(14px) saturate(180%)',
     WebkitBackdropFilter: 'blur(14px) saturate(180%)',
     borderTop: '1px solid rgba(255, 255, 255, 0.25)',
-    boxShadow: '0 -8px 24px rgba(0, 0, 0, 0.25)',
     background: `
       linear-gradient(
         to bottom,
