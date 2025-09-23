@@ -106,26 +106,32 @@ export default function Window({ window, children }: WindowProps) {
       // Calculate mouse position relative to window width
       const mouseRelativeX = e.clientX / globalThis.window.innerWidth
       
+      // Disable transitions for smooth dragging
+      setIsRestoringFromDrag(true)
+      
       // Restore window
       restoreWindow(window.id)
       
-      // Set up drag after a small delay to let the restore animation start
-      setTimeout(() => {
-        const restoredWindow = windows.get(window.id)
-        if (restoredWindow && windowRef.current) {
-          // Position window so mouse is at the same relative position
-          const newX = e.clientX - (restoredWindow.width * mouseRelativeX)
-          const newY = e.clientY - 20 // Offset for title bar
-          
-          updateWindowPosition(window.id, Math.max(0, newX), Math.max(0, newY))
-          
-          setDragOffset({
-            x: restoredWindow.width * mouseRelativeX,
-            y: 20
-          })
-          setIsDragging(true)
-        }
-      }, 50)
+      // Set up drag immediately
+      const restoredWindow = windows.get(window.id)
+      if (restoredWindow && restoredWindow.previousState) {
+        // Use previous state dimensions
+        const newX = e.clientX - (restoredWindow.previousState.width * mouseRelativeX)
+        const newY = e.clientY - 20 // Offset for title bar
+        
+        updateWindowPosition(window.id, Math.max(0, newX), Math.max(0, newY))
+        
+        setDragOffset({
+          x: restoredWindow.previousState.width * mouseRelativeX,
+          y: 20
+        })
+        setIsDragging(true)
+        
+        // Re-enable transitions after a short delay
+        setTimeout(() => {
+          setIsRestoringFromDrag(false)
+        }, 100)
+      }
       return
     }
 
@@ -245,11 +251,11 @@ export default function Window({ window, children }: WindowProps) {
         ${window.isMaximized ? '' : 'rounded-[7px]'}
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
-        ${!isDragging && !isResizing ? 'transition-all duration-300 ease-out' : ''}
+        ${!isDragging && !isResizing && !isRestoringFromDrag ? 'transition-all duration-300 ease-out' : ''}
         ${isOpening ? 'scale-95 opacity-0' : ''}
         ${isClosing ? 'scale-95 opacity-0' : ''}
         ${isMinimizing ? 'scale-95 opacity-0 translate-y-10' : ''}
-        ${isRestoring ? 'animate-restore' : ''}
+        ${isRestoring && !isRestoringFromDrag ? 'animate-restore' : ''}
         ${!isOpening && !isClosing && !isMinimizing && !isRestoring ? 'scale-100 opacity-100' : ''}
       `}
       style={{
