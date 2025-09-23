@@ -126,14 +126,22 @@ export default function Window({ window, children }: WindowProps) {
       
       // Calculate initial position based on mouse
       let newX = e.clientX - (restoredWidth * clickPositionRatio)
-      let newY = e.clientY - (e.clientY - rect.top)
+      
+      // For vertical position, keep the window centered around current mouse position
+      // but ensure it stays within bounds
+      let newY = e.clientY - 40 // Default offset for title bar height
       
       // Ensure window stays within screen bounds
       // Don't let it go off the left or right
       newX = Math.max(0, Math.min(newX, screenWidth - restoredWidth))
       
-      // Don't let it go above the top or below the taskbar
-      newY = Math.max(0, Math.min(newY, screenHeight - taskbarHeight - restoredHeight))
+      // Don't let it go above the top
+      newY = Math.max(0, newY)
+      
+      // Don't let it go below the taskbar
+      if (newY + restoredHeight > screenHeight - taskbarHeight) {
+        newY = screenHeight - taskbarHeight - restoredHeight
+      }
       
       // Restore window
       restoreWindow(window.id)
@@ -143,8 +151,8 @@ export default function Window({ window, children }: WindowProps) {
       
       // Set drag offset based on where the mouse is on the restored window
       setDragOffset({
-        x: restoredWidth * clickPositionRatio,
-        y: e.clientY - rect.top
+        x: e.clientX - newX,
+        y: e.clientY - newY
       })
       setIsDragging(true)
       
