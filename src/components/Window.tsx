@@ -187,6 +187,7 @@ export default function Window({ window, children }: WindowProps) {
         ${isActive ? 'shadow-2xl shadow-black/50' : 'shadow-xl shadow-black/30'}
         ${isDragging || isResizing ? 'select-none' : ''}
         ${animationClass}
+        ${isSlowMotion ? 'slow-motion' : ''}
       `}
       style={{
         left: window.isMaximized ? 0 : `${window.x}px`,
