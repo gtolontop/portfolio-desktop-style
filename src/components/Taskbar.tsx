@@ -84,6 +84,7 @@ export default function Taskbar() {
         borderTopRightRadius: hasMaximizedWindow ? '0px' : '10px',
         borderBottomLeftRadius: '0px',
         borderBottomRightRadius: '0px',
+        borderRadius: hasMaximizedWindow ? '0px' : undefined,
         transform: hasMaximizedWindow ? 'scaleX(1)' : 'scaleX(0.98)',
         opacity: hasMaximizedWindow ? '1' : '0.95'
       }}>
