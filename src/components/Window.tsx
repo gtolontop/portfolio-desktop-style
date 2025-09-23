@@ -27,9 +27,14 @@ export default function Window({ window, children }: WindowProps) {
   const [isResizing, setIsResizing] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
-  const [animationClass, setAnimationClass] = useState(
-    window.openedFromPosition ? 'window-bounce-open' : 'window-opening'
-  )
+  const [animationClass, setAnimationClass] = useState(() => {
+    if (window.openedFromPosition) {
+      // Check if opening from taskbar (bottom of screen)
+      const isFromTaskbar = window.openedFromPosition.y > window.innerHeight - 100
+      return isFromTaskbar ? 'window-expand-taskbar' : 'window-bounce-open'
+    }
+    return 'window-opening'
+  })
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
@@ -98,7 +103,9 @@ export default function Window({ window, children }: WindowProps) {
     if (animationClass === 'window-opening') {
       setTimeout(() => setAnimationClass(''), 300)
     } else if (animationClass === 'window-bounce-open') {
-      setTimeout(() => setAnimationClass(''), 600)
+      setTimeout(() => setAnimationClass(''), 400)
+    } else if (animationClass === 'window-expand-taskbar') {
+      setTimeout(() => setAnimationClass(''), 350)
     }
   }, [animationClass])
 
