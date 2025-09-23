@@ -42,11 +42,14 @@ export default function Window({ window, children }: WindowProps) {
   }, [])
 
   const handleWindowMouseDown = (e: React.MouseEvent) => {
-    if (window.isMaximized) return
-
     // Don't start dragging if clicking on buttons or interactive elements
     const target = e.target as HTMLElement
-    if (target.tagName === 'BUTTON' || target.closest('button')) return
+    if (target.tagName === 'BUTTON' || target.closest('button')) {
+      focusWindow(window.id)
+      return
+    }
+
+    if (window.isMaximized) return
 
     const rect = windowRef.current?.getBoundingClientRect()
     if (rect) {
