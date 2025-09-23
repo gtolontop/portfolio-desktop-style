@@ -17,12 +17,7 @@ export default function AppTemplate({ children }: AppTemplateProps) {
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(255, 255, 255, 0.2)'
           }}>
-          {children || (
-            <div className="text-white">
-              <h1 className="text-4xl font-bold mb-2">App Content</h1>
-              <p className="text-lg opacity-90">Your content here</p>
-            </div>
-          )}
+          {children}
         </div>
       </div>
     </div>
