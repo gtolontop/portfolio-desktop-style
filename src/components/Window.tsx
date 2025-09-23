@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { X, Minus, Square, Maximize2 } from 'lucide-react'
+import { X, Minus, Minimize2, Maximize } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import { AppWindow } from '@/types/app.types'
 
@@ -174,9 +174,9 @@ export default function Window({ window, children }: WindowProps) {
               className="w-5 h-5 flex items-center justify-center hover:bg-gray-200 rounded"
             >
               {window.isMaximized ? (
-                <Square className="w-3 h-3" />
+                <Minimize2 className="w-3 h-3" />
               ) : (
-                <Maximize2 className="w-3 h-3" />
+                <Maximize className="w-3 h-3" />
               )}
             </button>
           )}
