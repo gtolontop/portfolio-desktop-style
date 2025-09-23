@@ -27,6 +27,7 @@ export default function Window({ window, children }: WindowProps) {
   const [isResizing, setIsResizing] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
+  const [isOpening, setIsOpening] = useState(true)
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
@@ -145,9 +146,11 @@ export default function Window({ window, children }: WindowProps) {
     <div
       ref={windowRef}
       className={`
-        absolute overflow-hidden rounded-[7px] cursor-move
+        absolute overflow-hidden cursor-move
+        ${window.isMaximized ? '' : 'rounded-[7px]'}
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
+        ${!isDragging && !isResizing ? 'transition-all duration-300 ease-out' : ''}
       `}
       style={{
         left: window.isMaximized ? 0 : `${window.x}px`,
@@ -155,7 +158,7 @@ export default function Window({ window, children }: WindowProps) {
         width: window.isMaximized ? '100%' : `${window.width}px`,
         height: window.isMaximized ? 'calc(100% - 48px)' : `${window.height}px`,
         zIndex: window.zIndex,
-        borderRadius: '7px',
+        borderRadius: window.isMaximized ? '0' : '7px',
         border: '1px solid rgba(255, 255, 255, 0.35)',
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         backdropFilter: 'blur(20px) saturate(100%)',
