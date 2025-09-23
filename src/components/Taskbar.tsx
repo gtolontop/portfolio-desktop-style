@@ -10,6 +10,9 @@ export default function Taskbar() {
   const [isClicked, setIsClicked] = useState(false)
   const [currentTime, setCurrentTime] = useState(new Date())
   const { windows } = useAppStore()
+  
+  // Check if any window is maximized
+  const hasMaximizedWindow = Array.from(windows.values()).some(w => w.isMaximized)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -35,11 +38,11 @@ export default function Taskbar() {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-12 flex items-center gap-2">
+    <div className={`absolute bottom-0 left-0 right-0 h-12 flex items-center ${hasMaximizedWindow ? '' : 'gap-2'}`}>
       {/* Left Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2" style={{
         ...taskbarStyle,
-        borderTopRightRadius: '10px'
+        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px'
       }}>
         {/* Start Button */}
         <button

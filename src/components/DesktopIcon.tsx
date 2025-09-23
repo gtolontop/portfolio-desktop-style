@@ -17,8 +17,6 @@ export default function DesktopIcon({ icon, isSelected, onSelect }: DesktopIconP
   const iconRef = useRef<HTMLDivElement>(null)
   const app = getApp(icon.appId)
 
-  if (!app) return null
-
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -77,6 +75,8 @@ export default function DesktopIcon({ icon, isSelected, onSelect }: DesktopIconP
       document.removeEventListener('mouseup', handleMouseUp)
     }
   }, [isDragging, dragOffset, icon.id, updateIconPosition])
+
+  if (!app) return null
 
   return (
     <div
