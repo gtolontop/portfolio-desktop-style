@@ -83,7 +83,10 @@ export default function Taskbar() {
       </div>
 
       {/* Right Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-3" style={taskbarStyle}>
+      <div className="h-full flex items-center gap-1 px-2" style={{
+        ...taskbarStyle,
+        borderTopLeftRadius: '10px'
+      }}>
         {/* Show Desktop Button */}
         <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
           <ChevronUp className="w-4 h-4 text-white/80" />
