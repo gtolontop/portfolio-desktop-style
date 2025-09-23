@@ -4,7 +4,9 @@
       "Bash(npm install:*)",
       "Bash(npm run dev:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:harshil.net)"
+      "WebFetch(domain:harshil.net)",
+      "WebFetch(domain:*.net)",
+      "WebFetch(domain:*.com)"
     ],
     "deny": [],
     "ask": []
