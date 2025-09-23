@@ -143,6 +143,8 @@ export default function Window({ window, children }: WindowProps) {
         width: window.isMaximized ? '100%' : `${window.width}px`,
         height: window.isMaximized ? 'calc(100% - 48px)' : `${window.height}px`,
         zIndex: window.zIndex,
+        borderRadius: '7px',
+        border: '1px solid rgba(117, 117, 117, 0.40)'
       }}
       onMouseDown={() => focusWindow(window.id)}
     >
