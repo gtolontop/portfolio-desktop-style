@@ -11,7 +11,7 @@ interface AppStore {
   registerApp: (app: AppConfig) => void
   unregisterApp: (appId: string) => void
 
-  openWindow: (appId: string) => void
+  openWindow: (appId: string, fromPosition?: { x: number; y: number }) => void
   closeWindow: (windowId: string) => void
   minimizeWindow: (windowId: string) => void
   maximizeWindow: (windowId: string) => void
@@ -47,7 +47,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return { apps: newApps }
   }),
 
-  openWindow: (appId) => set((state) => {
+  openWindow: (appId, fromPosition) => set((state) => {
     const app = state.apps.get(appId)
     if (!app) return state
 
@@ -98,7 +98,8 @@ export const useAppStore = create<AppStore>((set, get) => ({
       y: ((screenHeight - taskbarHeight) - height) / 2,
       isMaximized: false,
       isMinimized: false,
-      zIndex: state.nextZIndex
+      zIndex: state.nextZIndex,
+      openedFromPosition: fromPosition
     }
 
     const newWindows = new Map(state.windows)

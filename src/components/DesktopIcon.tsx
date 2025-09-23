@@ -38,7 +38,15 @@ export default function DesktopIcon({ icon, isSelected, onSelect }: DesktopIconP
   }
 
   const handleDoubleClick = () => {
-    openWindow(icon.appId)
+    // Get the center position of the icon
+    const rect = iconRef.current?.getBoundingClientRect()
+    if (rect) {
+      const iconCenterX = rect.left + rect.width / 2
+      const iconCenterY = rect.top + rect.height / 2
+      openWindow(icon.appId, { x: iconCenterX, y: iconCenterY })
+    } else {
+      openWindow(icon.appId)
+    }
   }
 
   useEffect(() => {
