@@ -83,6 +83,7 @@ export default function Window({ window, children }: WindowProps) {
     if (!isDragging) return
 
     const handleMouseMove = (e: MouseEvent) => {
+      e.preventDefault()
       const newX = e.clientX - dragOffset.x
       const newY = Math.max(0, e.clientY - dragOffset.y)
       updateWindowPosition(window.id, newX, newY)
@@ -90,8 +91,10 @@ export default function Window({ window, children }: WindowProps) {
 
     const handleMouseUp = () => {
       setIsDragging(false)
+      document.body.style.userSelect = ''
     }
 
+    document.body.style.userSelect = 'none'
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
 
