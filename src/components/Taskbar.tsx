@@ -72,7 +72,11 @@ export default function Taskbar() {
       </div>
 
       {/* Center Taskbar Section */}
-      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={taskbarStyle}>
+      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={{
+        ...taskbarStyle,
+        borderTopLeftRadius: '10px',
+        borderTopRightRadius: '10px'
+      }}>
         {Array.from(windows.keys()).map((windowId) => (
           <TaskbarApp key={windowId} windowId={windowId} />
         ))}
