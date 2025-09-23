@@ -20,14 +20,14 @@ export default function TaskbarApp({ windowId }: TaskbarAppProps) {
   const handleClick = () => {
     if (window.isMinimized) {
       // Dispatch custom event for restore animation
-      window.dispatchEvent(new CustomEvent('window-restore', { 
+      globalThis.window.dispatchEvent(new CustomEvent('window-restore', { 
         detail: { windowId } 
       }))
       restoreWindow(windowId)
       focusWindow(windowId)
     } else if (isActive) {
       // Dispatch custom event for minimize animation
-      window.dispatchEvent(new CustomEvent('window-minimize', { 
+      globalThis.window.dispatchEvent(new CustomEvent('window-minimize', { 
         detail: { windowId } 
       }))
     } else {

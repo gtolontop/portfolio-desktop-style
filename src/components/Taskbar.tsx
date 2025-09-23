@@ -94,8 +94,10 @@ export default function Taskbar() {
       {/* Right Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2 transition-all duration-300 ease-in-out" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px',
-        marginLeft: hasMaximizedWindow ? '0' : '0'
+        borderTopLeftRadius: hasMaximizedWindow ? '0px' : '10px',
+        borderTopRightRadius: '0px',
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px'
       }}>
         {/* Show Desktop Button */}
         <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
