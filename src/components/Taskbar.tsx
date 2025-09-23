@@ -42,8 +42,10 @@ export default function Taskbar() {
       {/* Left Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2 transition-all duration-300 ease-in-out" style={{
         ...taskbarStyle,
-        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px',
-        marginRight: hasMaximizedWindow ? '0' : '0'
+        borderTopRightRadius: hasMaximizedWindow ? '0px' : '10px',
+        borderTopLeftRadius: '0px',
+        borderBottomRightRadius: '0px',
+        borderBottomLeftRadius: '0px'
       }}>
         {/* Start Button */}
         <button
@@ -77,8 +79,10 @@ export default function Taskbar() {
       {/* Center Taskbar Section */}
       <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto transition-all duration-300 ease-in-out" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px',
-        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px',
+        borderTopLeftRadius: hasMaximizedWindow ? '0px' : '10px',
+        borderTopRightRadius: hasMaximizedWindow ? '0px' : '10px',
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px',
         transform: hasMaximizedWindow ? 'scaleX(1)' : 'scaleX(0.98)',
         opacity: hasMaximizedWindow ? '1' : '0.95'
       }}>
