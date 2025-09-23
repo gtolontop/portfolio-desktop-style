@@ -78,77 +78,6 @@ export default function Window({ window, children }: WindowProps) {
     }
   }
 
-  useEffect(() => {
-    // Handle shift key for slow motion
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Shift') setIsSlowMotion(true)
-    }
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key === 'Shift') setIsSlowMotion(false)
-    }
-    
-    globalThis.addEventListener('keydown', handleKeyDown)
-    globalThis.addEventListener('keyup', handleKeyUp)
-    
-    return () => {
-      globalThis.removeEventListener('keydown', handleKeyDown)
-      globalThis.removeEventListener('keyup', handleKeyUp)
-    }
-  }, [])
-
-  // Handle opening animation
-  useEffect(() => {
-    if (window.openedFromPosition && windowRef.current && !genieAnimation) {
-      const windowRect = windowRef.current.getBoundingClientRect()
-      const iconSize = 48
-      const sourceRect = new DOMRect(
-        window.openedFromPosition.x - iconSize/2,
-        window.openedFromPosition.y - iconSize/2,
-        iconSize,
-        iconSize
-      )
-      
-      setGenieAnimation({
-        isAnimating: true,
-        type: 'open',
-        sourceRect: sourceRect,
-        targetRect: windowRect
-      })
-    }
-  }, [window.openedFromPosition])
-
-  useEffect(() => {
-    // Handle restore from minimize
-    if (!window.isMinimized && isMinimizing && windowRef.current) {
-      setIsMinimizing(false)
-      const windowRect = windowRef.current.getBoundingClientRect()
-      const taskbarHeight = 48
-      const iconSize = 44
-      
-      const taskbarRect = new DOMRect(
-        window.x + window.width / 2 - iconSize/2,
-        (typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight : 1080) - taskbarHeight + 2,
-        iconSize,
-        iconSize
-      )
-      
-      setGenieAnimation({
-        isAnimating: true,
-        type: 'restore',
-        sourceRect: taskbarRect,
-        targetRect: windowRect
-      })
-    }
-  }, [window.isMinimized, isMinimizing, window.x, window.width])
-
-  const handleAnimationComplete = () => {
-    if (genieAnimation?.type === 'minimize') {
-      minimizeWindow(window.id)
-    } else if (genieAnimation?.type === 'close') {
-      closeWindow(window.id)
-    }
-    setGenieAnimation(null)
-  }
 
   useEffect(() => {
     if (!isDragging) return
@@ -198,7 +127,7 @@ export default function Window({ window, children }: WindowProps) {
     }
   }, [isResizing, resizeStart, window.id, updateWindowSize])
 
-  if (window.isMinimized && !genieAnimation) return null
+  if (window.isMinimized) return null
 
   const windowContent = (
     <div
@@ -289,19 +218,5 @@ export default function Window({ window, children }: WindowProps) {
     </div>
   )
 
-  return (
-    <>
-      {genieAnimation?.isAnimating && (
-        <GenieEffect2
-          isAnimating={genieAnimation.isAnimating}
-          type={genieAnimation.type}
-          sourceRect={genieAnimation.sourceRect}
-          targetRect={genieAnimation.targetRect}
-          duration={isSlowMotion ? 2000 : 600}
-          onComplete={handleAnimationComplete}
-        />
-      )}
-      {(!genieAnimation || genieAnimation.type === 'open' || genieAnimation.type === 'restore') && windowContent}
-    </>
-  )
+  return windowContent
 }
