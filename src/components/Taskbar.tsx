@@ -37,44 +37,78 @@ export default function Taskbar() {
           )
         `
       }}>
-      <div className="h-full flex items-center px-1 gap-2.5">
-        <div
-          className="h-10 w-10 flex items-center justify-center rounded-lg"
-          style={{
-            backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-            backdropFilter: isHovered ? 'blur(20px)' : 'none',
-            WebkitBackdropFilter: isHovered ? 'blur(20px)' : 'none',
-            border: isHovered ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid transparent',
-            transform: isClicked ? 'scale(0.95)' : 'scale(1)',
-            transition: 'all 100ms ease-out',
-            position: 'relative',
-            zIndex: 1001,
-            boxShadow: isHovered ? '0 4px 12px rgba(0, 0, 0, 0.1)' : 'none'
-          }}
-          onPointerEnter={() => setIsHovered(true)}
-          onPointerLeave={() => setIsHovered(false)}
-          onPointerDown={() => setIsClicked(true)}
-          onPointerUp={() => setIsClicked(false)}
-        >
-          <img
-            src="/images/logo.png"
-            alt="Logo"
-            className="w-8 h-8 object-contain"
-            style={{ pointerEvents: 'none' }}
-          />
+      <div className="h-full flex items-center justify-between">
+        {/* Left Section - Start Menu, Search, Task View */}
+        <div className="flex items-center gap-1 px-2">
+          {/* Start Button */}
+          <button
+            className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onMouseDown={() => setIsClicked(true)}
+            onMouseUp={() => setIsClicked(false)}
+            style={{
+              transform: isClicked ? 'scale(0.95)' : 'scale(1)',
+            }}
+          >
+            <img
+              src="/images/logo.png"
+              alt="Start"
+              className="w-7 h-7 object-contain"
+            />
+          </button>
+
+          {/* Search Button */}
+          <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+            <Search className="w-5 h-5 text-white/80" />
+          </button>
+
+          {/* Task View Button */}
+          <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+            <Grid3X3 className="w-5 h-5 text-white/80" />
+          </button>
         </div>
-        
-        <div className="flex-1 flex gap-1 px-2.5 overflow-x-auto">
+
+        {/* Center Section - App Icons */}
+        <div className="flex-1 flex items-center justify-center gap-1 px-4 overflow-x-auto">
           {Array.from(windows.keys()).map((windowId) => (
             <TaskbarApp key={windowId} windowId={windowId} />
           ))}
         </div>
-        
-        <div className="px-3 text-[13px] text-white/80 font-medium">
-          {currentTime.toLocaleTimeString('fr-FR', {
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
+
+        {/* Right Section - System Tray */}
+        <div className="flex items-center gap-2 px-3">
+          {/* Show Desktop Button */}
+          <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+            <ChevronUp className="w-4 h-4 text-white/80" />
+          </button>
+
+          {/* Settings Button */}
+          <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+            <Settings className="w-5 h-5 text-white/80" />
+          </button>
+
+          {/* Menu Button */}
+          <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+            <Menu className="w-5 h-5 text-white/80" />
+          </button>
+
+          {/* Time and Date */}
+          <div className="flex flex-col items-end justify-center px-2 min-w-[80px]">
+            <div className="text-[13px] text-white/90 font-medium">
+              {currentTime.toLocaleTimeString('fr-FR', {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </div>
+            <div className="text-[10px] text-white/70">
+              {currentTime.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
