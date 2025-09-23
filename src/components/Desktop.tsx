@@ -17,8 +17,9 @@ interface SelectionBox {
 export default function Desktop() {
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null)
+  const [selectedIconIds, setSelectedIconIds] = useState<Set<string>>(new Set())
   const desktopRef = useRef<HTMLDivElement>(null)
-  const { registerApp, addDesktopIcon } = useAppStore()
+  const { registerApp, addDesktopIcon, desktopIcons } = useAppStore()
 
   useEffect(() => {
     // Register all default apps
@@ -59,6 +60,36 @@ export default function Desktop() {
     setIsSelecting(false)
     setSelectionBox(null)
   }
+
+  // Check which icons are in the selection box
+  useEffect(() => {
+    if (!selectionBox || !isSelecting) return
+
+    const selected = new Set<string>()
+    const selectionRect = {
+      left: Math.min(selectionBox.startX, selectionBox.endX),
+      right: Math.max(selectionBox.startX, selectionBox.endX),
+      top: Math.min(selectionBox.startY, selectionBox.endY),
+      bottom: Math.max(selectionBox.startY, selectionBox.endY)
+    }
+
+    // Check each icon
+    desktopIcons.forEach(icon => {
+      const iconCenterX = icon.position.x + 40 // Icon width / 2
+      const iconCenterY = icon.position.y + 40 // Icon height / 2
+
+      if (
+        iconCenterX >= selectionRect.left &&
+        iconCenterX <= selectionRect.right &&
+        iconCenterY >= selectionRect.top &&
+        iconCenterY <= selectionRect.bottom
+      ) {
+        selected.add(icon.id)
+      }
+    })
+
+    setSelectedIconIds(selected)
+  }, [selectionBox, isSelecting, desktopIcons])
 
   useEffect(() => {
     const handleGlobalMouseUp = () => {
@@ -122,7 +153,7 @@ export default function Desktop() {
 
       {/* Desktop Area */}
       <div className="desktop-area absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-        <DesktopIcons />
+        <DesktopIcons selectedIconIds={selectedIconIds} onIconClick={() => setSelectedIconIds(new Set())} />
       </div>
 
       {/* Window Manager */}

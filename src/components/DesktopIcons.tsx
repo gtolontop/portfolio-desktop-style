@@ -1,32 +1,25 @@
 'use client'
 
-import { useState } from 'react'
 import { useAppStore } from '@/store/appStore'
 import DesktopIcon from './DesktopIcon'
 
-export default function DesktopIcons() {
+interface DesktopIconsProps {
+  selectedIconIds: Set<string>
+  onIconClick: () => void
+}
+
+export default function DesktopIcons({ selectedIconIds, onIconClick }: DesktopIconsProps) {
   const { desktopIcons } = useAppStore()
-  const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set())
 
   const handleSelectIcon = (id: string, multiSelect: boolean) => {
-    setSelectedIcons(prev => {
-      const newSelection = new Set(prev)
-      if (multiSelect) {
-        if (newSelection.has(id)) {
-          newSelection.delete(id)
-        } else {
-          newSelection.add(id)
-        }
-      } else {
-        newSelection.clear()
-        newSelection.add(id)
-      }
-      return newSelection
-    })
+    // For now, just clear selection when an icon is clicked
+    // You can enhance this later for multi-select with Ctrl
+    onIconClick()
   }
 
-  const handleDesktopClick = () => {
-    setSelectedIcons(new Set())
+  const handleDesktopClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onIconClick()
   }
 
   return (
@@ -38,7 +31,7 @@ export default function DesktopIcons() {
         <DesktopIcon
           key={icon.id}
           icon={icon}
-          isSelected={selectedIcons.has(icon.id)}
+          isSelected={selectedIconIds.has(icon.id)}
           onSelect={handleSelectIcon}
         />
       ))}
