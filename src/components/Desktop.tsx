@@ -32,9 +32,9 @@ export default function Desktop() {
   }, [])
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Only start selection if clicking on the desktop area
-    const target = e.target as HTMLElement
-    if (target.classList.contains('desktop-area') || target === desktopRef.current) {
+    // Start selection if left mouse button is clicked
+    if (e.button === 0) {
+      e.preventDefault()
       setIsSelecting(true)
       setSelectionBox({
         startX: e.clientX,
@@ -109,6 +109,14 @@ export default function Desktop() {
             ...getSelectionStyle(),
             zIndex: 100
           }}
+        />
+      )}
+
+      {/* Selection Overlay - captures mouse events when selecting */}
+      {isSelecting && (
+        <div 
+          className="absolute inset-0 z-50" 
+          style={{ cursor: 'crosshair' }}
         />
       )}
 
