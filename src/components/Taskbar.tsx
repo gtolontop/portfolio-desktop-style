@@ -36,7 +36,7 @@ export default function Taskbar() {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-12 flex items-center gap-2 px-4">
+    <div className="absolute bottom-0 left-0 right-0 h-12 flex items-center gap-2">
       {/* Left Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-3" style={taskbarStyle}>
         {/* Start Button */}
