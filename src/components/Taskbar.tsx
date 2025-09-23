@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Search, Grid3X3, ChevronUp, Settings, Menu } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import TaskbarApp from './TaskbarApp'
 
