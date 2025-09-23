@@ -58,14 +58,16 @@ export default function Window({ window, children }: WindowProps) {
 
   useEffect(() => {
     // Listen for minimize/restore events from taskbar
-    const handleMinimizeEvent = (e: CustomEvent) => {
-      if (e.detail.windowId === window.id) {
+    const handleMinimizeEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ windowId: string }>
+      if (customEvent.detail.windowId === window.id) {
         handleMinimize()
       }
     }
 
-    const handleRestoreEvent = (e: CustomEvent) => {
-      if (e.detail.windowId === window.id) {
+    const handleRestoreEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ windowId: string }>
+      if (customEvent.detail.windowId === window.id) {
         setIsRestoring(true)
         setTimeout(() => {
           setIsRestoring(false)
@@ -73,14 +75,18 @@ export default function Window({ window, children }: WindowProps) {
       }
     }
 
-    window.addEventListener('window-minimize' as any, handleMinimizeEvent)
-    window.addEventListener('window-restore' as any, handleRestoreEvent)
+    // Use global window object to avoid naming conflict
+    const globalWindow = typeof window !== 'undefined' ? window : null
+    if (globalWindow) {
+      globalWindow.addEventListener('window-minimize', handleMinimizeEvent)
+      globalWindow.addEventListener('window-restore', handleRestoreEvent)
 
-    return () => {
-      window.removeEventListener('window-minimize' as any, handleMinimizeEvent)
-      window.removeEventListener('window-restore' as any, handleRestoreEvent)
+      return () => {
+        globalWindow.removeEventListener('window-minimize', handleMinimizeEvent)
+        globalWindow.removeEventListener('window-restore', handleRestoreEvent)
+      }
     }
-  }, [window.id])
+  }, [window.id, handleMinimize])
 
   const handleWindowMouseDown = (e: React.MouseEvent) => {
     // Don't start dragging if clicking on buttons or interactive elements
