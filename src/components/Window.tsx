@@ -133,7 +133,7 @@ export default function Window({ window, children }: WindowProps) {
     <div
       ref={windowRef}
       className={`
-        absolute bg-white overflow-hidden
+        absolute bg-white overflow-hidden rounded-[7px]
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
       `}
