@@ -53,7 +53,7 @@ export default function Taskbar() {
           }}
         >
           <img
-            src="/images/logo.png"
+            src="/images/home.png"
             alt="Start"
             className="w-7 h-7 object-contain"
           />
