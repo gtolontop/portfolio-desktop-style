@@ -133,7 +133,7 @@ export default function Window({ window, children }: WindowProps) {
     <div
       ref={windowRef}
       className={`
-        absolute bg-white overflow-hidden rounded-[7px]
+        absolute overflow-hidden rounded-[7px]
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
       `}
@@ -144,7 +144,19 @@ export default function Window({ window, children }: WindowProps) {
         height: window.isMaximized ? 'calc(100% - 48px)' : `${window.height}px`,
         zIndex: window.zIndex,
         borderRadius: '7px',
-        border: '1px solid rgba(117, 117, 117, 0.40)'
+        border: '1px solid rgba(255, 255, 255, 0.25)',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backdropFilter: 'blur(14px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(14px) saturate(180%)',
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.2) 5%,
+            rgba(255, 255, 255, 0.2) 95%,
+            rgba(255, 255, 255, 0.15) 100%
+          )
+        `
       }}
       onMouseDown={() => focusWindow(window.id)}
     >
@@ -154,7 +166,7 @@ export default function Window({ window, children }: WindowProps) {
         onMouseDown={handleTitleBarMouseDown}
       >
         {/* Title */}
-        <span className="text-sm font-medium select-none">
+        <span className="text-sm font-medium select-none text-white/90">
           {window.title}
         </span>
 
@@ -163,7 +175,7 @@ export default function Window({ window, children }: WindowProps) {
           {app?.minimizable !== false && (
             <button
               onClick={handleMinimize}
-              className="w-5 h-5 flex items-center justify-center hover:bg-gray-200 rounded"
+              className="w-5 h-5 flex items-center justify-center hover:bg-white/20 rounded text-white/80"
             >
               <Minus className="w-3 h-3" />
             </button>
@@ -171,7 +183,7 @@ export default function Window({ window, children }: WindowProps) {
           {app?.maximizable !== false && (
             <button
               onClick={handleMaximize}
-              className="w-5 h-5 flex items-center justify-center hover:bg-gray-200 rounded"
+              className="w-5 h-5 flex items-center justify-center hover:bg-white/20 rounded text-white/80"
             >
               {window.isMaximized ? (
                 <Minimize2 className="w-3 h-3" />
@@ -182,7 +194,7 @@ export default function Window({ window, children }: WindowProps) {
           )}
           <button
             onClick={handleClose}
-            className="w-5 h-5 flex items-center justify-center hover:bg-red-500 hover:text-white rounded"
+            className="w-5 h-5 flex items-center justify-center hover:bg-red-500 hover:text-white rounded text-white/80"
           >
             <X className="w-3 h-3" />
           </button>
