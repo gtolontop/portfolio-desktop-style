@@ -78,3 +78,19 @@ button, a, [role="button"] {
 input[type="text"], textarea {
   cursor: url('/images/default_cursor.cur'), text !important;
 }
+
+/* Window animations */
+@keyframes restore {
+  0% {
+    transform: scale(0.95) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-restore {
+  animation: restore 300ms ease-out;
+}
