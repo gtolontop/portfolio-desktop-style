@@ -28,11 +28,19 @@ export default function Window({ window, children }: WindowProps) {
   const [isResizing, setIsResizing] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
-  const [animationClass, setAnimationClass] = useState(() => {
+  const [genieAnimation, setGenieAnimation] = useState<{
+    isAnimating: boolean
+    type: 'minimize' | 'restore' | 'open' | 'close'
+    targetPosition?: { x: number; y: number }
+  } | null>(() => {
     if (window.openedFromPosition) {
-      return 'window-genie-open'
+      return {
+        isAnimating: true,
+        type: 'open',
+        targetPosition: window.openedFromPosition
+      }
     }
-    return ''
+    return null
   })
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
@@ -72,18 +80,24 @@ export default function Window({ window, children }: WindowProps) {
 
   const handleClose = () => {
     setIsClosing(true)
-    setAnimationClass('window-genie-close')
-    setTimeout(() => {
-      closeWindow(window.id)
-    }, 500)
+    setGenieAnimation({
+      isAnimating: true,
+      type: 'close',
+      targetPosition: window.openedFromPosition
+    })
   }
 
   const handleMinimize = () => {
     setIsMinimizing(true)
-    setAnimationClass('window-genie-minimize')
-    setTimeout(() => {
-      minimizeWindow(window.id)
-    }, 600)
+    const taskbarHeight = 48
+    setGenieAnimation({
+      isAnimating: true,
+      type: 'minimize',
+      targetPosition: {
+        x: window.x + window.width / 2,
+        y: typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight - taskbarHeight / 2 : 1080 - taskbarHeight / 2
+      }
+    })
   }
 
   const handleMaximize = () => {
