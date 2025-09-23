@@ -96,6 +96,24 @@ export default function Window({ window, children }: WindowProps) {
   }
 
   useEffect(() => {
+    // Handle shift key for slow motion
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Shift') setIsSlowMotion(true)
+    }
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'Shift') setIsSlowMotion(false)
+    }
+    
+    globalThis.addEventListener('keydown', handleKeyDown)
+    globalThis.addEventListener('keyup', handleKeyUp)
+    
+    return () => {
+      globalThis.removeEventListener('keydown', handleKeyDown)
+      globalThis.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [])
+
+  useEffect(() => {
     // Reset animation after opening
     if (animationClass === 'window-genie-open') {
       setTimeout(() => setAnimationClass(''), 500)
