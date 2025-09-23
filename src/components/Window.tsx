@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { X, Minus, Square, Maximize2 } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import { AppWindow } from '@/types/app.types'
+import GenieEffect from './GenieEffect'
 
 interface WindowProps {
   window: AppWindow
