@@ -119,14 +119,27 @@ export default function Window({ window, children }: WindowProps) {
       
       // Calculate where to position the window so the mouse stays at the same relative position
       const restoredWidth = windowData.previousState.width
-      const newX = e.clientX - (restoredWidth * clickPositionRatio)
-      const newY = e.clientY - (e.clientY - rect.top) // Keep same vertical offset
+      const restoredHeight = windowData.previousState.height
+      const screenWidth = globalThis.window.innerWidth
+      const screenHeight = globalThis.window.innerHeight
+      const taskbarHeight = 48
+      
+      // Calculate initial position based on mouse
+      let newX = e.clientX - (restoredWidth * clickPositionRatio)
+      let newY = e.clientY - (e.clientY - rect.top)
+      
+      // Ensure window stays within screen bounds
+      // Don't let it go off the left or right
+      newX = Math.max(0, Math.min(newX, screenWidth - restoredWidth))
+      
+      // Don't let it go above the top or below the taskbar
+      newY = Math.max(0, Math.min(newY, screenHeight - taskbarHeight - restoredHeight))
       
       // Restore window
       restoreWindow(window.id)
       
       // Position the window immediately
-      updateWindowPosition(window.id, Math.max(0, newX), Math.max(0, newY))
+      updateWindowPosition(window.id, newX, newY)
       
       // Set drag offset based on where the mouse is on the restored window
       setDragOffset({
