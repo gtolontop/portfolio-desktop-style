@@ -28,6 +28,9 @@ export default function Window({ window, children }: WindowProps) {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
   const [isOpening, setIsOpening] = useState(true)
+  const [isClosing, setIsClosing] = useState(false)
+  const [isMinimizing, setIsMinimizing] = useState(false)
+  const [isRestoring, setIsRestoring] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
@@ -40,6 +43,18 @@ export default function Window({ window, children }: WindowProps) {
     }, 50)
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    // Handle restore animation when window is un-minimized
+    if (!window.isMinimized && isMinimizing) {
+      setIsMinimizing(false)
+      setIsRestoring(true)
+      const timer = setTimeout(() => {
+        setIsRestoring(false)
+      }, 300)
+      return () => clearTimeout(timer)
+    }
+  }, [window.isMinimized, isMinimizing])
 
   const handleWindowMouseDown = (e: React.MouseEvent) => {
     // Don't start dragging if clicking on buttons or interactive elements
@@ -77,11 +92,17 @@ export default function Window({ window, children }: WindowProps) {
   }
 
   const handleClose = () => {
-    closeWindow(window.id)
+    setIsClosing(true)
+    setTimeout(() => {
+      closeWindow(window.id)
+    }, 300)
   }
 
   const handleMinimize = () => {
-    minimizeWindow(window.id)
+    setIsMinimizing(true)
+    setTimeout(() => {
+      minimizeWindow(window.id)
+    }, 300)
   }
 
   const handleMaximize = () => {
