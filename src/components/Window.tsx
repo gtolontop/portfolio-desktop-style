@@ -27,7 +27,9 @@ export default function Window({ window, children }: WindowProps) {
   const [isResizing, setIsResizing] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
-  const [animationClass, setAnimationClass] = useState('window-opening')
+  const [animationClass, setAnimationClass] = useState(
+    window.openedFromPosition ? 'window-bounce-open' : 'window-opening'
+  )
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
@@ -95,6 +97,8 @@ export default function Window({ window, children }: WindowProps) {
     // Reset animation after opening
     if (animationClass === 'window-opening') {
       setTimeout(() => setAnimationClass(''), 300)
+    } else if (animationClass === 'window-bounce-open') {
+      setTimeout(() => setAnimationClass(''), 600)
     }
   }, [animationClass])
 
@@ -174,8 +178,12 @@ export default function Window({ window, children }: WindowProps) {
         zIndex: window.zIndex,
         backgroundColor: 'rgba(30, 30, 30, 0.8)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
-      }}
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        '--origin-x': window.openedFromPosition ? `${window.openedFromPosition.x}px` : '50%',
+        '--origin-y': window.openedFromPosition ? `${window.openedFromPosition.y}px` : '50%',
+        '--target-x': `${window.x + window.width / 2}px`,
+        '--target-y': `${window.y + window.height / 2}px`
+      } as React.CSSProperties}
       onMouseDown={() => focusWindow(window.id)}
     >
       {/* Title Bar - macOS Style */}
