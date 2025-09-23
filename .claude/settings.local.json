@@ -6,7 +6,8 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:harshil.net)",
       "WebFetch(domain:*.net)",
-      "WebFetch(domain:*.com)"
+      "WebFetch(domain:*.com)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

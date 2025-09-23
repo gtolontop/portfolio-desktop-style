@@ -129,20 +129,29 @@ export default function Window({ window, children }: WindowProps) {
   }, [])
 
   useEffect(() => {
-    // Reset animation after opening
-    if (animationClass === 'window-genie-open') {
-      setTimeout(() => setAnimationClass(''), 500)
-    }
-  }, [animationClass])
-
-  useEffect(() => {
     // Handle restore from minimize
     if (!window.isMinimized && isMinimizing) {
       setIsMinimizing(false)
-      setAnimationClass('window-genie-restore')
-      setTimeout(() => setAnimationClass(''), 600)
+      const taskbarHeight = 48
+      setGenieAnimation({
+        isAnimating: true,
+        type: 'restore',
+        targetPosition: {
+          x: window.x + window.width / 2,
+          y: typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight - taskbarHeight / 2 : 1080 - taskbarHeight / 2
+        }
+      })
     }
-  }, [window.isMinimized, isMinimizing])
+  }, [window.isMinimized, isMinimizing, window.x, window.width])
+
+  const handleAnimationEnd = () => {
+    if (genieAnimation?.type === 'minimize') {
+      minimizeWindow(window.id)
+    } else if (genieAnimation?.type === 'close') {
+      closeWindow(window.id)
+    }
+    setGenieAnimation(null)
+  }
 
   useEffect(() => {
     if (!isDragging) return
@@ -192,17 +201,15 @@ export default function Window({ window, children }: WindowProps) {
     }
   }, [isResizing, resizeStart, window.id, updateWindowSize])
 
-  if (window.isMinimized) return null
+  if (window.isMinimized && !genieAnimation) return null
 
-  return (
+  const windowContent = (
     <div
       ref={windowRef}
       className={`
         absolute rounded-xl overflow-hidden
         ${isActive ? 'shadow-2xl shadow-black/50' : 'shadow-xl shadow-black/30'}
         ${isDragging || isResizing ? 'select-none' : ''}
-        ${animationClass}
-        ${isSlowMotion ? 'slow-motion' : ''}
       `}
       style={{
         left: window.isMaximized ? 0 : `${window.x}px`,
@@ -212,12 +219,8 @@ export default function Window({ window, children }: WindowProps) {
         zIndex: window.zIndex,
         backgroundColor: 'rgba(30, 30, 30, 0.8)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        '--window-x': `${window.x}px`,
-        '--window-y': `${window.y}px`,
-        '--target-x': window.openedFromPosition ? `${window.openedFromPosition.x}px` : `${window.x + window.width / 2}px`,
-        '--target-y': window.openedFromPosition ? `${window.openedFromPosition.y}px` : `${typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight - 24 : 1080 - 24}px`
-      } as React.CSSProperties}
+        border: '1px solid rgba(255, 255, 255, 0.1)'
+      }}
       onMouseDown={() => focusWindow(window.id)}
     >
       {/* Title Bar - macOS Style */}
@@ -288,4 +291,20 @@ export default function Window({ window, children }: WindowProps) {
       )}
     </div>
   )
+
+  if (genieAnimation?.isAnimating) {
+    return (
+      <GenieEffect
+        isAnimating={genieAnimation.isAnimating}
+        animationType={genieAnimation.type}
+        targetPosition={genieAnimation.targetPosition}
+        duration={isSlowMotion ? 2000 : 600}
+        onAnimationEnd={handleAnimationEnd}
+      >
+        {windowContent}
+      </GenieEffect>
+    )
+  }
+
+  return windowContent
 }
