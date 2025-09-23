@@ -133,8 +133,8 @@ export default function Window({ window, children }: WindowProps) {
     <div
       ref={windowRef}
       className={`
-        absolute rounded-xl overflow-hidden
-        ${isActive ? 'shadow-2xl shadow-black/50' : 'shadow-xl shadow-black/30'}
+        absolute bg-white overflow-hidden
+        ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
       `}
       style={{
@@ -143,68 +143,52 @@ export default function Window({ window, children }: WindowProps) {
         width: window.isMaximized ? '100%' : `${window.width}px`,
         height: window.isMaximized ? 'calc(100% - 48px)' : `${window.height}px`,
         zIndex: window.zIndex,
-        backgroundColor: 'rgba(30, 30, 30, 0.8)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
       }}
       onMouseDown={() => focusWindow(window.id)}
     >
-      {/* Title Bar - macOS Style */}
+      {/* Title Bar */}
       <div
-        className="h-11 flex items-center px-4 cursor-move"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(60, 60, 60, 0.8), rgba(45, 45, 45, 0.8))',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.2)'
-        }}
+        className="h-10 flex items-center justify-between px-4 border-b cursor-move"
         onMouseDown={handleTitleBarMouseDown}
       >
-        {/* Traffic Lights */}
-        <div className="flex items-center gap-2 mr-4">
-          <button
-            onClick={handleClose}
-            className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors group relative"
-          >
-            <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
-              <X className="w-2 h-2 text-red-900" strokeWidth={3} />
-            </span>
-          </button>
+        {/* Title */}
+        <span className="text-sm font-medium select-none">
+          {window.title}
+        </span>
+
+        {/* Window Controls */}
+        <div className="flex items-center gap-2">
           {app?.minimizable !== false && (
             <button
               onClick={handleMinimize}
-              className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors group relative"
+              className="w-5 h-5 flex items-center justify-center hover:bg-gray-200 rounded"
             >
-              <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                <Minus className="w-2 h-2 text-yellow-900" strokeWidth={3} />
-              </span>
+              <Minus className="w-3 h-3" />
             </button>
           )}
           {app?.maximizable !== false && (
             <button
               onClick={handleMaximize}
-              className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors group relative"
+              className="w-5 h-5 flex items-center justify-center hover:bg-gray-200 rounded"
             >
-              <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                {window.isMaximized ? (
-                  <Square className="w-2 h-2 text-green-900" strokeWidth={3} />
-                ) : (
-                  <Maximize2 className="w-2 h-2 text-green-900" strokeWidth={3} />
-                )}
-              </span>
+              {window.isMaximized ? (
+                <Square className="w-3 h-3" />
+              ) : (
+                <Maximize2 className="w-3 h-3" />
+              )}
             </button>
           )}
+          <button
+            onClick={handleClose}
+            className="w-5 h-5 flex items-center justify-center hover:bg-red-500 hover:text-white rounded"
+          >
+            <X className="w-3 h-3" />
+          </button>
         </div>
-
-        {/* Title */}
-        <span className="flex-1 text-center text-sm font-medium text-white/90 select-none">
-          {window.title}
-        </span>
-
-        {/* Spacer for balance */}
-        <div className="w-16" />
       </div>
 
       {/* Content */}
-      <div className="h-[calc(100%-44px)] overflow-auto" style={{ backgroundColor: 'rgba(20, 20, 20, 0.95)' }}>
+      <div className="h-[calc(100%-40px)] overflow-auto">
         {children}
       </div>
 
