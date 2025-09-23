@@ -33,6 +33,14 @@ export default function Window({ window, children }: WindowProps) {
   const app = getApp(window.appId)
   const isActive = activeWindowId === window.id
 
+  useEffect(() => {
+    // Remove opening animation after component mounts
+    const timer = setTimeout(() => {
+      setIsOpening(false)
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [])
+
   const handleWindowMouseDown = (e: React.MouseEvent) => {
     if (window.isMaximized) return
 
