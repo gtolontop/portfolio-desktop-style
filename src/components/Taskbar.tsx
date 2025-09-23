@@ -76,8 +76,8 @@ export default function Taskbar() {
       {/* Center Taskbar Section */}
       <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: '10px',
-        borderTopRightRadius: '10px'
+        borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px',
+        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px'
       }}>
         {Array.from(windows.keys()).map((windowId) => (
           <TaskbarApp key={windowId} windowId={windowId} />
@@ -87,7 +87,7 @@ export default function Taskbar() {
       {/* Right Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: '10px'
+        borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px'
       }}>
         {/* Show Desktop Button */}
         <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
