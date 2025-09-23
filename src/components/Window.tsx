@@ -202,7 +202,7 @@ export default function Window({ window, children }: WindowProps) {
       </div>
 
       {/* Content */}
-      <div className="h-[calc(100%-40px)] overflow-auto bg-white">
+      <div className="h-[calc(100%-40px)] overflow-auto">
         {children}
       </div>
 
