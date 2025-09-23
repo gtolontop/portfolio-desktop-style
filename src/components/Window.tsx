@@ -159,6 +159,7 @@ export default function Window({ window, children }: WindowProps) {
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
         ${!isDragging && !isResizing ? 'transition-all duration-300 ease-out' : ''}
+        ${isOpening ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}
       `}
       style={{
         left: window.isMaximized ? 0 : `${window.x}px`,
