@@ -89,7 +89,13 @@ export default function Desktop() {
   return (
     <div
       ref={desktopRef}
-      className="w-screen h-screen relative overflow-hidden desktop-gradient select-none"
+      className="w-screen h-screen relative overflow-hidden select-none"
+      style={{
+        backgroundImage: 'url(/images/background-pink.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
