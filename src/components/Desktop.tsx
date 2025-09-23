@@ -19,9 +19,14 @@ export default function Desktop() {
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null)
   const [selectedIconIds, setSelectedIconIds] = useState<Set<string>>(new Set())
   const desktopRef = useRef<HTMLDivElement>(null)
+  const initializedRef = useRef(false)
   const { registerApp, addDesktopIcon, desktopIcons } = useAppStore()
 
   useEffect(() => {
+    // Prevent double initialization in React StrictMode
+    if (initializedRef.current) return
+    initializedRef.current = true
+
     // Register all default apps
     defaultApps.forEach(app => {
       registerApp(app)

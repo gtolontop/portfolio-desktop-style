@@ -84,9 +84,9 @@ export default function DesktopIcon({ icon, isSelected, onSelect }: DesktopIconP
       className={`
         absolute flex flex-col items-center justify-center
         w-20 h-20 p-2 cursor-pointer select-none
-        transition-all duration-150 rounded-xl
+        rounded-xl
         ${isSelected ? 'bg-white/20 backdrop-blur-sm border border-white/30' : ''}
-        ${isDragging ? 'opacity-70' : 'hover:bg-white/10 hover:backdrop-blur-sm'}
+        ${isDragging ? 'opacity-90' : 'hover:bg-white/10 hover:backdrop-blur-sm'}
       `}
       style={{
         left: `${icon.position.x}px`,
