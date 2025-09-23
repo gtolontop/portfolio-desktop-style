@@ -32,8 +32,12 @@ export default function Window({ window, children }: WindowProps) {
   const app = getApp(window.appId)
   const isActive = activeWindowId === window.id
 
-  const handleTitleBarMouseDown = (e: React.MouseEvent) => {
+  const handleWindowMouseDown = (e: React.MouseEvent) => {
     if (window.isMaximized) return
+
+    // Don't start dragging if clicking on buttons or interactive elements
+    const target = e.target as HTMLElement
+    if (target.tagName === 'BUTTON' || target.closest('button')) return
 
     const rect = windowRef.current?.getBoundingClientRect()
     if (rect) {
@@ -141,7 +145,7 @@ export default function Window({ window, children }: WindowProps) {
     <div
       ref={windowRef}
       className={`
-        absolute overflow-hidden rounded-[7px]
+        absolute overflow-hidden rounded-[7px] cursor-move
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
       `}
@@ -152,17 +156,16 @@ export default function Window({ window, children }: WindowProps) {
         height: window.isMaximized ? 'calc(100% - 48px)' : `${window.height}px`,
         zIndex: window.zIndex,
         borderRadius: '7px',
-        border: '1px solid rgba(255, 255, 255, 0.3)',
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        border: '1px solid rgba(255, 255, 255, 0.35)',
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
         backdropFilter: 'blur(20px) saturate(100%)',
         WebkitBackdropFilter: 'blur(20px) saturate(100%)'
       }}
-      onMouseDown={() => focusWindow(window.id)}
+      onMouseDown={handleWindowMouseDown}
     >
       {/* Title Bar */}
       <div
-        className="h-10 flex items-center justify-between px-4 cursor-move"
-        onMouseDown={handleTitleBarMouseDown}
+        className="h-10 flex items-center justify-between px-4"
       >
         {/* Title */}
         <span className="text-sm font-medium select-none text-white/90">
