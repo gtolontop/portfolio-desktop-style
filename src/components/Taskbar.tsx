@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Grid3X3, ChevronUp, Settings, Menu } from 'lucide-react'
+import { Search, Layers, ChevronUp, Menu } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import TaskbarApp from './TaskbarApp'
 
@@ -37,9 +37,9 @@ export default function Taskbar() {
           )
         `
       }}>
-      <div className="h-full flex items-center justify-between">
+      <div className="h-full flex items-center">
         {/* Left Section - Start Menu, Search, Task View */}
-        <div className="flex items-center gap-1 px-2">
+        <div className="flex items-center gap-1 px-2 border-r border-white/10">
           {/* Start Button */}
           <button
             className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
@@ -65,27 +65,22 @@ export default function Taskbar() {
 
           {/* Task View Button */}
           <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-            <Grid3X3 className="w-5 h-5 text-white/80" />
+            <Layers className="w-5 h-5 text-white/80" />
           </button>
         </div>
 
         {/* Center Section - App Icons */}
-        <div className="flex-1 flex items-center justify-center gap-1 px-4 overflow-x-auto">
+        <div className="flex-1 flex items-center justify-center gap-1 px-4 overflow-x-auto border-r border-white/10">
           {Array.from(windows.keys()).map((windowId) => (
             <TaskbarApp key={windowId} windowId={windowId} />
           ))}
         </div>
 
         {/* Right Section - System Tray */}
-        <div className="flex items-center gap-2 px-3">
+        <div className="flex items-center gap-1 px-2">
           {/* Show Desktop Button */}
           <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
             <ChevronUp className="w-4 h-4 text-white/80" />
-          </button>
-
-          {/* Settings Button */}
-          <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-            <Settings className="w-5 h-5 text-white/80" />
           </button>
 
           {/* Menu Button */}
