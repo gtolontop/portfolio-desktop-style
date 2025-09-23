@@ -45,7 +45,8 @@ export default function Taskbar() {
         borderTopRightRadius: hasMaximizedWindow ? '0px' : '10px',
         borderTopLeftRadius: '0px',
         borderBottomRightRadius: '0px',
-        borderBottomLeftRadius: '0px'
+        borderBottomLeftRadius: '0px',
+        borderRadius: hasMaximizedWindow ? '0px' : undefined
       }}>
         {/* Start Button */}
         <button
