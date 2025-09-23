@@ -38,8 +38,8 @@ export default function Desktop() {
   }, [])
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Start selection if left mouse button is clicked
-    if (e.button === 0) {
+    // Start selection if left mouse button is clicked AND we're clicking on the desktop itself
+    if (e.button === 0 && e.target === desktopRef.current) {
       e.preventDefault()
       setIsSelecting(true)
       setSelectionBox({
