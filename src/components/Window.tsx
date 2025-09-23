@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react'
 import { X, Minus, Square, Maximize2 } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import { AppWindow } from '@/types/app.types'
-import GenieEffect2 from './GenieEffect2'
 
 interface WindowProps {
   window: AppWindow
@@ -28,15 +27,6 @@ export default function Window({ window, children }: WindowProps) {
   const [isResizing, setIsResizing] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
-  const [genieAnimation, setGenieAnimation] = useState<{
-    isAnimating: boolean
-    type: 'minimize' | 'restore' | 'open' | 'close'
-    sourceRect?: DOMRect
-    targetRect?: DOMRect
-  } | null>(null)
-  const [isClosing, setIsClosing] = useState(false)
-  const [isMinimizing, setIsMinimizing] = useState(false)
-  const [isSlowMotion, setIsSlowMotion] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
@@ -71,48 +61,11 @@ export default function Window({ window, children }: WindowProps) {
   }
 
   const handleClose = () => {
-    if (!windowRef.current || !window.openedFromPosition) return
-    
-    const windowRect = windowRef.current.getBoundingClientRect()
-    const iconSize = 48
-    const sourceRect = new DOMRect(
-      window.openedFromPosition.x - iconSize/2,
-      window.openedFromPosition.y - iconSize/2,
-      iconSize,
-      iconSize
-    )
-    
-    setIsClosing(true)
-    setGenieAnimation({
-      isAnimating: true,
-      type: 'close',
-      sourceRect: sourceRect,
-      targetRect: windowRect
-    })
+    closeWindow(window.id)
   }
 
   const handleMinimize = () => {
-    if (!windowRef.current) return
-    
-    const windowRect = windowRef.current.getBoundingClientRect()
-    const taskbarHeight = 48
-    const iconSize = 44
-    
-    // Create a rect for the taskbar position
-    const taskbarRect = new DOMRect(
-      window.x + window.width / 2 - iconSize/2,
-      (typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight : 1080) - taskbarHeight + 2,
-      iconSize,
-      iconSize
-    )
-    
-    setIsMinimizing(true)
-    setGenieAnimation({
-      isAnimating: true,
-      type: 'minimize',
-      sourceRect: taskbarRect,
-      targetRect: windowRect
-    })
+    minimizeWindow(window.id)
   }
 
   const handleMaximize = () => {
