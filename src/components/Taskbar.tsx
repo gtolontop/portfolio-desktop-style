@@ -38,11 +38,12 @@ export default function Taskbar() {
   }
 
   return (
-    <div className={`absolute bottom-0 left-0 right-0 h-12 flex items-center ${hasMaximizedWindow ? '' : 'gap-2'}`}>
+    <div className={`absolute bottom-0 left-0 right-0 h-12 flex items-center transition-all duration-300 ease-in-out ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`}>
       {/* Left Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-2" style={{
+      <div className="h-full flex items-center gap-1 px-2 transition-all duration-300 ease-in-out" style={{
         ...taskbarStyle,
-        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px'
+        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px',
+        marginRight: hasMaximizedWindow ? '0' : '0'
       }}>
         {/* Start Button */}
         <button
@@ -74,10 +75,12 @@ export default function Taskbar() {
       </div>
 
       {/* Center Taskbar Section */}
-      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={{
+      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto transition-all duration-300 ease-in-out" style={{
         ...taskbarStyle,
         borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px',
-        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px'
+        borderTopRightRadius: hasMaximizedWindow ? '0' : '10px',
+        transform: hasMaximizedWindow ? 'scaleX(1)' : 'scaleX(0.98)',
+        opacity: hasMaximizedWindow ? '1' : '0.95'
       }}>
         {Array.from(windows.keys()).map((windowId) => (
           <TaskbarApp key={windowId} windowId={windowId} />
@@ -85,9 +88,10 @@ export default function Taskbar() {
       </div>
 
       {/* Right Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-2" style={{
+      <div className="h-full flex items-center gap-1 px-2 transition-all duration-300 ease-in-out" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px'
+        borderTopLeftRadius: hasMaximizedWindow ? '0' : '10px',
+        marginLeft: hasMaximizedWindow ? '0' : '0'
       }}>
         {/* Show Desktop Button */}
         <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
