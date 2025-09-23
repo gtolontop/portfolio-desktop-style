@@ -29,15 +29,13 @@ export default function Window({ window, children }: WindowProps) {
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
   const [animationClass, setAnimationClass] = useState(() => {
     if (window.openedFromPosition) {
-      // Check if opening from taskbar (bottom of screen)
-      const screenHeight = typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight : 1080
-      const isFromTaskbar = window.openedFromPosition.y > screenHeight - 100
-      return isFromTaskbar ? 'window-expand-taskbar' : 'window-bounce-open'
+      return 'window-genie-open'
     }
-    return 'window-opening'
+    return ''
   })
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
+  const [isSlowMotion, setIsSlowMotion] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
@@ -73,40 +71,34 @@ export default function Window({ window, children }: WindowProps) {
 
   const handleClose = () => {
     setIsClosing(true)
-    setAnimationClass('window-closing')
+    setAnimationClass('window-genie-close')
     setTimeout(() => {
       closeWindow(window.id)
-    }, 200)
+    }, 500)
   }
 
   const handleMinimize = () => {
     setIsMinimizing(true)
-    setAnimationClass('window-minimizing')
+    setAnimationClass('window-genie-minimize')
     setTimeout(() => {
       minimizeWindow(window.id)
-    }, 300)
+    }, 600)
   }
 
   const handleMaximize = () => {
     if (!app?.maximizable) return
 
     if (window.isMaximized) {
-      setAnimationClass('window-unmaximizing')
       restoreWindow(window.id)
     } else {
-      setAnimationClass('window-maximizing')
       maximizeWindow(window.id)
     }
   }
 
   useEffect(() => {
     // Reset animation after opening
-    if (animationClass === 'window-opening') {
-      setTimeout(() => setAnimationClass(''), 300)
-    } else if (animationClass === 'window-bounce-open') {
-      setTimeout(() => setAnimationClass(''), 400)
-    } else if (animationClass === 'window-expand-taskbar') {
-      setTimeout(() => setAnimationClass(''), 350)
+    if (animationClass === 'window-genie-open') {
+      setTimeout(() => setAnimationClass(''), 500)
     }
   }, [animationClass])
 
@@ -114,8 +106,8 @@ export default function Window({ window, children }: WindowProps) {
     // Handle restore from minimize
     if (!window.isMinimized && isMinimizing) {
       setIsMinimizing(false)
-      setAnimationClass('window-restoring')
-      setTimeout(() => setAnimationClass(''), 300)
+      setAnimationClass('window-genie-restore')
+      setTimeout(() => setAnimationClass(''), 600)
     }
   }, [window.isMinimized, isMinimizing])
 
@@ -187,10 +179,10 @@ export default function Window({ window, children }: WindowProps) {
         backgroundColor: 'rgba(30, 30, 30, 0.8)',
         backdropFilter: 'blur(20px)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
-        '--origin-x': window.openedFromPosition ? `${window.openedFromPosition.x}px` : '50%',
-        '--origin-y': window.openedFromPosition ? `${window.openedFromPosition.y}px` : '50%',
-        '--target-x': `${window.x + window.width / 2}px`,
-        '--target-y': `${window.y + window.height / 2}px`
+        '--window-x': `${window.x}px`,
+        '--window-y': `${window.y}px`,
+        '--target-x': window.openedFromPosition ? `${window.openedFromPosition.x}px` : `${window.x + window.width / 2}px`,
+        '--target-y': window.openedFromPosition ? `${window.openedFromPosition.y}px` : `${typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight - 24 : 1080 - 24}px`
       } as React.CSSProperties}
       onMouseDown={() => focusWindow(window.id)}
     >
