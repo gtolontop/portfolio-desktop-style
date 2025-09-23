@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { X, Minus, Square, Maximize2 } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import { AppWindow } from '@/types/app.types'
-import GenieEffect from './GenieEffect'
+import GenieEffect2 from './GenieEffect2'
 
 interface WindowProps {
   window: AppWindow
@@ -31,17 +31,9 @@ export default function Window({ window, children }: WindowProps) {
   const [genieAnimation, setGenieAnimation] = useState<{
     isAnimating: boolean
     type: 'minimize' | 'restore' | 'open' | 'close'
-    targetPosition?: { x: number; y: number }
-  } | null>(() => {
-    if (window.openedFromPosition) {
-      return {
-        isAnimating: true,
-        type: 'open',
-        targetPosition: window.openedFromPosition
-      }
-    }
-    return null
-  })
+    sourceRect?: DOMRect
+    targetRect?: DOMRect
+  } | null>(null)
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
   const [isSlowMotion, setIsSlowMotion] = useState(false)
@@ -79,24 +71,47 @@ export default function Window({ window, children }: WindowProps) {
   }
 
   const handleClose = () => {
+    if (!windowRef.current || !window.openedFromPosition) return
+    
+    const windowRect = windowRef.current.getBoundingClientRect()
+    const iconSize = 48
+    const sourceRect = new DOMRect(
+      window.openedFromPosition.x - iconSize/2,
+      window.openedFromPosition.y - iconSize/2,
+      iconSize,
+      iconSize
+    )
+    
     setIsClosing(true)
     setGenieAnimation({
       isAnimating: true,
       type: 'close',
-      targetPosition: window.openedFromPosition
+      sourceRect: sourceRect,
+      targetRect: windowRect
     })
   }
 
   const handleMinimize = () => {
-    setIsMinimizing(true)
+    if (!windowRef.current) return
+    
+    const windowRect = windowRef.current.getBoundingClientRect()
     const taskbarHeight = 48
+    const iconSize = 44
+    
+    // Create a rect for the taskbar position
+    const taskbarRect = new DOMRect(
+      window.x + window.width / 2 - iconSize/2,
+      (typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight : 1080) - taskbarHeight + 2,
+      iconSize,
+      iconSize
+    )
+    
+    setIsMinimizing(true)
     setGenieAnimation({
       isAnimating: true,
       type: 'minimize',
-      targetPosition: {
-        x: window.x + window.width / 2,
-        y: typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight - taskbarHeight / 2 : 1080 - taskbarHeight / 2
-      }
+      sourceRect: taskbarRect,
+      targetRect: windowRect
     })
   }
 
@@ -128,23 +143,52 @@ export default function Window({ window, children }: WindowProps) {
     }
   }, [])
 
+  // Handle opening animation
+  useEffect(() => {
+    if (window.openedFromPosition && windowRef.current && !genieAnimation) {
+      const windowRect = windowRef.current.getBoundingClientRect()
+      const iconSize = 48
+      const sourceRect = new DOMRect(
+        window.openedFromPosition.x - iconSize/2,
+        window.openedFromPosition.y - iconSize/2,
+        iconSize,
+        iconSize
+      )
+      
+      setGenieAnimation({
+        isAnimating: true,
+        type: 'open',
+        sourceRect: sourceRect,
+        targetRect: windowRect
+      })
+    }
+  }, [window.openedFromPosition])
+
   useEffect(() => {
     // Handle restore from minimize
-    if (!window.isMinimized && isMinimizing) {
+    if (!window.isMinimized && isMinimizing && windowRef.current) {
       setIsMinimizing(false)
+      const windowRect = windowRef.current.getBoundingClientRect()
       const taskbarHeight = 48
+      const iconSize = 44
+      
+      const taskbarRect = new DOMRect(
+        window.x + window.width / 2 - iconSize/2,
+        (typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight : 1080) - taskbarHeight + 2,
+        iconSize,
+        iconSize
+      )
+      
       setGenieAnimation({
         isAnimating: true,
         type: 'restore',
-        targetPosition: {
-          x: window.x + window.width / 2,
-          y: typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight - taskbarHeight / 2 : 1080 - taskbarHeight / 2
-        }
+        sourceRect: taskbarRect,
+        targetRect: windowRect
       })
     }
   }, [window.isMinimized, isMinimizing, window.x, window.width])
 
-  const handleAnimationEnd = () => {
+  const handleAnimationComplete = () => {
     if (genieAnimation?.type === 'minimize') {
       minimizeWindow(window.id)
     } else if (genieAnimation?.type === 'close') {
@@ -292,19 +336,19 @@ export default function Window({ window, children }: WindowProps) {
     </div>
   )
 
-  if (genieAnimation?.isAnimating) {
-    return (
-      <GenieEffect
-        isAnimating={genieAnimation.isAnimating}
-        animationType={genieAnimation.type}
-        targetPosition={genieAnimation.targetPosition}
-        duration={isSlowMotion ? 2000 : 600}
-        onAnimationEnd={handleAnimationEnd}
-      >
-        {windowContent}
-      </GenieEffect>
-    )
-  }
-
-  return windowContent
+  return (
+    <>
+      {genieAnimation?.isAnimating && (
+        <GenieEffect2
+          isAnimating={genieAnimation.isAnimating}
+          type={genieAnimation.type}
+          sourceRect={genieAnimation.sourceRect}
+          targetRect={genieAnimation.targetRect}
+          duration={isSlowMotion ? 2000 : 600}
+          onComplete={handleAnimationComplete}
+        />
+      )}
+      {(!genieAnimation || genieAnimation.type === 'open' || genieAnimation.type === 'restore') && windowContent}
+    </>
+  )
 }
