@@ -101,6 +101,7 @@ export default function Window({ window, children }: WindowProps) {
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
+      document.body.style.userSelect = ''
     }
   }, [isDragging, dragOffset, window.id, updateWindowPosition])
 
