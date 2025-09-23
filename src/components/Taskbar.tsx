@@ -99,7 +99,8 @@ export default function Taskbar() {
         borderTopLeftRadius: hasMaximizedWindow ? '0px' : '10px',
         borderTopRightRadius: '0px',
         borderBottomLeftRadius: '0px',
-        borderBottomRightRadius: '0px'
+        borderBottomRightRadius: '0px',
+        borderRadius: hasMaximizedWindow ? '0px' : undefined
       }}>
         {/* Show Desktop Button */}
         <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
