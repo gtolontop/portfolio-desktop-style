@@ -56,6 +56,32 @@ export default function Window({ window, children }: WindowProps) {
     }
   }, [window.isMinimized, isMinimizing])
 
+  useEffect(() => {
+    // Listen for minimize/restore events from taskbar
+    const handleMinimizeEvent = (e: CustomEvent) => {
+      if (e.detail.windowId === window.id) {
+        handleMinimize()
+      }
+    }
+
+    const handleRestoreEvent = (e: CustomEvent) => {
+      if (e.detail.windowId === window.id) {
+        setIsRestoring(true)
+        setTimeout(() => {
+          setIsRestoring(false)
+        }, 300)
+      }
+    }
+
+    window.addEventListener('window-minimize' as any, handleMinimizeEvent)
+    window.addEventListener('window-restore' as any, handleRestoreEvent)
+
+    return () => {
+      window.removeEventListener('window-minimize' as any, handleMinimizeEvent)
+      window.removeEventListener('window-restore' as any, handleRestoreEvent)
+    }
+  }, [window.id])
+
   const handleWindowMouseDown = (e: React.MouseEvent) => {
     // Don't start dragging if clicking on buttons or interactive elements
     const target = e.target as HTMLElement
