@@ -38,7 +38,10 @@ export default function Taskbar() {
   return (
     <div className="absolute bottom-0 left-0 right-0 h-12 flex items-center gap-2">
       {/* Left Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-3" style={taskbarStyle}>
+      <div className="h-full flex items-center gap-1 px-2" style={{
+        ...taskbarStyle,
+        borderTopRightRadius: '10px'
+      }}>
         {/* Start Button */}
         <button
           className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
