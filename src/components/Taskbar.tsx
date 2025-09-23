@@ -18,13 +18,24 @@ export default function Taskbar() {
   }, [])
   return (
     <div
-      className="absolute bottom-0 left-0 right-0 h-12 border-t shadow-lg"
+      className="absolute bottom-0 left-0 right-0 h-12"
       style={{
         zIndex: 1000,
-        backgroundColor: 'rgba(30, 30, 30, 0.7)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 -2px 20px rgba(0, 0, 0, 0.3)'
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backdropFilter: 'blur(14px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(14px) saturate(180%)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.25)',
+        borderRadius: '18px 18px 0 0',
+        boxShadow: '0 -8px 24px rgba(0, 0, 0, 0.25)',
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.2) 5%,
+            rgba(255, 255, 255, 0.2) 95%,
+            rgba(255, 255, 255, 0.15) 100%
+          )
+        `
       }}>
       <div className="h-full flex items-center px-1 gap-2.5">
         <div
