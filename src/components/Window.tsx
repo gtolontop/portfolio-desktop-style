@@ -12,6 +12,7 @@ interface WindowProps {
 
 export default function Window({ window, children }: WindowProps) {
   const {
+    windows,
     closeWindow,
     minimizeWindow,
     maximizeWindow,
