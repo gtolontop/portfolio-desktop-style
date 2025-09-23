@@ -148,7 +148,7 @@ export default function Window({ window, children }: WindowProps) {
     >
       {/* Title Bar */}
       <div
-        className="h-10 flex items-center justify-between px-4 border-b cursor-move"
+        className="h-10 flex items-center justify-between px-4 cursor-move"
         onMouseDown={handleTitleBarMouseDown}
       >
         {/* Title */}
