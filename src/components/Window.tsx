@@ -32,6 +32,7 @@ export default function Window({ window, children }: WindowProps) {
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
   const [isRestoring, setIsRestoring] = useState(false)
+  const [isRestoringFromDrag, setIsRestoringFromDrag] = useState(false)
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
