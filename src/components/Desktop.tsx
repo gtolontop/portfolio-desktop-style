@@ -147,7 +147,6 @@ export default function Desktop() {
       {isSelecting && (
         <div 
           className="absolute inset-0 z-50" 
-          style={{ cursor: 'crosshair' }}
         />
       )}
 
