@@ -145,18 +145,9 @@ export default function Window({ window, children }: WindowProps) {
         zIndex: window.zIndex,
         borderRadius: '7px',
         border: '1px solid rgba(255, 255, 255, 0.25)',
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        backdropFilter: 'blur(14px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(14px) saturate(180%)',
-        background: `
-          linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.25) 0%,
-            rgba(255, 255, 255, 0.2) 5%,
-            rgba(255, 255, 255, 0.2) 95%,
-            rgba(255, 255, 255, 0.15) 100%
-          )
-        `
+        backgroundColor: 'rgba(240, 240, 240, 0.1)',
+        backdropFilter: 'blur(20px) saturate(100%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(100%)'
       }}
       onMouseDown={() => focusWindow(window.id)}
     >
