@@ -61,7 +61,10 @@ export default function Window({ window, children }: WindowProps) {
     const handleMinimizeEvent = (e: Event) => {
       const customEvent = e as CustomEvent<{ windowId: string }>
       if (customEvent.detail.windowId === window.id) {
-        handleMinimize()
+        setIsMinimizing(true)
+        setTimeout(() => {
+          minimizeWindow(window.id)
+        }, 300)
       }
     }
 
@@ -75,8 +78,8 @@ export default function Window({ window, children }: WindowProps) {
       }
     }
 
-    // Use global window object to avoid naming conflict
-    const globalWindow = typeof window !== 'undefined' ? window : null
+    // Use global window object
+    const globalWindow = globalThis.window
     if (globalWindow) {
       globalWindow.addEventListener('window-minimize', handleMinimizeEvent)
       globalWindow.addEventListener('window-restore', handleRestoreEvent)
@@ -86,7 +89,7 @@ export default function Window({ window, children }: WindowProps) {
         globalWindow.removeEventListener('window-restore', handleRestoreEvent)
       }
     }
-  }, [window.id, handleMinimize])
+  }, [window.id, minimizeWindow])
 
   const handleWindowMouseDown = (e: React.MouseEvent) => {
     // Don't start dragging if clicking on buttons or interactive elements
