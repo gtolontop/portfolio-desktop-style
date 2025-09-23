@@ -103,35 +103,43 @@ export default function Window({ window, children }: WindowProps) {
 
     // If window is maximized and user tries to drag, restore it
     if (window.isMaximized) {
-      // Calculate mouse position relative to window width
-      const mouseRelativeX = e.clientX / globalThis.window.innerWidth
+      // Get the click position relative to the window
+      const rect = windowRef.current?.getBoundingClientRect()
+      if (!rect) return
+      
+      // Calculate where the mouse clicked on the title bar (0-1 range)
+      const clickPositionRatio = e.clientX / globalThis.window.innerWidth
       
       // Disable transitions for smooth dragging
       setIsRestoringFromDrag(true)
       
+      // Get the window's previous state before restoring
+      const windowData = windows.get(window.id)
+      if (!windowData?.previousState) return
+      
+      // Calculate where to position the window so the mouse stays at the same relative position
+      const restoredWidth = windowData.previousState.width
+      const newX = e.clientX - (restoredWidth * clickPositionRatio)
+      const newY = e.clientY - (e.clientY - rect.top) // Keep same vertical offset
+      
       // Restore window
       restoreWindow(window.id)
       
-      // Set up drag immediately
-      const restoredWindow = windows.get(window.id)
-      if (restoredWindow && restoredWindow.previousState) {
-        // Use previous state dimensions
-        const newX = e.clientX - (restoredWindow.previousState.width * mouseRelativeX)
-        const newY = e.clientY - 20 // Offset for title bar
-        
-        updateWindowPosition(window.id, Math.max(0, newX), Math.max(0, newY))
-        
-        setDragOffset({
-          x: restoredWindow.previousState.width * mouseRelativeX,
-          y: 20
-        })
-        setIsDragging(true)
-        
-        // Re-enable transitions after a short delay
-        setTimeout(() => {
-          setIsRestoringFromDrag(false)
-        }, 100)
-      }
+      // Position the window immediately
+      updateWindowPosition(window.id, Math.max(0, newX), Math.max(0, newY))
+      
+      // Set drag offset based on where the mouse is on the restored window
+      setDragOffset({
+        x: restoredWidth * clickPositionRatio,
+        y: e.clientY - rect.top
+      })
+      setIsDragging(true)
+      
+      // Re-enable transitions after a short delay
+      setTimeout(() => {
+        setIsRestoringFromDrag(false)
+      }, 100)
+      
       return
     }
 
