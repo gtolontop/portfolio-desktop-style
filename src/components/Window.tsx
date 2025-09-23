@@ -172,7 +172,7 @@ export default function Window({ window, children }: WindowProps) {
     }
   }, [isResizing, resizeStart, window.id, updateWindowSize])
 
-  if (window.isMinimized) return null
+  if (window.isMinimized && !isMinimizing) return null
 
   const windowContent = (
     <div
@@ -183,7 +183,11 @@ export default function Window({ window, children }: WindowProps) {
         ${isActive ? 'shadow-2xl' : 'shadow-xl'}
         ${isDragging || isResizing ? 'select-none' : ''}
         ${!isDragging && !isResizing ? 'transition-all duration-300 ease-out' : ''}
-        ${isOpening ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}
+        ${isOpening ? 'scale-95 opacity-0' : ''}
+        ${isClosing ? 'scale-95 opacity-0' : ''}
+        ${isMinimizing ? 'scale-95 opacity-0 translate-y-10' : ''}
+        ${isRestoring ? 'animate-restore' : ''}
+        ${!isOpening && !isClosing && !isMinimizing && !isRestoring ? 'scale-100 opacity-100' : ''}
       `}
       style={{
         left: window.isMaximized ? 0 : `${window.x}px`,
