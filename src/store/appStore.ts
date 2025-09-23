@@ -137,7 +137,13 @@ export const useAppStore = create<AppStore>((set, get) => ({
     if (window) {
       newWindows.set(windowId, {
         ...window,
-        isMaximized: true
+        isMaximized: true,
+        previousState: {
+          x: window.x,
+          y: window.y,
+          width: window.width,
+          height: window.height
+        }
       })
     }
     return { windows: newWindows }
@@ -149,11 +155,21 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
     if (windowData) {
       // Restore both minimized and maximized states
-      newWindows.set(windowId, {
+      const restored = {
         ...windowData,
         isMinimized: false,
         isMaximized: false
-      })
+      }
+      
+      // If we have previous state and we're restoring from maximized, use it
+      if (windowData.previousState && windowData.isMaximized) {
+        restored.x = windowData.previousState.x
+        restored.y = windowData.previousState.y
+        restored.width = windowData.previousState.width
+        restored.height = windowData.previousState.height
+      }
+      
+      newWindows.set(windowId, restored)
     }
     return { windows: newWindows }
   }),

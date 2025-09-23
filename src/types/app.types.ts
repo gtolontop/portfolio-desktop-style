@@ -17,6 +17,12 @@ export interface AppWindow {
   isMinimized: boolean
   zIndex: number
   openedFromPosition?: { x: number; y: number } // Track where the window was opened from
+  previousState?: { // Store position and size before maximizing
+    x: number
+    y: number
+    width: number
+    height: number
+  }
 }
 
 export interface AppConfig {

@@ -99,7 +99,33 @@ export default function Window({ window, children }: WindowProps) {
       return
     }
 
-    if (window.isMaximized) return
+    // If window is maximized and user tries to drag, restore it
+    if (window.isMaximized) {
+      // Calculate mouse position relative to window width
+      const mouseRelativeX = e.clientX / globalThis.window.innerWidth
+      
+      // Restore window
+      restoreWindow(window.id)
+      
+      // Set up drag after a small delay to let the restore animation start
+      setTimeout(() => {
+        const restoredWindow = windows.get(window.id)
+        if (restoredWindow && windowRef.current) {
+          // Position window so mouse is at the same relative position
+          const newX = e.clientX - (restoredWindow.width * mouseRelativeX)
+          const newY = e.clientY - 20 // Offset for title bar
+          
+          updateWindowPosition(window.id, Math.max(0, newX), Math.max(0, newY))
+          
+          setDragOffset({
+            x: restoredWindow.width * mouseRelativeX,
+            y: 20
+          })
+          setIsDragging(true)
+        }
+      }, 50)
+      return
+    }
 
     const rect = windowRef.current?.getBoundingClientRect()
     if (rect) {
