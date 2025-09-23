@@ -30,7 +30,8 @@ export default function Window({ window, children }: WindowProps) {
   const [animationClass, setAnimationClass] = useState(() => {
     if (window.openedFromPosition) {
       // Check if opening from taskbar (bottom of screen)
-      const isFromTaskbar = window.openedFromPosition.y > window.innerHeight - 100
+      const screenHeight = typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window.innerHeight : 1080
+      const isFromTaskbar = window.openedFromPosition.y > screenHeight - 100
       return isFromTaskbar ? 'window-expand-taskbar' : 'window-bounce-open'
     }
     return 'window-opening'
