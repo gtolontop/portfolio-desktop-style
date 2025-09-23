@@ -148,10 +148,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
     const windowData = newWindows.get(windowId)
 
     if (windowData) {
-      // Simply restore minimized state without changing position
+      // Restore both minimized and maximized states
       newWindows.set(windowId, {
         ...windowData,
-        isMinimized: false
+        isMinimized: false,
+        isMaximized: false
       })
     }
     return { windows: newWindows }
