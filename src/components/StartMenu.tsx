@@ -66,30 +66,55 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         zIndex: 9999
       }}
     >
+      {/* Navbar */}
+      <div className="h-14 px-5 flex items-center bg-white/10 backdrop-blur-sm border-b border-white/20">
+        {/* Search Bar */}
+        <div className="flex-1 relative max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search for anything"
+            className="w-full h-9 pl-10 pr-4 rounded-full text-sm
+                     bg-white/50
+                     border border-white/30
+                     placeholder-gray-500 text-gray-700
+                     focus:outline-none focus:bg-white/60 focus:border-white/40
+                     transition-all"
+          />
+        </div>
+        
+        {/* Center - Profile */}
+        <div className="flex items-center gap-2 mx-auto">
+          <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center">
+            <span className="text-white text-xs font-bold">Z</span>
+          </div>
+          <span className="text-sm font-medium text-gray-700">Concept Central</span>
+        </div>
+        
+        {/* Right Icons */}
+        <div className="flex items-center gap-2">
+          <button className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <Mail className="w-4 h-4 text-gray-600" />
+          </button>
+          <button className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <Settings className="w-4 h-4 text-gray-600" />
+          </button>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+          >
+            <Power className="w-4 h-4 text-gray-600" />
+          </button>
+        </div>
+      </div>
+
       {/* Main Container - Two Columns */}
-      <div className="h-full flex">
+      <div className="flex-1 flex">
         
         {/* Left Column */}
         <div className="w-[55%] p-5 pr-3 flex flex-col bg-gradient-to-br from-blue-50/20 via-transparent to-purple-50/20">
-          
-          {/* Search Bar at the top */}
-          <div className="mb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for anything"
-                className="w-full h-10 pl-10 pr-4 rounded-full text-sm
-                         bg-white/50 backdrop-blur-sm
-                         border border-white/40
-                         placeholder-gray-500 text-gray-700
-                         focus:outline-none focus:bg-white/70 focus:border-white/60
-                         transition-all"
-              />
-            </div>
-          </div>
 
           {/* Most Used Section */}
           <div className="mb-4">
