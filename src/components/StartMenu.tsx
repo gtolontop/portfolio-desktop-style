@@ -94,103 +94,170 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         `
       }}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-white/20">
-        <h2 className="text-xl font-light text-gray-700">Start</h2>
-        <button
-          onClick={onClose}
-          className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-        >
-          <X className="w-5 h-5 text-gray-600" />
-        </button>
-      </div>
+      {/* Navbar */}
+      <div className="h-16 flex items-center px-6 border-b border-white/20">
+        <div className="flex-1 flex items-center gap-4">
+          {/* Search Bar */}
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search apps, files, settings..."
+              className="w-full pl-10 pr-4 py-2 bg-white/30 border border-white/20 
+                       rounded-full text-sm text-gray-700 placeholder-gray-500
+                       focus:outline-none focus:border-blue-400/50 focus:bg-white/40
+                       transition-all"
+            />
+          </div>
+        </div>
 
-      {/* Search Bar */}
-      <div className="p-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Type to search"
-            className="w-full pl-10 pr-4 py-3 bg-white/50 border border-white/30 
-                     rounded-lg text-gray-700 placeholder-gray-500
-                     focus:outline-none focus:border-blue-400/50 focus:bg-white/60
-                     transition-all"
-          />
+        {/* User Section */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+              <User className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <div className="text-sm font-medium text-gray-700">User Account</div>
+              <div className="text-xs text-gray-500">user@example.com</div>
+            </div>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex items-center gap-1 ml-4">
+            <button className="p-2 rounded-lg hover:bg-white/20 transition-colors">
+              <FolderOpen className="w-5 h-5 text-gray-600" />
+            </button>
+            <button className="p-2 rounded-lg hover:bg-white/20 transition-colors">
+              <Settings className="w-5 h-5 text-gray-600" />
+            </button>
+            <button 
+              onClick={onClose}
+              className="p-2 rounded-lg hover:bg-red-500/20 transition-colors group"
+            >
+              <Power className="w-5 h-5 text-gray-600 group-hover:text-red-600" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Content Area */}
-      <div className="flex-1 flex gap-4 p-4 overflow-hidden">
-        {/* Pinned Section */}
-        <div className="w-1/2 flex flex-col">
-          <h3 className="text-sm font-medium text-gray-600 mb-3">Pinned</h3>
-          <div className="grid grid-cols-3 gap-2 overflow-y-auto">
-            {filteredApps.slice(0, 6).map((app) => (
+      {/* Main Content */}
+      <div className="flex-1 flex">
+        {/* Left Section - Apps */}
+        <div className="flex-1 flex flex-col p-6">
+          {/* Tabs */}
+          <div className="flex gap-4 mb-4">
+            <button
+              onClick={() => setActiveTab('most-used')}
+              className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
+                activeTab === 'most-used' 
+                  ? 'text-gray-700 border-blue-500' 
+                  : 'text-gray-500 border-transparent hover:text-gray-600'
+              }`}
+            >
+              Most used
+            </button>
+            <button
+              onClick={() => setActiveTab('all-apps')}
+              className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
+                activeTab === 'all-apps' 
+                  ? 'text-gray-700 border-blue-500' 
+                  : 'text-gray-500 border-transparent hover:text-gray-600'
+              }`}
+            >
+              All apps
+            </button>
+          </div>
+
+          {/* Apps List */}
+          <div className="flex-1 overflow-y-auto space-y-2">
+            {(activeTab === 'most-used' ? mostUsedApps : allApps).map((app) => (
               <button
                 key={app.id}
                 onClick={() => handleAppClick(app.id)}
-                className="flex flex-col items-center p-4 rounded-lg
-                         hover:bg-white/10 transition-all group"
+                className="w-full flex items-center gap-4 p-3 rounded-lg
+                         hover:bg-white/20 transition-all text-left group"
               >
-                <div className="w-12 h-12 mb-2 flex items-center justify-center
-                              bg-white/40 rounded-lg group-hover:bg-white/60
+                <div className="w-12 h-12 flex items-center justify-center
+                              bg-white/30 rounded-lg group-hover:bg-white/40
                               transition-colors">
                   {typeof app.icon === 'string' ? (
-                    <span className="text-2xl">{app.icon}</span>
+                    <span className="text-xl">{app.icon}</span>
                   ) : (
                     <app.icon className="w-6 h-6 text-gray-700" />
                   )}
                 </div>
-                <span className="text-xs text-gray-700 text-center">{app.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* All Apps Section */}
-        <div className="w-1/2 flex flex-col">
-          <h3 className="text-sm font-medium text-gray-600 mb-3">All apps</h3>
-          <div className="flex-1 overflow-y-auto space-y-1">
-            {filteredApps.map((app) => (
-              <button
-                key={app.id}
-                onClick={() => handleAppClick(app.id)}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg
-                         hover:bg-white/10 transition-colors text-left"
-              >
-                <div className="w-8 h-8 flex items-center justify-center
-                              bg-white/30 rounded">
-                  {typeof app.icon === 'string' ? (
-                    <span className="text-lg">{app.icon}</span>
-                  ) : (
-                    <app.icon className="w-5 h-5 text-gray-700" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-700">{app.name}</div>
+                  {appDescriptions[app.id] && (
+                    <div className="text-xs text-gray-500 truncate">{appDescriptions[app.id]}</div>
                   )}
                 </div>
-                <span className="text-sm text-gray-700">{app.name}</span>
               </button>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between p-4 border-t border-white/20">
-        <button className="flex items-center gap-3 px-4 py-2 rounded-lg
-                         hover:bg-white/10 transition-colors">
-          <User className="w-5 h-5 text-gray-600" />
-          <span className="text-sm text-gray-700">User</span>
-        </button>
-        
-        <div className="flex items-center gap-2">
-          <button className="p-2 rounded-lg hover:bg-white/10 transition-colors">
-            <Settings className="w-5 h-5 text-gray-600" />
-          </button>
-          <button className="p-2 rounded-lg hover:bg-white/10 transition-colors">
-            <Power className="w-5 h-5 text-gray-600" />
-          </button>
+          {/* Recommended Section */}
+          <div className="mt-4 pt-4 border-t border-white/20">
+            <h3 className="text-xs font-medium text-gray-500 uppercase mb-2">Recommended</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <button className="flex items-center gap-2 p-2 rounded hover:bg-white/20 text-xs text-gray-600">
+                <span className="w-4 h-4 bg-blue-400 rounded"></span>
+                Recent document.pdf
+              </button>
+              <button className="flex items-center gap-2 p-2 rounded hover:bg-white/20 text-xs text-gray-600">
+                <span className="w-4 h-4 bg-green-400 rounded"></span>
+                Project folder
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section - Widgets */}
+        <div className="w-80 bg-white/10 p-6 space-y-4">
+          {/* Weather Widget */}
+          <div className="bg-white/20 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-2">
+              <Cloud className="w-5 h-5 text-gray-600" />
+              <span className="text-xs text-gray-500">Today</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-light text-gray-700">22°</span>
+              <span className="text-sm text-gray-600">Partly cloudy</span>
+            </div>
+          </div>
+
+          {/* Calendar Widget */}
+          <div className="bg-white/20 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-2">
+              <Calendar className="w-5 h-5 text-gray-600" />
+              <span className="text-xs text-gray-500">Today</span>
+            </div>
+            <div className="text-sm text-gray-700">No upcoming events</div>
+          </div>
+
+          {/* Discord Notifications */}
+          <div className="bg-white/20 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-2">
+              <MessageCircle className="w-5 h-5 text-gray-600" />
+              <span className="text-xs text-gray-500">Discord</span>
+            </div>
+            <div className="space-y-2">
+              <div className="text-xs text-gray-600">3 new messages</div>
+              <div className="text-xs text-gray-500">2 servers with activity</div>
+            </div>
+          </div>
+
+          {/* Media Player */}
+          <div className="bg-white/20 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-2">
+              <Music className="w-5 h-5 text-gray-600" />
+              <span className="text-xs text-gray-500">Now playing</span>
+            </div>
+            <div className="text-sm text-gray-700">No media playing</div>
+          </div>
         </div>
       </div>
     </div>
