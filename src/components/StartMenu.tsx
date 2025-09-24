@@ -79,19 +79,10 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
       `}
       style={{
-        border: '1px solid rgba(255, 255, 255, 0.35)',
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(20px) saturate(100%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(100%)',
-        background: `
-          linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.5) 0%,
-            rgba(255, 255, 255, 0.4) 5%,
-            rgba(255, 255, 255, 0.4) 95%,
-            rgba(255, 255, 255, 0.35) 100%
-          )
-        `
+        backgroundColor: 'rgba(240, 242, 247, 0.95)',
+        backdropFilter: 'blur(30px) saturate(150%)',
+        WebkitBackdropFilter: 'blur(30px) saturate(150%)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
       }}
     >
       {/* Navbar */}
