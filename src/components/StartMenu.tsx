@@ -11,11 +11,24 @@ interface StartMenuProps {
 
 // App descriptions
 const appDescriptions: Record<string, string> = {
-  'file-explorer': 'Browse and manage your files',
-  'discord': 'Chat with friends and communities',
-  'vscode': 'Code editor for developers',
-  'chrome': 'Browse the web securely',
-  'spotify': 'Listen to your favorite music'
+  'file-explorer': '',
+  'discord': 'Discord Central',
+  'vscode': '',
+  'chrome': '',
+  'spotify': ''
+}
+
+// App colors for icons
+const appColors: Record<string, string> = {
+  'weather': 'bg-orange-500',
+  'discord': 'bg-purple-500',
+  'file-explorer': 'bg-yellow-500',
+  'calendar': 'bg-blue-500',
+  'clock': 'bg-gray-500',
+  'settings': 'bg-blue-600',
+  'media-player': 'bg-red-500',
+  'photos': 'bg-cyan-500',
+  'edge': 'bg-blue-500'
 }
 
 export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
@@ -79,14 +92,12 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
       `}
       style={{
-        backgroundColor: 'rgba(240, 242, 247, 0.95)',
-        backdropFilter: 'blur(30px) saturate(150%)',
-        WebkitBackdropFilter: 'blur(30px) saturate(150%)',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%)',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
       }}
     >
       {/* Navbar */}
-      <div className="h-12 flex items-center px-4 border-b border-gray-200/20">
+      <div className="h-12 flex items-center px-4 bg-white shadow-sm">
         {/* Search Bar */}
         <div className="flex-1">
           <div className="relative w-64">
@@ -96,9 +107,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for anything"
-              className="w-full pl-8 pr-3 py-1.5 bg-gray-100/10 border border-gray-300/20
-                       rounded-md text-xs text-gray-700 placeholder-gray-400
-                       focus:outline-none focus:bg-gray-100/20 focus:border-gray-300/30
+              className="w-full pl-8 pr-3 py-1.5 bg-gray-50 border border-gray-200
+                       rounded-full text-xs text-gray-700 placeholder-gray-400
+                       focus:outline-none focus:bg-white focus:border-gray-300
                        transition-all"
             />
           </div>
@@ -132,7 +143,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       {/* Main Content */}
       <div className="flex-1 flex">
         {/* Left Section - Apps */}
-        <div className="w-1/2 flex flex-col p-4 border-r border-gray-200/10">
+        <div className="w-1/2 flex flex-col p-4 bg-gradient-to-br from-blue-50/30 to-purple-50/30 border-r border-gray-200/20">
           {/* Section Title */}
           <div className="mb-3">
             <h3 className="text-sm font-semibold text-gray-800">Most used</h3>
@@ -148,13 +159,13 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                 className="w-full flex items-center gap-3 p-2 rounded-lg
                          hover:bg-white/20 transition-all text-left group"
               >
-                <div className="w-10 h-10 flex items-center justify-center
-                              bg-white/20 rounded-lg group-hover:bg-white/30
-                              transition-colors">
+                <div className={`w-10 h-10 flex items-center justify-center
+                              ${appColors[app.id] || 'bg-gray-400'} rounded-lg
+                              transition-transform group-hover:scale-110`}>
                   {typeof app.icon === 'string' ? (
                     <span className="text-xl">{app.icon}</span>
                   ) : (
-                    <app.icon className="w-6 h-6 text-gray-700" />
+                    <app.icon className="w-6 h-6 text-white" />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -191,9 +202,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         </div>
 
         {/* Right Section - Widgets */}
-        <div className="w-1/2 p-3 space-y-2">
+        <div className="w-1/2 p-3 space-y-2 bg-gradient-to-br from-purple-50/20 to-blue-50/20">
           {/* Weather Widget - Large Rectangle */}
-          <div className="bg-white/15 rounded-xl p-4">
+          <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">☀️</span>
@@ -248,7 +259,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           {/* Row with Discord and Media Player */}
           <div className="grid grid-cols-2 gap-2">
             {/* Discord Widget */}
-            <div className="bg-white/15 rounded-xl p-3">
+            <div className="bg-white rounded-xl p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center">
@@ -279,7 +290,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
             </div>
 
             {/* Media Player Widget */}
-            <div className="bg-white/15 rounded-xl p-3">
+            <div className="bg-white rounded-xl p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <Music className="w-5 h-5 text-gray-600" />
@@ -314,7 +325,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Calendar Widget - Large Square */}
-          <div className="bg-white/15 rounded-xl p-4">
+          <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-blue-600" />
