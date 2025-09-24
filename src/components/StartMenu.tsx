@@ -200,34 +200,57 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         </div>
 
         {/* Right Section - Widgets */}
-        <div className="w-80 p-4 space-y-3 bg-gradient-to-br from-white/5 to-white/10">
+        <div className="w-80 p-3 space-y-2">
           {/* Weather Widget - Large Rectangle */}
-          <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-medium text-gray-700">Weather</h3>
-              <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
-                <span className="text-gray-500 text-xs">•••</span>
+          <div className="bg-white/15 rounded-xl p-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">☀️</span>
+                <h3 className="text-sm font-medium text-gray-700">Weather</h3>
+              </div>
+              <button className="text-gray-400 hover:text-gray-600">
+                <span className="text-sm">•••</span>
               </button>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-3">
               <div>
-                <div className="text-xs text-gray-600 mb-1">15mph winds</div>
-                <div className="text-xs text-gray-600">Sunset at 7:58</div>
+                <div className="text-xs text-gray-500">15mph winds</div>
+                <div className="text-xs text-gray-500">Sunset at 7:58</div>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-light text-gray-800">60° F</div>
-                <div className="flex items-center justify-end gap-1 mt-1">
-                  <span className="text-2xl">☀️</span>
-                </div>
+                <div className="text-3xl font-light text-gray-700">60° F</div>
+                <div className="text-2xl">☀️</div>
               </div>
             </div>
-            <div className="grid grid-cols-7 gap-1 mt-4">
-              {['60°', '61°', '62°', '62°', '67°', '66°', '69°'].map((temp, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-xs text-gray-600">{temp}</div>
-                  <div className="text-sm mt-1">{i % 2 === 0 ? '☀️' : '🌤️'}</div>
-                </div>
-              ))}
+            <div className="flex justify-between text-xs">
+              <div className="text-center">
+                <div>☀️</div>
+                <div className="text-gray-600 mt-1">60°</div>
+              </div>
+              <div className="text-center">
+                <div>☁️</div>
+                <div className="text-gray-600 mt-1">61°</div>
+              </div>
+              <div className="text-center">
+                <div>☀️</div>
+                <div className="text-gray-600 mt-1">62°</div>
+              </div>
+              <div className="text-center">
+                <div>☀️</div>
+                <div className="text-gray-600 mt-1">62°</div>
+              </div>
+              <div className="text-center">
+                <div>🌤️</div>
+                <div className="text-gray-600 mt-1">67°</div>
+              </div>
+              <div className="text-center">
+                <div>☀️</div>
+                <div className="text-gray-600 mt-1">66°</div>
+              </div>
+              <div className="text-center">
+                <div>☀️</div>
+                <div className="text-gray-600 mt-1">69°</div>
+              </div>
             </div>
           </div>
 
