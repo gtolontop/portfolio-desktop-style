@@ -61,12 +61,26 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       ref={menuRef}
       className={`
         absolute bottom-14 left-0 w-[600px] h-[700px]
-        rounded-t-xl shadow-2xl
-        flex flex-col
+        rounded-t-[7px] shadow-2xl
+        flex flex-col overflow-hidden
         transition-all duration-300 ease-out origin-bottom-left
         ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
       `}
-      style={glassmorphismStyles.glass}
+      style={{
+        border: '1px solid rgba(255, 255, 255, 0.35)',
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(20px) saturate(100%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(100%)',
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.4) 5%,
+            rgba(255, 255, 255, 0.4) 95%,
+            rgba(255, 255, 255, 0.35) 100%
+          )
+        `
+      }}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-white/20">
