@@ -9,8 +9,18 @@ interface StartMenuProps {
   onClose: () => void
 }
 
+// App descriptions
+const appDescriptions: Record<string, string> = {
+  'file-explorer': 'Browse and manage your files',
+  'discord': 'Chat with friends and communities',
+  'vscode': 'Code editor for developers',
+  'chrome': 'Browse the web securely',
+  'spotify': 'Listen to your favorite music'
+}
+
 export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [activeTab, setActiveTab] = useState<'most-used' | 'all-apps'>('most-used')
   const { apps, openWindow } = useAppStore()
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -52,6 +62,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
   const filteredApps = Array.from(apps.values()).filter(app =>
     app.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
+  
+  const mostUsedApps = filteredApps.slice(0, 5)
+  const allApps = filteredApps
 
   if (!isOpen) return null
 
@@ -59,8 +72,8 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        absolute bottom-14 left-0 w-[600px] h-[700px]
-        rounded-t-[7px] shadow-2xl
+        absolute bottom-14 left-0 w-[800px] h-[600px]
+        rounded-[7px] shadow-2xl
         flex flex-col overflow-hidden
         transition-all duration-300 ease-out origin-bottom-left
         ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
