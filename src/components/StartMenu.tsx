@@ -60,32 +60,35 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       ref={menuRef}
       className={`
         absolute bottom-14 left-0 w-[600px] h-[700px]
-        bg-gray-900/95 backdrop-blur-2xl
-        rounded-t-xl border border-gray-700/50
-        shadow-2xl shadow-black/50
+        rounded-t-xl shadow-2xl
         flex flex-col
         transition-all duration-300 ease-out origin-bottom-left
         ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
       `}
       style={{
+        border: '1px solid rgba(255, 255, 255, 0.35)',
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(20px) saturate(100%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(100%)',
         background: `
           linear-gradient(
-            135deg,
-            rgba(17, 24, 39, 0.98) 0%,
-            rgba(31, 41, 55, 0.95) 50%,
-            rgba(17, 24, 39, 0.98) 100%
+            to bottom,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.4) 5%,
+            rgba(255, 255, 255, 0.4) 95%,
+            rgba(255, 255, 255, 0.35) 100%
           )
         `
       }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-gray-700/30">
-        <h2 className="text-xl font-light text-white">Start</h2>
+      <div className="flex items-center justify-between p-6 border-b border-white/20">
+        <h2 className="text-xl font-light text-gray-700">Start</h2>
         <button
           onClick={onClose}
           className="p-2 rounded-lg hover:bg-white/10 transition-colors"
         >
-          <X className="w-5 h-5 text-white/70" />
+          <X className="w-5 h-5 text-gray-600" />
         </button>
       </div>
 
@@ -98,9 +101,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Type to search"
-            className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700/50 
-                     rounded-lg text-white placeholder-gray-400
-                     focus:outline-none focus:border-blue-500/50 focus:bg-gray-800/70
+            className="w-full pl-10 pr-4 py-3 bg-white/50 border border-white/30 
+                     rounded-lg text-gray-700 placeholder-gray-500
+                     focus:outline-none focus:border-blue-400/50 focus:bg-white/60
                      transition-all"
           />
         </div>
@@ -110,7 +113,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       <div className="flex-1 flex gap-4 p-4 overflow-hidden">
         {/* Pinned Section */}
         <div className="w-1/2 flex flex-col">
-          <h3 className="text-sm font-medium text-gray-400 mb-3">Pinned</h3>
+          <h3 className="text-sm font-medium text-gray-600 mb-3">Pinned</h3>
           <div className="grid grid-cols-3 gap-2 overflow-y-auto">
             {filteredApps.slice(0, 6).map((app) => (
               <button
@@ -120,15 +123,15 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                          hover:bg-white/10 transition-all group"
               >
                 <div className="w-12 h-12 mb-2 flex items-center justify-center
-                              bg-gray-800/50 rounded-lg group-hover:bg-gray-700/50
+                              bg-white/40 rounded-lg group-hover:bg-white/60
                               transition-colors">
                   {typeof app.icon === 'string' ? (
                     <span className="text-2xl">{app.icon}</span>
                   ) : (
-                    <app.icon className="w-6 h-6 text-white/80" />
+                    <app.icon className="w-6 h-6 text-gray-700" />
                   )}
                 </div>
-                <span className="text-xs text-white/80 text-center">{app.name}</span>
+                <span className="text-xs text-gray-700 text-center">{app.name}</span>
               </button>
             ))}
           </div>
@@ -136,7 +139,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
 
         {/* All Apps Section */}
         <div className="w-1/2 flex flex-col">
-          <h3 className="text-sm font-medium text-gray-400 mb-3">All apps</h3>
+          <h3 className="text-sm font-medium text-gray-600 mb-3">All apps</h3>
           <div className="flex-1 overflow-y-auto space-y-1">
             {filteredApps.map((app) => (
               <button
@@ -146,14 +149,14 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                          hover:bg-white/10 transition-colors text-left"
               >
                 <div className="w-8 h-8 flex items-center justify-center
-                              bg-gray-800/30 rounded">
+                              bg-white/30 rounded">
                   {typeof app.icon === 'string' ? (
                     <span className="text-lg">{app.icon}</span>
                   ) : (
-                    <app.icon className="w-5 h-5 text-white/80" />
+                    <app.icon className="w-5 h-5 text-gray-700" />
                   )}
                 </div>
-                <span className="text-sm text-white/80">{app.name}</span>
+                <span className="text-sm text-gray-700">{app.name}</span>
               </button>
             ))}
           </div>
@@ -161,19 +164,19 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between p-4 border-t border-gray-700/30">
+      <div className="flex items-center justify-between p-4 border-t border-white/20">
         <button className="flex items-center gap-3 px-4 py-2 rounded-lg
                          hover:bg-white/10 transition-colors">
-          <User className="w-5 h-5 text-white/70" />
-          <span className="text-sm text-white/80">User</span>
+          <User className="w-5 h-5 text-gray-600" />
+          <span className="text-sm text-gray-700">User</span>
         </button>
         
         <div className="flex items-center gap-2">
           <button className="p-2 rounded-lg hover:bg-white/10 transition-colors">
-            <Settings className="w-5 h-5 text-white/70" />
+            <Settings className="w-5 h-5 text-gray-600" />
           </button>
           <button className="p-2 rounded-lg hover:bg-white/10 transition-colors">
-            <Power className="w-5 h-5 text-white/70" />
+            <Power className="w-5 h-5 text-gray-600" />
           </button>
         </div>
       </div>
