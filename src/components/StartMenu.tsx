@@ -41,7 +41,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        absolute w-[600px] h-[650px]
+        fixed w-[600px] h-[650px]
         rounded-lg overflow-hidden
         transition-all duration-200 ease-out
         pointer-events-auto
@@ -51,7 +51,6 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         bottom: '60px',
         left: '50%',
         transform: 'translateX(-50%)',
-      style={{
         border: '1px solid rgba(255, 255, 255, 0.35)',
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         backdropFilter: 'blur(20px) saturate(100%)',
