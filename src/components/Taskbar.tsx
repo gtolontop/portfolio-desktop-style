@@ -137,6 +137,12 @@ export default function Taskbar() {
           </div>
         </div>
       </div>
+      
+      {/* Start Menu */}
+      <StartMenu 
+        isOpen={isStartMenuOpen} 
+        onClose={() => setIsStartMenuOpen(false)} 
+      />
     </div>
   )
 }
