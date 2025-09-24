@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Search, Mail, Share2, Settings, FolderOpen, Clock, ChevronRight, MoreHorizontal, ChevronLeft, ChevronRight as Next, Pause, Play } from 'lucide-react'
+import { Search, Mail, Share2, Settings, FolderOpen, Clock, ChevronRight, MoreHorizontal, ChevronLeft, ChevronRight as Next, Pause, Play, Power } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 
 interface StartMenuProps {
