@@ -41,22 +41,37 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        absolute bottom-12 left-2 w-[900px] h-[600px]
-        rounded-xl overflow-hidden
-        transition-all duration-300 ease-out origin-bottom-left
-        ${isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0'}
+        absolute w-[600px] h-[650px]
+        rounded-lg overflow-hidden
+        transition-all duration-200 ease-out
+        pointer-events-auto
+        ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
       `}
       style={{
-        backgroundColor: 'rgba(250, 251, 252, 0.85)',
-        backdropFilter: 'blur(60px) saturate(150%)',
-        WebkitBackdropFilter: 'blur(60px) saturate(150%)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04)',
-        border: '1px solid rgba(255, 255, 255, 0.6)'
+        bottom: '60px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+      style={{
+        border: '1px solid rgba(255, 255, 255, 0.35)',
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(20px) saturate(100%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(100%)',
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.4) 5%,
+            rgba(255, 255, 255, 0.4) 95%,
+            rgba(255, 255, 255, 0.35) 100%
+          )
+        `,
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+        zIndex: 9999
       }}
       className="flex flex-col"
     >
       {/* Navbar - Top of entire menu */}
-      <div className="h-14 px-6 flex items-center gap-4 border-b border-gray-200/20">
+      <div className="h-12 px-4 flex items-center gap-3 border-b border-gray-200/20">
         {/* Search Bar */}
         <div className="flex-1 relative max-w-sm">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -100,7 +115,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       <div className="flex-1 flex">
         
         {/* Left Column */}
-        <div className="w-[55%] p-6 pr-4 flex flex-col">
+        <div className="w-[55%] p-4 pr-3 flex flex-col">
 
           {/* Most Used Section */}
           <div className="mb-6">
@@ -206,7 +221,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         <div className="w-px bg-gray-200/50"></div>
 
         {/* Right Column - Widgets */}
-        <div className="flex-1 p-6 pl-4 flex flex-col gap-3">
+        <div className="flex-1 p-4 pl-3 flex flex-col gap-2">
           
           {/* Weather Widget */}
           <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-200/30">
