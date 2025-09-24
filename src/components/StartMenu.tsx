@@ -70,10 +70,29 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       <div className="h-full flex">
         
         {/* Left Column */}
-        <div className="w-[55%] p-4 pr-3 flex flex-col">
+        <div className="w-[55%] p-5 pr-3 flex flex-col bg-gradient-to-br from-blue-50/20 via-transparent to-purple-50/20">
+          
+          {/* Search Bar at the top */}
+          <div className="mb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for anything"
+                className="w-full h-10 pl-10 pr-4 rounded-full text-sm
+                         bg-white/50 backdrop-blur-sm
+                         border border-white/40
+                         placeholder-gray-500 text-gray-700
+                         focus:outline-none focus:bg-white/70 focus:border-white/60
+                         transition-all"
+              />
+            </div>
+          </div>
 
           {/* Most Used Section */}
-          <div className="mb-6">
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-medium text-gray-700">Most used</h3>
               <button className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
@@ -176,7 +195,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         <div className="w-px bg-gray-200/50"></div>
 
         {/* Right Column - Widgets */}
-        <div className="flex-1 p-4 pl-3 flex flex-col gap-2">
+        <div className="flex-1 p-4 pl-3 flex flex-col gap-2 bg-gradient-to-bl from-purple-50/10 via-transparent to-blue-50/10">
           
           {/* Weather Widget */}
           <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-200/30">
