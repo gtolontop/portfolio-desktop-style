@@ -95,45 +95,45 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       }}
     >
       {/* Navbar */}
-      <div className="h-14 flex items-center px-6 bg-white/5">
-        <div className="flex-1 flex items-center">
-          {/* Search Bar */}
-          <div className="relative w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+      <div className="h-12 flex items-center px-4 border-b border-gray-200/20">
+        {/* Search Bar */}
+        <div className="flex-1">
+          <div className="relative w-64">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for anything"
-              className="w-full pl-9 pr-4 py-1.5 bg-white/20 
-                       rounded-md text-sm text-gray-700 placeholder-gray-400
-                       focus:outline-none focus:bg-white/30
+              className="w-full pl-8 pr-3 py-1.5 bg-gray-100/10 border border-gray-300/20
+                       rounded-md text-xs text-gray-700 placeholder-gray-400
+                       focus:outline-none focus:bg-gray-100/20 focus:border-gray-300/30
                        transition-all"
             />
           </div>
         </div>
 
         {/* Center Title */}
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
-            <span className="text-white text-xs font-bold">Z</span>
+        <div className="flex items-center gap-2 px-4">
+          <div className="w-7 h-7 rounded-full bg-gray-900 flex items-center justify-center">
+            <span className="text-white text-xs">Z</span>
           </div>
-          <span className="text-sm font-medium text-gray-700">Concept Central</span>
+          <span className="text-sm font-medium text-gray-800">Concept Central</span>
         </div>
 
         {/* Right Actions */}
-        <div className="flex-1 flex justify-end items-center gap-2">
-          <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
-            <FolderOpen className="w-4 h-4 text-gray-500" />
+        <div className="flex-1 flex justify-end items-center gap-1">
+          <button className="p-1.5 hover:bg-gray-100/10 rounded transition-colors">
+            <FolderOpen className="w-4 h-4 text-gray-600" />
           </button>
-          <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
-            <Settings className="w-4 h-4 text-gray-500" />
+          <button className="p-1.5 hover:bg-gray-100/10 rounded transition-colors">
+            <Settings className="w-4 h-4 text-gray-600" />
           </button>
           <button 
             onClick={onClose}
-            className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
+            className="p-1.5 hover:bg-gray-100/10 rounded transition-colors"
           >
-            <Power className="w-4 h-4 text-gray-500" />
+            <Power className="w-4 h-4 text-gray-600" />
           </button>
         </div>
       </div>
