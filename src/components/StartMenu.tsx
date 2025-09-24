@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { X, Search, Power, Settings, User } from 'lucide-react'
+import { Search, Power, Settings, FolderOpen, Cloud, Calendar, Music, MessageCircle, User } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
-import { glassmorphismStyles } from '@/config/glassmorphism.styles'
 
 interface StartMenuProps {
   isOpen: boolean
