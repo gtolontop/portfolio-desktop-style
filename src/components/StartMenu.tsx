@@ -163,40 +163,40 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           {/* Recommended Section */}
           <div className="mt-auto">
             <h3 className="text-sm font-medium text-gray-700 mb-3">Recommended</h3>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
               {/* Settings */}
-              <button className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-12 h-12 bg-gray-500 rounded-lg flex items-center justify-center">
-                  <Settings className="w-7 h-7 text-white" />
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-10 h-10 bg-gray-500 rounded-lg flex items-center justify-center">
+                  <Settings className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xs text-gray-600">Settings</span>
+                <span className="text-sm text-gray-700">Settings</span>
               </button>
               
               {/* Media Player */}
-              <button className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-2xl">▶</span>
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xl">▶</span>
                 </div>
-                <div className="text-center">
-                  <div className="text-xs text-gray-600">Media Player</div>
-                  <div className="text-xs text-gray-400">Now playing - Daydream</div>
+                <div className="text-left">
+                  <div className="text-sm text-gray-700">Media Player</div>
+                  <div className="text-xs text-gray-500">Now playing - Daydream</div>
                 </div>
               </button>
               
               {/* Photos */}
-              <button className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">🏞️</span>
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                  <span className="text-xl">🏞️</span>
                 </div>
-                <span className="text-xs text-gray-600">Photos</span>
+                <span className="text-sm text-gray-700">Photos</span>
               </button>
               
               {/* Edge */}
-              <button className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-green-400 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-lg font-bold">E</span>
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-green-400 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">E</span>
                 </div>
-                <span className="text-xs text-gray-600">Edge</span>
+                <span className="text-sm text-gray-700">Edge</span>
               </button>
             </div>
           </div>
