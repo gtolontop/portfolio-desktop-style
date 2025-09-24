@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react'
 import { Search, Layers, ChevronUp, Menu } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 import TaskbarApp from './TaskbarApp'
+import StartMenu from './StartMenu'
 
 export default function Taskbar() {
   const [isHovered, setIsHovered] = useState(false)
   const [isClicked, setIsClicked] = useState(false)
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false)
   const windows = useAppStore(state => state.windows)
   const [, forceUpdate] = useState({})
   
@@ -62,13 +64,15 @@ export default function Taskbar() {
       }}>
         {/* Start Button */}
         <button
-          className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
+          className="taskbar-start-button h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
+          onClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseDown={() => setIsClicked(true)}
           onMouseUp={() => setIsClicked(false)}
           style={{
             transform: isClicked ? 'scale(0.95)' : 'scale(1)',
+            backgroundColor: isStartMenuOpen ? 'rgba(255, 255, 255, 0.2)' : undefined
           }}
         >
           <img
