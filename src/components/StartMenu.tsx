@@ -66,49 +66,8 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         zIndex: 9999
       }}
     >
-      {/* Navbar - Top of entire menu */}
-      <div className="h-12 px-4 flex items-center gap-3 border-b border-gray-200/20">
-        {/* Search Bar */}
-        <div className="flex-1 relative max-w-sm">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for anything"
-            className="w-full h-9 pl-11 pr-4 rounded-full text-sm
-                     bg-white/60 backdrop-blur-sm
-                     border border-gray-200/50
-                     placeholder-gray-400 text-gray-700
-                     focus:outline-none focus:bg-white/80 focus:border-gray-300/50
-                     transition-all"
-          />
-        </div>
-        
-        {/* User Profile */}
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-            <span className="text-blue-500 text-lg font-bold">∞</span>
-          </div>
-          <span className="text-sm font-medium text-gray-800">Concept Central</span>
-        </div>
-        
-        {/* Right Icons */}
-        <div className="flex items-center gap-1">
-          <button className="p-2 hover:bg-gray-100/50 rounded-lg transition-colors">
-            <Mail className="w-4 h-4 text-gray-600" />
-          </button>
-          <button className="p-2 hover:bg-gray-100/50 rounded-lg transition-colors">
-            <Share2 className="w-4 h-4 text-gray-600" />
-          </button>
-          <button className="p-2 hover:bg-gray-100/50 rounded-lg transition-colors">
-            <Settings className="w-4 h-4 text-gray-600" />
-          </button>
-        </div>
-      </div>
-
       {/* Main Container - Two Columns */}
-      <div className="flex-1 flex">
+      <div className="h-full flex">
         
         {/* Left Column */}
         <div className="w-[55%] p-4 pr-3 flex flex-col">
