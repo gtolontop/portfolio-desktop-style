@@ -323,36 +323,36 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Calendar Widget - Large Square */}
-          <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
+          <div className="bg-white/15 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-blue-500" />
+                <Calendar className="w-5 h-5 text-blue-600" />
                 <h3 className="text-sm font-medium text-gray-700">Calendar</h3>
               </div>
-              <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
-                <span className="text-gray-500 text-xs">•••</span>
+              <button className="text-gray-400 hover:text-gray-600">
+                <span className="text-sm">•••</span>
               </button>
             </div>
-            <div className="text-2xl font-light text-gray-800 mb-2">5/21/22</div>
-            <div className="space-y-2">
+            <div className="flex items-baseline justify-between mb-3">
+              <div className="text-xl font-medium text-gray-800">5/21/22</div>
+              <button className="text-2xl text-gray-300 hover:text-gray-500 leading-none">+</button>
+            </div>
+            <div className="space-y-3">
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-red-400 rounded-full mt-1"></div>
-                <div>
+                <div className="w-2 h-2 bg-red-400 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="flex-1">
                   <div className="text-sm font-medium text-gray-700">Launch merch store</div>
                   <div className="text-xs text-gray-500">Community designed merch!</div>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-orange-400 rounded-full mt-1"></div>
-                <div>
+                <div className="w-2 h-2 bg-orange-400 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="flex-1">
                   <div className="text-sm font-medium text-gray-700">Give update to Twitter</div>
                   <div className="text-xs text-gray-500">@Concept_Central</div>
                 </div>
               </div>
             </div>
-            <button className="mt-3 text-center w-full">
-              <span className="text-2xl text-gray-400">+</span>
-            </button>
           </div>
         </div>
       </div>
