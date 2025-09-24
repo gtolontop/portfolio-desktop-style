@@ -172,16 +172,16 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Apps List */}
-          <div className="flex-1 overflow-y-auto space-y-2">
+          <div className="flex-1 overflow-y-auto space-y-2 pr-2">
             {(activeTab === 'most-used' ? mostUsedApps : allApps).map((app) => (
               <button
                 key={app.id}
                 onClick={() => handleAppClick(app.id)}
-                className="w-full flex items-center gap-4 p-3 rounded-lg
+                className="w-full flex items-center gap-4 p-3 rounded-xl
                          hover:bg-white/20 transition-all text-left group"
               >
                 <div className="w-12 h-12 flex items-center justify-center
-                              bg-white/30 rounded-lg group-hover:bg-white/40
+                              bg-white/30 rounded-xl group-hover:bg-white/40
                               transition-colors">
                   {typeof app.icon === 'string' ? (
                     <span className="text-xl">{app.icon}</span>
@@ -203,12 +203,12 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           <div className="mt-4 pt-4 border-t border-white/20">
             <h3 className="text-xs font-medium text-gray-500 uppercase mb-2">Recommended</h3>
             <div className="grid grid-cols-2 gap-2">
-              <button className="flex items-center gap-2 p-2 rounded hover:bg-white/20 text-xs text-gray-600">
-                <span className="w-4 h-4 bg-blue-400 rounded"></span>
+              <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/20 text-xs text-gray-600">
+                <span className="w-4 h-4 bg-blue-400 rounded-md"></span>
                 Recent document.pdf
               </button>
-              <button className="flex items-center gap-2 p-2 rounded hover:bg-white/20 text-xs text-gray-600">
-                <span className="w-4 h-4 bg-green-400 rounded"></span>
+              <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/20 text-xs text-gray-600">
+                <span className="w-4 h-4 bg-green-400 rounded-md"></span>
                 Project folder
               </button>
             </div>
@@ -216,47 +216,132 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         </div>
 
         {/* Right Section - Widgets */}
-        <div className="w-80 bg-white/10 p-6 space-y-4">
-          {/* Weather Widget */}
-          <div className="bg-white/20 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <Cloud className="w-5 h-5 text-gray-600" />
-              <span className="text-xs text-gray-500">Today</span>
+        <div className="w-80 p-4 space-y-3 bg-gradient-to-br from-white/5 to-white/10">
+          {/* Weather Widget - Large Rectangle */}
+          <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-gray-700">Weather</h3>
+              <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
+                <span className="text-gray-500 text-xs">•••</span>
+              </button>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-light text-gray-700">22°</span>
-              <span className="text-sm text-gray-600">Partly cloudy</span>
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-xs text-gray-600 mb-1">15mph winds</div>
+                <div className="text-xs text-gray-600">Sunset at 7:58</div>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-light text-gray-800">60° F</div>
+                <div className="flex items-center justify-end gap-1 mt-1">
+                  <span className="text-2xl">☀️</span>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-7 gap-1 mt-4">
+              {['60°', '61°', '62°', '62°', '67°', '66°', '69°'].map((temp, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-xs text-gray-600">{temp}</div>
+                  <div className="text-sm mt-1">{i % 2 === 0 ? '☀️' : '🌤️'}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Calendar Widget */}
-          <div className="bg-white/20 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <Calendar className="w-5 h-5 text-gray-600" />
-              <span className="text-xs text-gray-500">Today</span>
+          {/* Row with Discord and Media Player */}
+          <div className="grid grid-cols-2 gap-3">
+            {/* Discord Widget */}
+            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center">
+                    <MessageCircle className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <h3 className="text-sm font-medium text-gray-700">Discord</h3>
+                </div>
+                <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
+                  <span className="text-gray-500 text-xs">•••</span>
+                </button>
+              </div>
+              <div className="space-y-2">
+                <div>
+                  <div className="text-xs font-medium text-gray-700">James</div>
+                  <div className="text-xs text-gray-500">Yuh i don't wanna be in...</div>
+                </div>
+                <div className="mt-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-white font-bold">!</span>
+                    </div>
+                    <div className="text-xs font-medium text-gray-700">Concept Central</div>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">Link in description</div>
+                </div>
+              </div>
             </div>
-            <div className="text-sm text-gray-700">No upcoming events</div>
+
+            {/* Media Player Widget */}
+            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-gray-700">Media Player</h3>
+                <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
+                  <span className="text-gray-500 text-xs">•••</span>
+                </button>
+              </div>
+              <div className="space-y-3">
+                <div className="text-xs text-gray-600">Now playing - Daydream</div>
+                <div className="flex items-center justify-center gap-3 my-4">
+                  <button className="p-1.5 hover:bg-white/20 rounded-lg transition-colors">
+                    <span className="text-gray-700">⏮</span>
+                  </button>
+                  <button className="p-1.5 hover:bg-white/20 rounded-lg transition-colors">
+                    <span className="text-gray-700 text-lg">‖</span>
+                  </button>
+                  <button className="p-1.5 hover:bg-white/20 rounded-lg transition-colors">
+                    <span className="text-gray-700">⏭</span>
+                  </button>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <span>1:02</span>
+                  <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                    <div className="w-1/3 h-full bg-orange-400 rounded-full"></div>
+                  </div>
+                  <span>2:49</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Discord Notifications */}
-          <div className="bg-white/20 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <MessageCircle className="w-5 h-5 text-gray-600" />
-              <span className="text-xs text-gray-500">Discord</span>
+          {/* Calendar Widget - Large Square */}
+          <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-blue-500" />
+                <h3 className="text-sm font-medium text-gray-700">Calendar</h3>
+              </div>
+              <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
+                <span className="text-gray-500 text-xs">•••</span>
+              </button>
             </div>
+            <div className="text-2xl font-light text-gray-800 mb-2">5/21/22</div>
             <div className="space-y-2">
-              <div className="text-xs text-gray-600">3 new messages</div>
-              <div className="text-xs text-gray-500">2 servers with activity</div>
+              <div className="flex items-start gap-2">
+                <div className="w-2 h-2 bg-red-400 rounded-full mt-1"></div>
+                <div>
+                  <div className="text-sm font-medium text-gray-700">Launch merch store</div>
+                  <div className="text-xs text-gray-500">Community designed merch!</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <div className="w-2 h-2 bg-orange-400 rounded-full mt-1"></div>
+                <div>
+                  <div className="text-sm font-medium text-gray-700">Give update to Twitter</div>
+                  <div className="text-xs text-gray-500">@Concept_Central</div>
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* Media Player */}
-          <div className="bg-white/20 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <Music className="w-5 h-5 text-gray-600" />
-              <span className="text-xs text-gray-500">Now playing</span>
-            </div>
-            <div className="text-sm text-gray-700">No media playing</div>
+            <button className="mt-3 text-center w-full">
+              <span className="text-2xl text-gray-400">+</span>
+            </button>
           </div>
         </div>
       </div>
