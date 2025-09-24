@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import Taskbar from './Taskbar'
 import DesktopIcons from './DesktopIcons'
 import WindowManager from './WindowManager'
+import StartMenu from './StartMenu'
 import { useAppStore } from '@/store/appStore'
 import { defaultApps } from '@/config/apps.registry'
 
@@ -18,6 +19,7 @@ export default function Desktop() {
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null)
   const [selectedIconIds, setSelectedIconIds] = useState<Set<string>>(new Set())
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false)
   const desktopRef = useRef<HTMLDivElement>(null)
   const initializedRef = useRef(false)
   const { registerApp, addDesktopIcon, desktopIcons } = useAppStore()
@@ -167,7 +169,10 @@ export default function Desktop() {
       {/* Window Manager */}
       <WindowManager />
 
-      <Taskbar />
+      {/* Start Menu - Above everything */}
+      <StartMenu isOpen={isStartMenuOpen} onClose={() => setIsStartMenuOpen(false)} />
+
+      <Taskbar onStartClick={() => setIsStartMenuOpen(!isStartMenuOpen)} />
     </div>
   )
 }

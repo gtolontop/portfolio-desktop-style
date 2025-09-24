@@ -41,10 +41,10 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        absolute bottom-14 left-0 w-[900px] h-[600px]
+        absolute bottom-12 left-2 w-[900px] h-[600px]
         rounded-xl overflow-hidden
         transition-all duration-300 ease-out origin-bottom-left
-        ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
+        ${isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0'}
       `}
       style={{
         backgroundColor: 'rgba(250, 251, 252, 0.85)',
