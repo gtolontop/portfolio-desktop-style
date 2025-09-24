@@ -141,42 +141,24 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       {/* Main Content */}
       <div className="flex-1 flex">
         {/* Left Section - Apps */}
-        <div className="flex-1 flex flex-col p-6">
-          {/* Tabs */}
-          <div className="flex gap-4 mb-4">
-            <button
-              onClick={() => setActiveTab('most-used')}
-              className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
-                activeTab === 'most-used' 
-                  ? 'text-gray-700 border-blue-500' 
-                  : 'text-gray-500 border-transparent hover:text-gray-600'
-              }`}
-            >
-              Most used
-            </button>
-            <button
-              onClick={() => setActiveTab('all-apps')}
-              className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
-                activeTab === 'all-apps' 
-                  ? 'text-gray-700 border-blue-500' 
-                  : 'text-gray-500 border-transparent hover:text-gray-600'
-              }`}
-            >
-              All apps
-            </button>
+        <div className="flex-1 flex flex-col p-4">
+          {/* Section Title */}
+          <div className="mb-3">
+            <h3 className="text-sm font-semibold text-gray-800">Most used</h3>
+            <button className="text-xs text-gray-500 hover:text-gray-700">All apps &gt;</button>
           </div>
 
           {/* Apps List */}
-          <div className="flex-1 overflow-y-auto space-y-2 pr-2">
-            {(activeTab === 'most-used' ? mostUsedApps : allApps).map((app) => (
+          <div className="flex-1 overflow-y-auto space-y-1">
+            {mostUsedApps.map((app) => (
               <button
                 key={app.id}
                 onClick={() => handleAppClick(app.id)}
-                className="w-full flex items-center gap-4 p-3 rounded-xl
+                className="w-full flex items-center gap-3 p-2 rounded-lg
                          hover:bg-white/20 transition-all text-left group"
               >
-                <div className="w-12 h-12 flex items-center justify-center
-                              bg-white/30 rounded-xl group-hover:bg-white/40
+                <div className="w-10 h-10 flex items-center justify-center
+                              bg-white/20 rounded-lg group-hover:bg-white/30
                               transition-colors">
                   {typeof app.icon === 'string' ? (
                     <span className="text-xl">{app.icon}</span>
@@ -195,16 +177,23 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Recommended Section */}
-          <div className="mt-4 pt-4 border-t border-white/20">
-            <h3 className="text-xs font-medium text-gray-500 uppercase mb-2">Recommended</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/20 text-xs text-gray-600">
-                <span className="w-4 h-4 bg-blue-400 rounded-md"></span>
-                Recent document.pdf
+          <div className="mt-auto pt-4 border-t border-white/10">
+            <h3 className="text-sm font-semibold text-gray-800 mb-2">Recommended</h3>
+            <div className="space-y-1">
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/20 text-left">
+                <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <Settings className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-sm text-gray-700">Settings</span>
               </button>
-              <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/20 text-xs text-gray-600">
-                <span className="w-4 h-4 bg-green-400 rounded-md"></span>
-                Project folder
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/20 text-left">
+                <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <Music className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-700">Media Player</div>
+                  <div className="text-xs text-gray-500">Now playing - Daydream</div>
+                </div>
               </button>
             </div>
           </div>
