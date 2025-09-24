@@ -72,8 +72,8 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        absolute bottom-14 left-0 w-[800px] h-[600px]
-        rounded-[7px] shadow-2xl
+        absolute bottom-14 left-0 w-[700px] h-[500px]
+        rounded-2xl shadow-2xl
         flex flex-col overflow-hidden
         transition-all duration-300 ease-out origin-bottom-left
         ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
@@ -95,51 +95,46 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       }}
     >
       {/* Navbar */}
-      <div className="h-16 flex items-center px-6 border-b border-white/20">
-        <div className="flex-1 flex items-center gap-4">
+      <div className="h-14 flex items-center px-6 bg-white/5">
+        <div className="flex-1 flex items-center">
           {/* Search Bar */}
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <div className="relative w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search apps, files, settings..."
-              className="w-full pl-10 pr-4 py-2 bg-white/30 border border-white/20 
-                       rounded-full text-sm text-gray-700 placeholder-gray-500
-                       focus:outline-none focus:border-blue-400/50 focus:bg-white/40
+              placeholder="Search for anything"
+              className="w-full pl-9 pr-4 py-1.5 bg-white/20 
+                       rounded-md text-sm text-gray-700 placeholder-gray-400
+                       focus:outline-none focus:bg-white/30
                        transition-all"
             />
           </div>
         </div>
 
-        {/* User Section */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-              <User className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <div className="text-sm font-medium text-gray-700">User Account</div>
-              <div className="text-xs text-gray-500">user@example.com</div>
-            </div>
+        {/* Center Title */}
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+            <span className="text-white text-xs font-bold">Z</span>
           </div>
-          
-          {/* Action Buttons */}
-          <div className="flex items-center gap-1 ml-4">
-            <button className="p-2 rounded-lg hover:bg-white/20 transition-colors">
-              <FolderOpen className="w-5 h-5 text-gray-600" />
-            </button>
-            <button className="p-2 rounded-lg hover:bg-white/20 transition-colors">
-              <Settings className="w-5 h-5 text-gray-600" />
-            </button>
-            <button 
-              onClick={onClose}
-              className="p-2 rounded-lg hover:bg-red-500/20 transition-colors group"
-            >
-              <Power className="w-5 h-5 text-gray-600 group-hover:text-red-600" />
-            </button>
-          </div>
+          <span className="text-sm font-medium text-gray-700">Concept Central</span>
+        </div>
+
+        {/* Right Actions */}
+        <div className="flex-1 flex justify-end items-center gap-2">
+          <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
+            <FolderOpen className="w-4 h-4 text-gray-500" />
+          </button>
+          <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
+            <Settings className="w-4 h-4 text-gray-500" />
+          </button>
+          <button 
+            onClick={onClose}
+            className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
+          >
+            <Power className="w-4 h-4 text-gray-500" />
+          </button>
         </div>
       </div>
 
