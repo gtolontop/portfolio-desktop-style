@@ -41,16 +41,14 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        fixed w-[600px] h-[650px]
-        rounded-lg overflow-hidden
-        transition-all duration-200 ease-out
+        fixed bottom-14 left-2 w-[600px] h-[500px]
+        rounded-[7px] shadow-2xl
+        flex flex-col overflow-hidden
+        transition-all duration-300 ease-out origin-bottom-left
+        ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
         pointer-events-auto
-        ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
       `}
       style={{
-        bottom: '60px',
-        left: '50%',
-        transform: 'translateX(-50%)',
         border: '1px solid rgba(255, 255, 255, 0.35)',
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         backdropFilter: 'blur(20px) saturate(100%)',
@@ -67,7 +65,6 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
         zIndex: 9999
       }}
-      className="flex flex-col"
     >
       {/* Navbar - Top of entire menu */}
       <div className="h-12 px-4 flex items-center gap-3 border-b border-gray-200/20">
