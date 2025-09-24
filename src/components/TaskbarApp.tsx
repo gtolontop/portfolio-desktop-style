@@ -40,11 +40,11 @@ export default function TaskbarApp({ windowId }: TaskbarAppProps) {
       <button
         onClick={handleClick}
         className={`
-          w-11 h-11 rounded-lg transition-all
+          w-11 h-11 rounded-lg transition-all relative
           flex items-center justify-center
           ${isActive
-            ? 'bg-white/20 backdrop-blur-md'
-            : 'bg-white/5 hover:bg-white/15 backdrop-blur-md'
+            ? 'bg-white/25 backdrop-blur-md shadow-lg shadow-white/20'
+            : 'bg-white/10 hover:bg-white/15 backdrop-blur-md'
           }
         `}
       >
@@ -53,6 +53,13 @@ export default function TaskbarApp({ windowId }: TaskbarAppProps) {
         ) : (
           <app.icon className="w-6 h-6 text-white" />
         )}
+        
+        {/* Active indicator */}
+        <div className={`
+          absolute bottom-0 left-1/2 -translate-x-1/2 transition-all
+          ${isActive ? 'w-8 h-0.5' : 'w-2 h-0.5'}
+          bg-white/80 rounded-full
+        `} />
       </button>
 
       {/* Tooltip */}

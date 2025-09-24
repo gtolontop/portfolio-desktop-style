@@ -283,7 +283,7 @@ export default function Window({ window, children }: WindowProps) {
         ${!isDragging && !isResizing && !isRestoringFromDrag ? 'transition-all duration-300 ease-out' : ''}
         ${isOpening ? 'scale-95 opacity-0' : ''}
         ${isClosing ? 'scale-95 opacity-0' : ''}
-        ${isMinimizing ? 'scale-95 opacity-0 translate-y-10' : ''}
+        ${isMinimizing ? 'scale-90 opacity-0 translate-y-20' : ''}
         ${isRestoring && !isRestoringFromDrag ? 'animate-restore' : ''}
         ${!isOpening && !isClosing && !isMinimizing && !isRestoring ? 'scale-100 opacity-100' : ''}
       `}
