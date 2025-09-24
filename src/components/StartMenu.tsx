@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Search, Mail, Share2, Settings, FolderOpen, Clock, ChevronRight, MoreHorizontal, ChevronLeft, ChevronRight as Next, Pause, Play, Power } from 'lucide-react'
+import { Search, Share2, Settings, FolderOpen, Clock, ChevronRight, MoreHorizontal, ChevronLeft, ChevronRight as Next, Pause, Play, Power } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
 
 interface StartMenuProps {
@@ -67,56 +67,51 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       }}
     >
       {/* Navbar */}
-      <div className="h-16 px-6 flex items-center" style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+      <div className="h-14 px-5 flex items-center bg-white/5" style={{
+        borderBottom: '1px solid rgba(0, 0, 0, 0.06)'
       }}>
         {/* Left Side - Search Bar */}
         <div className="flex-1 flex items-center">
-          <div className="relative w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600" />
+          <div className="relative w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for anything"
-              className="w-full h-10 pl-10 pr-4 rounded-full text-sm
-                       bg-white/70
-                       border border-white/50
-                       placeholder-gray-600 text-gray-800 font-medium
-                       focus:outline-none focus:bg-white/80 focus:border-white/60
-                       transition-all shadow-sm"
+              className="w-full h-9 pl-10 pr-4 rounded-full text-sm
+                       bg-white/90
+                       border border-gray-200/70
+                       placeholder-gray-500 text-gray-700
+                       focus:outline-none focus:bg-white focus:border-gray-300
+                       transition-all"
             />
           </div>
         </div>
         
         {/* Right Side - Profile and Icons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {/* Profile */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center shadow-sm">
-              <span className="text-white text-sm font-semibold">C</span>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+              <span className="text-white text-xs font-medium">C</span>
             </div>
-            <span className="text-sm font-semibold text-gray-800">Concept Central</span>
+            <span className="text-sm text-gray-700">Concept Central</span>
           </div>
           
-          {/* Vertical Divider */}
-          <div className="h-8 w-px bg-gray-300/40"></div>
-          
           {/* Icons */}
-          <div className="flex items-center gap-1">
-            <button className="p-2.5 hover:bg-white/25 rounded-lg transition-all">
-              <Mail className="w-5 h-5 text-gray-700" />
+          <div className="flex items-center gap-0.5">
+            <button className="p-2 hover:bg-black/5 rounded transition-colors">
+              <FolderOpen className="w-[18px] h-[18px] text-gray-600" />
             </button>
-            <button className="p-2.5 hover:bg-white/25 rounded-lg transition-all">
-              <Settings className="w-5 h-5 text-gray-700" />
+            <button className="p-2 hover:bg-black/5 rounded transition-colors">
+              <Settings className="w-[18px] h-[18px] text-gray-600" />
             </button>
             <button 
               onClick={onClose}
-              className="p-2.5 hover:bg-red-500/20 rounded-lg transition-all"
+              className="p-2 hover:bg-black/5 rounded transition-colors"
             >
-              <Power className="w-5 h-5 text-gray-700" />
+              <Power className="w-[18px] h-[18px] text-gray-600" />
             </button>
           </div>
         </div>
