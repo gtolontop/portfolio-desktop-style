@@ -10,9 +10,24 @@ export default function Taskbar() {
   const [isClicked, setIsClicked] = useState(false)
   const [currentTime, setCurrentTime] = useState(new Date())
   const windows = useAppStore(state => state.windows)
+  const [, forceUpdate] = useState({})
   
   // Subscribe directly to windows changes for immediate updates
   const hasMaximizedWindow = Array.from(windows.values()).some(w => w.isMaximized)
+  
+  // Force re-render when window state changes
+  useEffect(() => {
+    const checkMaximizedState = () => {
+      forceUpdate({})
+    }
+    
+    // Listen for custom events that might affect maximize state
+    window.addEventListener('window-state-changed', checkMaximizedState)
+    
+    return () => {
+      window.removeEventListener('window-state-changed', checkMaximizedState)
+    }
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -38,7 +53,7 @@ export default function Taskbar() {
   }
 
   return (
-    <div className={`absolute bottom-0 left-0 right-0 h-12 flex items-center ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`}>
+    <div className={`absolute bottom-0 left-0 right-0 h-12 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`}>
       {/* Left Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2" style={{
         ...taskbarStyle,
@@ -75,15 +90,10 @@ export default function Taskbar() {
       </div>
 
       {/* Center Taskbar Section */}
-      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto transition-all duration-300 ease-in-out" style={{
+      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: hasMaximizedWindow ? '0px' : '10px',
-        borderTopRightRadius: hasMaximizedWindow ? '0px' : '10px',
-        borderBottomLeftRadius: '0px',
-        borderBottomRightRadius: '0px',
-        borderRadius: hasMaximizedWindow ? '0px' : undefined,
-        transform: hasMaximizedWindow ? 'scaleX(1)' : 'scaleX(0.98)',
-        opacity: hasMaximizedWindow ? '1' : '0.95'
+        borderRadius: hasMaximizedWindow ? '0' : '10px 10px 0 0',
+        transition: 'all 200ms ease-in-out'
       }}>
         {Array.from(windows.keys()).map((windowId) => (
           <TaskbarApp key={windowId} windowId={windowId} />
@@ -91,13 +101,10 @@ export default function Taskbar() {
       </div>
 
       {/* Right Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-2 transition-all duration-300 ease-in-out" style={{
+      <div className="h-full flex items-center gap-1 px-2" style={{
         ...taskbarStyle,
-        borderTopLeftRadius: hasMaximizedWindow ? '0px' : '10px',
-        borderTopRightRadius: '0px',
-        borderBottomLeftRadius: '0px',
-        borderBottomRightRadius: '0px',
-        borderRadius: hasMaximizedWindow ? '0px' : undefined
+        borderRadius: hasMaximizedWindow ? '0' : '10px 0 0 0',
+        transition: 'all 200ms ease-in-out'
       }}>
         {/* Show Desktop Button */}
         <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">

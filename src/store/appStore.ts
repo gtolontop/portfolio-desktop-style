@@ -146,7 +146,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
         }
       })
     }
-    return { windows: newWindows }
+    
+    // Force re-render by creating new Map instance
+    return { windows: new Map(newWindows) }
   }),
 
   restoreWindow: (windowId) => set((state) => {
@@ -171,7 +173,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
       
       newWindows.set(windowId, restored)
     }
-    return { windows: newWindows }
+    
+    // Force re-render by creating new Map instance
+    return { windows: new Map(newWindows) }
   }),
 
   focusWindow: (windowId) => set((state) => {

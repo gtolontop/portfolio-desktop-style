@@ -211,6 +211,11 @@ export default function Window({ window, children }: WindowProps) {
     } else {
       maximizeWindow(window.id)
     }
+    
+    // Dispatch event to force taskbar update
+    setTimeout(() => {
+      globalThis.window.dispatchEvent(new CustomEvent('window-state-changed'))
+    }, 0)
   }
 
 
