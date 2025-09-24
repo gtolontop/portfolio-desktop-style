@@ -141,7 +141,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       {/* Main Content */}
       <div className="flex-1 flex">
         {/* Left Section - Apps */}
-        <div className="flex-1 flex flex-col p-4">
+        <div className="w-1/2 flex flex-col p-4 border-r border-gray-200/10">
           {/* Section Title */}
           <div className="mb-3">
             <h3 className="text-sm font-semibold text-gray-800">Most used</h3>
@@ -200,7 +200,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         </div>
 
         {/* Right Section - Widgets */}
-        <div className="w-80 p-3 space-y-2">
+        <div className="w-1/2 p-3 space-y-2">
           {/* Weather Widget - Large Rectangle */}
           <div className="bg-white/15 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
