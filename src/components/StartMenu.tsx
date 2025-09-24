@@ -255,64 +255,68 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Row with Discord and Media Player */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2">
             {/* Discord Widget */}
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
-              <div className="flex items-center justify-between mb-3">
+            <div className="bg-white/15 rounded-xl p-3">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center">
-                    <MessageCircle className="w-3.5 h-3.5 text-white" />
+                    <span className="text-white text-xs">D</span>
                   </div>
                   <h3 className="text-sm font-medium text-gray-700">Discord</h3>
                 </div>
-                <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
-                  <span className="text-gray-500 text-xs">•••</span>
+                <button className="text-gray-400 hover:text-gray-600">
+                  <span className="text-sm">•••</span>
                 </button>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 text-xs">
                 <div>
-                  <div className="text-xs font-medium text-gray-700">James</div>
-                  <div className="text-xs text-gray-500">Yuh i don't wanna be in...</div>
+                  <div className="font-medium text-gray-700">James</div>
+                  <div className="text-gray-500">Yuh I don't wanna be in...</div>
+                  <div className="text-gray-400">ur video pls don't add me</div>
                 </div>
-                <div className="mt-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-white font-bold">!</span>
+                <div className="mt-2 p-2 bg-red-50/50 rounded-lg">
+                  <div className="flex items-center gap-1">
+                    <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold" style={{fontSize: '10px'}}>!</span>
                     </div>
-                    <div className="text-xs font-medium text-gray-700">Concept Central</div>
+                    <div className="font-medium text-gray-700">Concept Central</div>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">Link in description</div>
+                  <div className="text-gray-500 mt-1">Link in description</div>
                 </div>
               </div>
             </div>
 
             {/* Media Player Widget */}
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-700">Media Player</h3>
-                <button className="p-1 hover:bg-white/20 rounded-lg transition-colors">
-                  <span className="text-gray-500 text-xs">•••</span>
+            <div className="bg-white/15 rounded-xl p-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Music className="w-5 h-5 text-gray-600" />
+                  <h3 className="text-sm font-medium text-gray-700">Media Player</h3>
+                </div>
+                <button className="text-gray-400 hover:text-gray-600">
+                  <span className="text-sm">•••</span>
                 </button>
               </div>
-              <div className="space-y-3">
-                <div className="text-xs text-gray-600">Now playing - Daydream</div>
-                <div className="flex items-center justify-center gap-3 my-4">
-                  <button className="p-1.5 hover:bg-white/20 rounded-lg transition-colors">
-                    <span className="text-gray-700">⏮</span>
+              <div className="space-y-2">
+                <div className="text-xs text-gray-500">Now playing - Daydream</div>
+                <div className="flex items-center justify-center gap-3 my-3">
+                  <button className="text-gray-600 hover:text-gray-800">
+                    <span className="text-lg">⏮</span>
                   </button>
-                  <button className="p-1.5 hover:bg-white/20 rounded-lg transition-colors">
-                    <span className="text-gray-700 text-lg">‖</span>
+                  <button className="text-gray-600 hover:text-gray-800">
+                    <span className="text-xl">‖</span>
                   </button>
-                  <button className="p-1.5 hover:bg-white/20 rounded-lg transition-colors">
-                    <span className="text-gray-700">⏭</span>
+                  <button className="text-gray-600 hover:text-gray-800">
+                    <span className="text-lg">⏭</span>
                   </button>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500">
-                  <span>1:02</span>
-                  <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-500">1:02</span>
+                  <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
                     <div className="w-1/3 h-full bg-orange-400 rounded-full"></div>
                   </div>
-                  <span>2:49</span>
+                  <span className="text-xs text-gray-500">2:49</span>
                 </div>
               </div>
             </div>
