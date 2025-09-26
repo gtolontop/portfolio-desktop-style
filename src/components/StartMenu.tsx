@@ -125,7 +125,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       <div className="flex-1 flex">
 
         {/* Left Column */}
-        <div className="w-[55%] p-4 pr-3 flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+        <div className="w-[45%] p-4 pr-3 flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
 
           {/* Most Used Section */}
           <div className="mb-4">
