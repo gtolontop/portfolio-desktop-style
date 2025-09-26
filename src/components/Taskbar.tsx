@@ -87,18 +87,19 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
           <img
             src="/images/home.png"
             alt="Start"
-            className="w-5 h-5 object-contain"
+            style={{ width: '2.8vh', height: '2.8vh' }}
+            className="object-contain"
           />
         </button>
 
         {/* Search Button */}
-        <button className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Search className="w-4 h-4 text-white/80" />
+        <button className="flex items-center justify-center hover:bg-white/15 transition-all" style={{ width: '4.5vh', height: '4.5vh', borderRadius: '0.8vh' }}>
+          <Search className="text-white/80" style={{ width: '2.3vh', height: '2.3vh' }} />
         </button>
 
         {/* Task View Button */}
-        <button className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Layers className="w-4 h-4 text-white/80" />
+        <button className="flex items-center justify-center hover:bg-white/15 transition-all" style={{ width: '4.5vh', height: '4.5vh', borderRadius: '0.8vh' }}>
+          <Layers className="text-white/80" style={{ width: '2.3vh', height: '2.3vh' }} />
         </button>
       </div>
 
