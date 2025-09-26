@@ -57,7 +57,7 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
   }
 
   return (
-    <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`} style={{ height: '7vh' }}>
+    <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`} style={{ height: '5vh' }}>
       {/* Left Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2" style={{
         ...taskbarStyle,
