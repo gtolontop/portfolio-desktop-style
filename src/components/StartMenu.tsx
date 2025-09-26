@@ -67,51 +67,51 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       }}
     >
       {/* Navbar */}
-      <div className="h-14 px-5 flex items-center bg-white/5" style={{
-        borderBottom: '1px solid rgba(0, 0, 0, 0.06)'
+      <div className="h-16 px-6 flex items-center justify-between bg-white/10" style={{
+        borderBottom: '1px solid rgba(0, 0, 0, 0.08)'
       }}>
         {/* Left Side - Search Bar */}
-        <div className="flex-1 flex items-center">
-          <div className="relative w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+        <div className="flex items-center">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for anything"
-              className="w-full h-9 pl-10 pr-4 rounded-full text-sm
-                       bg-white/90
-                       border border-gray-200/70
-                       placeholder-gray-500 text-gray-700
-                       focus:outline-none focus:bg-white focus:border-gray-300
+              className="w-[280px] h-8 pl-10 pr-4 rounded-full text-[13px]
+                       bg-white/80
+                       border border-gray-300/50
+                       placeholder-gray-600 text-gray-800
+                       focus:outline-none focus:bg-white focus:border-blue-400/50
                        transition-all"
             />
           </div>
         </div>
-        
+
         {/* Right Side - Profile and Icons */}
         <div className="flex items-center gap-3">
-          {/* Profile */}
+          {/* Profile with avatar and name */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
-              <span className="text-white text-xs font-medium">C</span>
+            <div className="w-7 h-7 rounded-full bg-gray-900 flex items-center justify-center">
+              <span className="text-white text-xs font-semibold">C</span>
             </div>
-            <span className="text-sm text-gray-700">Concept Central</span>
+            <span className="text-[13px] font-medium text-gray-800">Concept Central</span>
           </div>
-          
+
           {/* Icons */}
-          <div className="flex items-center gap-0.5">
-            <button className="p-2 hover:bg-black/5 rounded transition-colors">
-              <FolderOpen className="w-[18px] h-[18px] text-gray-600" />
+          <div className="flex items-center gap-1">
+            <button className="p-1.5 hover:bg-black/5 rounded-md transition-colors">
+              <FolderOpen className="w-5 h-5 text-gray-700" />
             </button>
-            <button className="p-2 hover:bg-black/5 rounded transition-colors">
-              <Settings className="w-[18px] h-[18px] text-gray-600" />
+            <button className="p-1.5 hover:bg-black/5 rounded-md transition-colors">
+              <Settings className="w-5 h-5 text-gray-700" />
             </button>
-            <button 
+            <button
               onClick={onClose}
-              className="p-2 hover:bg-black/5 rounded transition-colors"
+              className="p-1.5 hover:bg-black/5 rounded-md transition-colors"
             >
-              <Power className="w-[18px] h-[18px] text-gray-600" />
+              <Power className="w-5 h-5 text-gray-700" />
             </button>
           </div>
         </div>
