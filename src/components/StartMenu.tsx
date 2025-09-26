@@ -134,63 +134,63 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
             
             <div className="space-y-1">
               {/* Weather */}
-              <button 
+              <button
                 onClick={() => handleAppClick('weather')}
-                className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors"
+                className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors"
               >
-                <div className="w-10 h-10 bg-orange-400 rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">☀️</span>
+                <div className="w-8 h-8 bg-orange-400 rounded-lg flex items-center justify-center">
+                  <span className="text-lg">☀️</span>
                 </div>
-                <span className="text-sm text-gray-700">Weather</span>
+                <span className="text-xs text-gray-700">Weather</span>
               </button>
               
               {/* Discord */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-lg font-bold">D</span>
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">D</span>
                 </div>
                 <div className="text-left">
-                  <div className="text-sm text-gray-700">Discord</div>
-                  <div className="text-xs text-gray-500">Concept Central</div>
+                  <div className="text-xs text-gray-700">Discord</div>
+                  <div className="text-[10px] text-gray-500">Concept Central</div>
                 </div>
               </button>
               
               {/* File Explorer */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                  <FolderOpen className="w-6 h-6 text-white" />
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center">
+                  <FolderOpen className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-sm text-gray-700">File Explorer</span>
+                <span className="text-xs text-gray-700">File Explorer</span>
               </button>
               
               {/* Calendar */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-lg">📅</span>
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm">📅</span>
                 </div>
-                <span className="text-sm text-gray-700">Calendar</span>
+                <span className="text-xs text-gray-700">Calendar</span>
               </button>
               
               {/* Clock */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-gray-400 rounded-lg flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-white" />
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-gray-400 rounded-lg flex items-center justify-center">
+                  <Clock className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-sm text-gray-700">Clock</span>
+                <span className="text-xs text-gray-700">Clock</span>
               </button>
             </div>
           </div>
 
           {/* Recommended Section */}
           <div className="mt-auto">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Recommended</h3>
+            <h3 className="text-xs font-medium text-gray-700 mb-2">Recommended</h3>
             <div className="space-y-1">
               {/* Settings */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-gray-500 rounded-lg flex items-center justify-center">
-                  <Settings className="w-6 h-6 text-white" />
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-gray-500 rounded-lg flex items-center justify-center">
+                  <Settings className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-sm text-gray-700">Settings</span>
+                <span className="text-xs text-gray-700">Settings</span>
               </button>
               
               {/* Media Player */}
