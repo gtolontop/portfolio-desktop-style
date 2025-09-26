@@ -81,18 +81,18 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
           <img
             src="/images/home.png"
             alt="Start"
-            className="w-6 h-6 object-contain"
+            className="w-[26px] h-[26px] object-contain"
           />
         </button>
 
         {/* Search Button */}
         <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Search className="w-4 h-4 text-white/80" />
+          <Search className="w-5 h-5 text-white/80" />
         </button>
 
         {/* Task View Button */}
         <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Layers className="w-4 h-4 text-white/80" />
+          <Layers className="w-5 h-5 text-white/80" />
         </button>
       </div>
 
@@ -110,7 +110,7 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
       {/* Right Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-1" style={{
         width: 'fit-content',
-        maxWidth: '160px',
+        maxWidth: '120px',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '10px 0 0 0',
         transition: 'all 200ms ease-in-out'
@@ -122,7 +122,7 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
 
         {/* Menu Button */}
         <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Menu className="w-4 h-4 text-white/80" />
+          <Menu className="w-5 h-5 text-white/80" />
         </button>
 
         {/* Time and Date */}
