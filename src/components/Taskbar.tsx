@@ -57,16 +57,18 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
   }
 
   return (
-    <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`} style={{ height: '6vh' }}>
+    <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`} style={{ height: '5.8vh' }}>
       {/* Left Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-2" style={{
+      <div className="h-full flex items-center gap-1 px-1" style={{
+        width: 'fit-content',
+        maxWidth: '120px',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '0 10px 0 0',
         transition: 'all 200ms ease-in-out'
       }}>
         {/* Start Button */}
         <button
-          className="taskbar-start-button h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
+          className="taskbar-start-button h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
           onClick={onStartClick}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -79,18 +81,18 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
           <img
             src="/images/home.png"
             alt="Start"
-            className="w-7 h-7 object-contain"
+            className="w-6 h-6 object-contain"
           />
         </button>
 
         {/* Search Button */}
-        <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Search className="w-5 h-5 text-white/80" />
+        <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <Search className="w-4 h-4 text-white/80" />
         </button>
 
         {/* Task View Button */}
-        <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Layers className="w-5 h-5 text-white/80" />
+        <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <Layers className="w-4 h-4 text-white/80" />
         </button>
       </div>
 
@@ -106,19 +108,21 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
       </div>
 
       {/* Right Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-2" style={{
+      <div className="h-full flex items-center gap-1 px-1" style={{
+        width: 'fit-content',
+        maxWidth: '160px',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '10px 0 0 0',
         transition: 'all 200ms ease-in-out'
       }}>
         {/* Show Desktop Button */}
-        <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+        <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
           <ChevronUp className="w-4 h-4 text-white/80" />
         </button>
 
         {/* Menu Button */}
-        <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Menu className="w-5 h-5 text-white/80" />
+        <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <Menu className="w-4 h-4 text-white/80" />
         </button>
 
         {/* Time and Date */}
