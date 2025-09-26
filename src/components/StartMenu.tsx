@@ -80,7 +80,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for anything"
-              className="w-[280px] h-8 pl-10 pr-4 rounded-full text-[13px]
+              className="w-[280px] h-8 pl-10 pr-4 rounded-md text-[13px]
                        bg-white/80
                        border border-gray-300/50
                        placeholder-gray-600 text-gray-800
@@ -117,6 +117,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
         </div>
       </div>
+
+      {/* Blue accent bar */}
+      <div className="h-1 bg-gradient-to-r from-blue-500/70 via-blue-400/50 to-transparent"></div>
 
       {/* Main Container - Two Columns */}
       <div className="flex-1 flex">
