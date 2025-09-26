@@ -68,7 +68,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
       }}
     >
       {/* Navbar */}
-      <div className="py-4 px-6 flex items-center justify-between bg-white/10" style={{
+      <div className="py-3 px-3 flex items-center justify-between bg-white/10" style={{
         borderBottom: '1px solid rgba(0, 0, 0, 0.08)'
       }}>
         {/* Left Side - Search Bar */}
