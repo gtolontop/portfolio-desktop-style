@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Search, Share2, Settings, FolderOpen, Clock, ChevronRight, MoreHorizontal, ChevronLeft, ChevronRight as Next, Pause, Play, Power } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
+import './startmenu.css'
 
 interface StartMenuProps {
   isOpen: boolean
