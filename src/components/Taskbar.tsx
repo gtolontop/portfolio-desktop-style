@@ -59,16 +59,15 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
   return (
     <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`} style={{ height: '5.8vh' }}>
       {/* Left Taskbar Section */}
-      <div className="h-full flex items-center gap-0.5 px-0.5" style={{
-        width: 'fit-content',
-        maxWidth: '100px',
+      <div className="h-full flex items-center gap-1 px-1" style={{
+        width: '16.5vh',
         ...taskbarStyle,
-        borderRadius: hasMaximizedWindow ? '0' : '0 10px 0 0',
+        borderRadius: hasMaximizedWindow ? '0' : '0 8px 0 0',
         transition: 'all 200ms ease-in-out'
       }}>
         {/* Start Button */}
         <button
-          className="taskbar-start-button h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
+          className="taskbar-start-button h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
           onClick={onStartClick}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -86,20 +85,20 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
         </button>
 
         {/* Search Button */}
-        <button className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Search className="w-4 h-4 text-white/80" />
+        <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <Search className="w-4.5 h-4.5 text-white/80" />
         </button>
 
         {/* Task View Button */}
-        <button className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Layers className="w-4 h-4 text-white/80" />
+        <button className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <Layers className="w-4.5 h-4.5 text-white/80" />
         </button>
       </div>
 
       {/* Center Taskbar Section */}
       <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={{
         ...taskbarStyle,
-        borderRadius: hasMaximizedWindow ? '0' : '10px 10px 0 0',
+        borderRadius: hasMaximizedWindow ? '0' : '8px 8px 0 0',
         transition: 'all 200ms ease-in-out'
       }}>
         {Array.from(windows.keys()).map((windowId) => (
@@ -108,25 +107,24 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
       </div>
 
       {/* Right Taskbar Section */}
-      <div className="h-full flex items-center gap-0.5 px-0.5" style={{
-        width: 'fit-content',
-        maxWidth: '90px',
+      <div className="h-full flex items-center gap-1 px-2" style={{
+        width: '25vh',
         ...taskbarStyle,
-        borderRadius: hasMaximizedWindow ? '0' : '10px 0 0 0',
+        borderRadius: hasMaximizedWindow ? '0' : '8px 0 0 0',
         transition: 'all 200ms ease-in-out'
       }}>
         {/* Show Desktop Button */}
-        <button className="h-7 w-7 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <ChevronUp className="w-3.5 h-3.5 text-white/80" />
+        <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <ChevronUp className="w-4 h-4 text-white/80" />
         </button>
 
         {/* Menu Button */}
-        <button className="h-7 w-7 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Menu className="w-3.5 h-3.5 text-white/80" />
+        <button className="h-10 w-10 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
+          <Menu className="w-5 h-5 text-white/80" />
         </button>
 
         {/* Time and Date */}
-        <div className="flex flex-col items-end justify-center px-1 min-w-[60px]">
+        <div className="flex flex-col items-end justify-center px-2 min-w-[80px]">
           <div className="text-[13px] text-white/90 font-medium">
             {currentTime.toLocaleTimeString('fr-FR', {
               hour: '2-digit',
