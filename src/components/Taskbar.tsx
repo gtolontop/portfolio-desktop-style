@@ -57,9 +57,11 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
   }
 
   return (
-    <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200 ${hasMaximizedWindow ? 'gap-0' : 'gap-2'}`} style={{ height: '5.8vh' }}>
+    <div className={`absolute bottom-0 left-0 right-0 flex items-center transition-all duration-200`} style={{ height: '5.8vh', gap: hasMaximizedWindow ? '0' : '0.3vh' }}>
       {/* Left Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-1" style={{
+      <div className="h-full flex items-center" style={{
+        gap: '0.5vh',
+        padding: '0 0.5vh',
         width: '16.5vh',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '0 8px 0 0',
@@ -67,7 +69,12 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
       }}>
         {/* Start Button */}
         <button
-          className="taskbar-start-button h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all"
+          className="taskbar-start-button flex items-center justify-center hover:bg-white/15 transition-all"
+          style={{
+            width: '4.5vh',
+            height: '4.5vh',
+            borderRadius: '0.8vh'
+          }}
           onClick={onStartClick}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
