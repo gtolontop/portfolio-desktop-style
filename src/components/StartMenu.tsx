@@ -231,10 +231,10 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
         <div className="flex-1 p-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent border-l border-gray-200/30">
           
           {/* Weather Widget */}
-          <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-200/30">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                <span>☀️</span> Weather
+          <div className="bg-white/50 backdrop-blur-sm rounded-xl p-2 border border-gray-200/30">
+            <div className="flex items-center justify-between mb-1">
+              <h4 className="text-xs font-medium text-gray-600 flex items-center gap-1">
+                <span className="text-xs">☀️</span> Weather
               </h4>
               <button className="text-gray-400 hover:text-gray-600">
                 <MoreHorizontal className="w-4 h-4" />
@@ -247,8 +247,8 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                 <div>Sunset at 7:58</div>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-light text-gray-800">60° F</div>
-                <span className="text-2xl">☀️</span>
+                <div className="text-xl font-light text-gray-800">60° F</div>
+                <span className="text-lg">☀️</span>
               </div>
             </div>
             
@@ -273,11 +273,11 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           {/* Two widgets side by side */}
           <div className="grid grid-cols-2 gap-3">
             {/* Discord Widget */}
-            <div className="bg-white/50 backdrop-blur-sm rounded-xl p-3 border border-gray-200/30">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                  <div className="w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs">D</span>
+            <div className="bg-white/50 backdrop-blur-sm rounded-xl p-2 border border-gray-200/30">
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-xs font-medium text-gray-600 flex items-center gap-1">
+                  <div className="w-4 h-4 bg-purple-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-[8px]">D</span>
                   </div>
                   Discord
                 </h4>
@@ -312,9 +312,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
             </div>
 
             {/* Media Player Widget */}
-            <div className="bg-white/50 backdrop-blur-sm rounded-xl p-3 border border-gray-200/30">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-sm font-medium text-gray-600">Media Player</h4>
+            <div className="bg-white/50 backdrop-blur-sm rounded-xl p-2 border border-gray-200/30">
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-xs font-medium text-gray-600">Media Player</h4>
                 <button className="text-gray-400 hover:text-gray-600">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
@@ -323,13 +323,13 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
               <div className="flex flex-col items-center justify-center py-2">
                 <div className="flex items-center gap-3 mb-3">
                   <button className="text-gray-600 hover:text-gray-800 transition-colors">
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <button className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow">
-                    <Play className="w-6 h-6 text-gray-800 ml-0.5" />
+                  <button className="w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow">
+                    <Play className="w-4 h-4 text-gray-800 ml-0.5" />
                   </button>
                   <button className="text-gray-600 hover:text-gray-800 transition-colors">
-                    <Next className="w-5 h-5" />
+                    <Next className="w-4 h-4" />
                   </button>
                 </div>
                 
@@ -346,32 +346,32 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Calendar Widget */}
-          <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-200/30 flex-1">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                <span className="text-blue-500">📅</span> Calendar
+          <div className="bg-white/50 backdrop-blur-sm rounded-xl p-2 border border-gray-200/30">
+            <div className="flex items-center justify-between mb-1">
+              <h4 className="text-xs font-medium text-gray-600 flex items-center gap-1">
+                <span className="text-xs">📅</span> Calendar
               </h4>
               <button className="text-gray-400 hover:text-gray-600">
                 <MoreHorizontal className="w-4 h-4" />
               </button>
             </div>
             
-            <div className="text-2xl font-light text-gray-800 mb-4">5/21/22</div>
+            <div className="text-lg font-light text-gray-800 mb-2">5/21/22</div>
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex gap-2">
-                <div className="w-2 h-2 bg-red-400 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-0.5 flex-shrink-0"></div>
                 <div>
-                  <div className="text-sm font-medium text-gray-800">Launch merch store</div>
-                  <div className="text-xs text-gray-500">Community-designed merch!</div>
+                  <div className="text-xs font-medium text-gray-800">Launch merch store</div>
+                  <div className="text-[10px] text-gray-500">Community-designed merch!</div>
                 </div>
               </div>
               
               <div className="flex gap-2">
-                <div className="w-2 h-2 bg-purple-400 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-0.5 flex-shrink-0"></div>
                 <div>
-                  <div className="text-sm font-medium text-gray-800">Give update to Twitter</div>
-                  <div className="text-xs text-gray-500">@Concept_Central</div>
+                  <div className="text-xs font-medium text-gray-800">Give update to Twitter</div>
+                  <div className="text-[10px] text-gray-500">@Concept_Central</div>
                 </div>
               </div>
             </div>
