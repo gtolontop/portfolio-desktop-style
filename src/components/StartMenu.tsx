@@ -119,9 +119,9 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
 
       {/* Main Container - Two Columns */}
       <div className="flex-1 flex">
-        
+
         {/* Left Column */}
-        <div className="w-[55%] p-5 pr-3 flex flex-col bg-gradient-to-br from-blue-50/20 via-transparent to-purple-50/20">
+        <div className="w-[55%] p-4 pr-3 flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
 
           {/* Most Used Section */}
           <div className="mb-4">
@@ -182,7 +182,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           </div>
 
           {/* Recommended Section */}
-          <div className="mt-auto">
+          <div className="mt-6">
             <h3 className="text-xs font-medium text-gray-700 mb-2">Recommended</h3>
             <div className="space-y-1">
               {/* Settings */}
@@ -192,42 +192,39 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                 </div>
                 <span className="text-xs text-gray-700">Settings</span>
               </button>
-              
+
               {/* Media Player */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl">▶</span>
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm">▶</span>
                 </div>
                 <div className="text-left">
-                  <div className="text-sm text-gray-700">Media Player</div>
-                  <div className="text-xs text-gray-500">Now playing - Daydream</div>
+                  <div className="text-xs text-gray-700">Media Player</div>
+                  <div className="text-[10px] text-gray-500">Now playing - Daydream</div>
                 </div>
               </button>
-              
+
               {/* Photos */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">🏞️</span>
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                  <span className="text-sm">🏞️</span>
                 </div>
-                <span className="text-sm text-gray-700">Photos</span>
+                <span className="text-xs text-gray-700">Photos</span>
               </button>
-              
+
               {/* Edge */}
-              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-green-400 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">E</span>
+              <button className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/50 transition-colors">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-green-400 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">E</span>
                 </div>
-                <span className="text-sm text-gray-700">Edge</span>
+                <span className="text-xs text-gray-700">Edge</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Vertical Divider */}
-        <div className="w-px bg-gray-200/50"></div>
-
         {/* Right Column - Widgets */}
-        <div className="flex-1 p-4 pl-3 flex flex-col gap-2 bg-gradient-to-bl from-purple-50/10 via-transparent to-blue-50/10">
+        <div className="flex-1 p-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent border-l border-gray-200/30">
           
           {/* Weather Widget */}
           <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-200/30">
