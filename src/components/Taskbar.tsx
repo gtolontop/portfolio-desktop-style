@@ -108,7 +108,7 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
 
       {/* Right Taskbar Section */}
       <div className="h-full flex items-center gap-1 px-2" style={{
-        width: '25vh',
+        width: '16vh',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '8px 0 0 0',
         transition: 'all 200ms ease-in-out'
