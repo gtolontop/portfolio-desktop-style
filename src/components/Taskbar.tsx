@@ -104,7 +104,9 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
       </div>
 
       {/* Center Taskbar Section */}
-      <div className="flex-1 flex items-center justify-center gap-1 px-4 h-full overflow-x-auto" style={{
+      <div className="flex-1 flex items-center justify-center h-full overflow-x-auto" style={{
+        gap: '0.5vh',
+        padding: '0 1vh',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '8px 8px 0 0',
         transition: 'all 200ms ease-in-out'
@@ -115,31 +117,33 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
       </div>
 
       {/* Right Taskbar Section */}
-      <div className="h-full flex items-center gap-1 px-2" style={{
+      <div className="h-full flex items-center" style={{
+        gap: '0.5vh',
+        padding: '0 0.5vh',
         width: '16vh',
         ...taskbarStyle,
         borderRadius: hasMaximizedWindow ? '0' : '8px 0 0 0',
         transition: 'all 200ms ease-in-out'
       }}>
         {/* Show Desktop Button */}
-        <button className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <ChevronUp className="w-3.5 h-3.5 text-white/80" />
+        <button className="flex items-center justify-center hover:bg-white/15 transition-all" style={{ width: '4.5vh', height: '4.5vh', borderRadius: '0.8vh' }}>
+          <ChevronUp className="text-white/80" style={{ width: '2vh', height: '2vh' }} />
         </button>
 
         {/* Menu Button */}
-        <button className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/15 transition-all">
-          <Menu className="w-4 h-4 text-white/80" />
+        <button className="flex items-center justify-center hover:bg-white/15 transition-all" style={{ width: '4.5vh', height: '4.5vh', borderRadius: '0.8vh' }}>
+          <Menu className="text-white/80" style={{ width: '2.3vh', height: '2.3vh' }} />
         </button>
 
         {/* Time and Date */}
-        <div className="flex flex-col items-end justify-center px-1 min-w-[70px]">
-          <div className="text-[12px] text-white/90 font-medium">
+        <div className="flex flex-col items-end justify-center" style={{ paddingLeft: '0.5vh', paddingRight: '0.5vh', minWidth: '8vh' }}>
+          <div className="text-white/90 font-medium" style={{ fontSize: '1.4vh', lineHeight: '1.6vh' }}>
             {currentTime.toLocaleTimeString('fr-FR', {
               hour: '2-digit',
               minute: '2-digit'
             })}
           </div>
-          <div className="text-[9px] text-white/70">
+          <div className="text-white/70" style={{ fontSize: '1vh', lineHeight: '1.2vh' }}>
             {currentTime.toLocaleDateString('fr-FR', {
               day: '2-digit',
               month: '2-digit',
