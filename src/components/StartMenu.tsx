@@ -41,7 +41,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     <div
       ref={menuRef}
       className={`
-        fixed bottom-14 left-2 w-[600px] h-[500px]
+        fixed bottom-14 left-2 w-[700px] h-[600px]
         rounded-[7px] shadow-2xl
         flex flex-col overflow-hidden
         transition-all duration-300 ease-out origin-bottom-left
