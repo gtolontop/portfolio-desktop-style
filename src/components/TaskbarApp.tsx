@@ -36,7 +36,7 @@ export default function TaskbarApp({ windowId }: TaskbarAppProps) {
   }
 
   return (
-    <div className="relative group">
+    <div className="relative group" data-window-id={windowId}>
       <button
         onClick={handleClick}
         className={`
