@@ -73,16 +73,14 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
           style={{
             width: '4.5vh',
             height: '4.5vh',
-            borderRadius: '0.8vh'
+            borderRadius: '0.8vh',
+            transform: isClicked ? 'scale(0.95)' : 'scale(1)'
           }}
           onClick={onStartClick}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseDown={() => setIsClicked(true)}
           onMouseUp={() => setIsClicked(false)}
-          style={{
-            transform: isClicked ? 'scale(0.95)' : 'scale(1)'
-          }}
         >
           <img
             src="/images/home.png"

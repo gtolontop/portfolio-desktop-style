@@ -292,8 +292,8 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                     <span className="text-xs font-medium text-gray-700">James</span>
                     <span className="bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
                   </div>
-                  <div className="text-xs text-gray-500">Yuh I don't wanna be in</div>
-                  <div className="text-xs text-gray-500">ur video pls don't add me</div>
+                  <div className="text-xs text-gray-500">Yuh I don&apos;t wanna be in</div>
+                  <div className="text-xs text-gray-500">ur video pls don&apos;t add me</div>
                 </div>
                 
                 <div className="pt-2 border-t border-gray-100">

@@ -37,6 +37,7 @@ export default function Desktop() {
         addDesktopIcon(app.id)
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMouseDown = (e: React.MouseEvent) => {
