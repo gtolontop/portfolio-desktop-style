@@ -275,14 +275,22 @@ export default function Window({ window, children }: WindowProps) {
       {!isClosing && (
         <motion.div
           ref={windowRef}
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={isRestoring ? {
+            scale: 0.1,
+            opacity: 0,
+            x: initialRestorePosition.x,
+            y: initialRestorePosition.y
+          } : {
+            scale: 0.9,
+            opacity: 0
+          }}
           animate={isMinimizing ? {
             scale: 0.1,
             opacity: 0,
             x: minimizeOffsetX,
             y: minimizeOffsetY,
             transition: {
-              duration: 0.3,
+              duration: 0.25,
               ease: [0.4, 0, 0.2, 1]
             }
           } : {
@@ -292,14 +300,15 @@ export default function Window({ window, children }: WindowProps) {
             y: 0,
             transition: {
               type: 'spring',
-              stiffness: 400,
-              damping: 30
+              stiffness: 500,
+              damping: 35,
+              mass: 0.8
             }
           }}
           exit={{
             scale: 0.9,
             opacity: 0,
-            transition: { duration: 0.2, ease: 'easeOut' }
+            transition: { duration: 0.15, ease: 'easeOut' }
           }}
           className={`
             absolute overflow-hidden cursor-move
