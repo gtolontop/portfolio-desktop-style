@@ -82,12 +82,18 @@ export default function Taskbar({ onStartClick }: TaskbarProps) {
           onMouseDown={() => setIsClicked(true)}
           onMouseUp={() => setIsClicked(false)}
         >
-          <img
-            src="/images/home.png"
-            alt="Start"
-            style={{ width: '2.8vh', height: '2.8vh' }}
-            className="object-contain"
-          />
+          {/* Windows 11 style logo */}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            style={{ width: '2.4vh', height: '2.4vh' }}
+            className="text-white/90"
+          >
+            <rect x="2" y="2" width="9" height="9" rx="1.5" fill="currentColor" />
+            <rect x="13" y="2" width="9" height="9" rx="1.5" fill="currentColor" />
+            <rect x="2" y="13" width="9" height="9" rx="1.5" fill="currentColor" />
+            <rect x="13" y="13" width="9" height="9" rx="1.5" fill="currentColor" />
+          </svg>
         </button>
 
         {/* Search Button */}
