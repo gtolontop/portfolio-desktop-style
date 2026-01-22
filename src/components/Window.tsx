@@ -31,8 +31,10 @@ export default function Window({ window, children }: WindowProps) {
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
   const [isClosing, setIsClosing] = useState(false)
   const [isMinimizing, setIsMinimizing] = useState(false)
+  const [isRestoring, setIsRestoring] = useState(false)
   const [taskbarIconPosition, setTaskbarIconPosition] = useState({ x: 0, y: 0 })
   const [isRestoringFromDrag, setIsRestoringFromDrag] = useState(false)
+  const [initialRestorePosition, setInitialRestorePosition] = useState({ x: 0, y: 0 })
   const windowRef = useRef<HTMLDivElement>(null)
 
   const app = getApp(window.appId)
@@ -65,14 +67,34 @@ export default function Window({ window, children }: WindowProps) {
       }
     }
 
+    const handleRestoreEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ windowId: string }>
+      if (customEvent.detail.windowId === window.id) {
+        // Calculate starting position from taskbar icon
+        const iconPos = getTaskbarIconPosition()
+        const windowCenterX = window.x + window.width / 2
+        const windowCenterY = window.y + window.height / 2
+        setInitialRestorePosition({
+          x: iconPos.x - windowCenterX,
+          y: iconPos.y - windowCenterY
+        })
+        setIsRestoring(true)
+        // Clear restore state after animation
+        setTimeout(() => setIsRestoring(false), 350)
+      }
+    }
+
     const globalWindow = globalThis.window
     if (globalWindow) {
       globalWindow.addEventListener('window-minimize', handleMinimizeEvent)
+      globalWindow.addEventListener('window-restore', handleRestoreEvent)
       return () => {
         globalWindow.removeEventListener('window-minimize', handleMinimizeEvent)
+        globalWindow.removeEventListener('window-restore', handleRestoreEvent)
       }
     }
-  }, [window.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.id, window.x, window.y, window.width, window.height])
 
   // Handle minimize animation completion
   useEffect(() => {
