@@ -1,22 +1,41 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Search, Settings, FolderOpen, Clock, ChevronRight, MoreHorizontal, ChevronLeft, ChevronRight as Next, Play, Power, Music, SkipBack, SkipForward } from 'lucide-react'
+import { Search, Settings, FolderOpen, ChevronRight, MoreHorizontal, Play, Pause, Power, Music, SkipBack, SkipForward, Moon, RefreshCw, LogOut, Globe, Clock, Image, Calendar, FileText } from 'lucide-react'
 import { useAppStore } from '@/store/appStore'
+import { useSystemStore, formatRelativeTime, formatTime } from '@/store/systemStore'
+import Dropdown from './Dropdown'
 import './startmenu.css'
 
 interface StartMenuProps {
   isOpen: boolean
   onClose: () => void
+  onSleep?: () => void
+  onRestart?: () => void
+  onShutdown?: () => void
+  onLock?: () => void
 }
 
-export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
+export default function StartMenu({ isOpen, onClose, onSleep, onRestart, onShutdown, onLock }: StartMenuProps) {
   const [searchQuery, setSearchQuery] = useState('')
-  const [isPlaying, setIsPlaying] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const { apps, openWindow } = useAppStore()
   const menuRef = useRef<HTMLDivElement>(null)
+
+  // Get real data from system store
+  const {
+    recentFiles,
+    weather,
+    calendarEvents,
+    mediaPlayer,
+    togglePlayPause,
+    nextTrack,
+    prevTrack,
+    discord,
+    userProfile,
+    quickAccessFolders
+  } = useSystemStore()
 
   // Handle open/close animations
   useEffect(() => {
@@ -59,34 +78,53 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
     onClose()
   }
 
+  // Get today's calendar events
+  const todayEvents = calendarEvents.filter(e => {
+    const today = new Date()
+    const eventDate = new Date(e.date)
+    return eventDate.toDateString() === today.toDateString()
+  })
+
+  // Get file icon based on type
+  const getFileIcon = (type: string, icon: string) => {
+    if (icon) return icon
+    switch (type) {
+      case 'folder': return '📁'
+      case 'code': return '⚛️'
+      case 'document': return '📄'
+      case 'image': return '🖼️'
+      case 'video': return '🎬'
+      case 'audio': return '🎵'
+      default: return '📄'
+    }
+  }
+
+  // Get gradient color based on file type
+  const getFileGradient = (type: string) => {
+    switch (type) {
+      case 'folder': return 'from-yellow-400 to-orange-500'
+      case 'code': return 'from-blue-400 to-blue-600'
+      case 'document': return 'from-gray-400 to-gray-600'
+      case 'image': return 'from-purple-400 to-pink-500'
+      case 'video': return 'from-red-400 to-rose-600'
+      case 'audio': return 'from-green-400 to-emerald-600'
+      default: return 'from-gray-400 to-gray-600'
+    }
+  }
+
   if (!isVisible) return null
 
   return (
     <>
-      {/* Backdrop overlay with blur */}
-      <div
-        className={`
-          fixed inset-0 transition-opacity duration-200
-          ${isAnimating ? 'opacity-100' : 'opacity-0'}
-        `}
-        style={{
-          zIndex: 9998,
-          backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          backdropFilter: 'blur(2px)',
-          WebkitBackdropFilter: 'blur(2px)'
-        }}
-        onClick={onClose}
-      />
-
       {/* Start Menu */}
       <div
         ref={menuRef}
         className="start-menu-container fixed"
         style={{
-          bottom: '56px',
+          bottom: '62px',
           left: '8px',
           width: '680px',
-          height: '480px',
+          height: '520px',
           borderRadius: '12px',
           border: '1px solid rgba(255, 255, 255, 0.4)',
           background: `
@@ -143,25 +181,63 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
             {/* Profile with avatar and name */}
             <div className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-black/5 transition-colors cursor-pointer">
               <div className="w-7 h-7 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center shadow-sm">
-                <span className="text-white text-xs font-semibold">C</span>
+                <span className="text-white text-xs font-semibold">{userProfile.avatar}</span>
               </div>
-              <span className="text-[13px] font-medium text-gray-700">Concept Central</span>
+              <span className="text-[13px] font-medium text-gray-700">{userProfile.name}</span>
             </div>
 
             {/* Icons */}
             <div className="flex items-center gap-0.5">
-              <button className="p-2 hover:bg-black/5 rounded-lg transition-colors">
+              <button
+                onClick={() => handleAppClick('explorer')}
+                className="p-2 hover:bg-black/5 rounded-lg transition-colors"
+                title="File Explorer"
+              >
                 <FolderOpen className="w-5 h-5 text-gray-600" />
               </button>
-              <button className="p-2 hover:bg-black/5 rounded-lg transition-colors">
+              <button
+                onClick={() => handleAppClick('settings')}
+                className="p-2 hover:bg-black/5 rounded-lg transition-colors"
+                title="Settings"
+              >
                 <Settings className="w-5 h-5 text-gray-600" />
               </button>
-              <button
-                onClick={onClose}
-                className="p-2 hover:bg-red-500/10 rounded-lg transition-colors group"
-              >
-                <Power className="w-5 h-5 text-gray-600 group-hover:text-red-500" />
-              </button>
+              <Dropdown
+                trigger={
+                  <button className="p-2 hover:bg-black/5 rounded-lg transition-colors" title="Power">
+                    <Power className="w-5 h-5 text-gray-600" />
+                  </button>
+                }
+                position="top-right"
+                items={[
+                  {
+                    id: 'sleep',
+                    label: 'Sleep',
+                    icon: <Moon className="w-4 h-4" />,
+                    onClick: onSleep
+                  },
+                  {
+                    id: 'restart',
+                    label: 'Restart',
+                    icon: <RefreshCw className="w-4 h-4" />,
+                    onClick: onRestart
+                  },
+                  { id: 'divider-1', label: '', divider: true },
+                  {
+                    id: 'lock',
+                    label: 'Lock',
+                    icon: <LogOut className="w-4 h-4" />,
+                    onClick: onLock
+                  },
+                  {
+                    id: 'shutdown',
+                    label: 'Shut down',
+                    icon: <Power className="w-4 h-4" />,
+                    onClick: onShutdown,
+                    danger: true
+                  }
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -177,7 +253,7 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           {/* Left Column - Apps */}
           <div className="w-[45%] p-4 flex flex-col" style={{ borderRight: '1px solid rgba(0,0,0,0.05)' }}>
 
-            {/* Most Used Section */}
+            {/* Pinned Apps Section */}
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold text-gray-700">Pinned</h3>
@@ -187,43 +263,33 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
               </div>
 
               <div className="grid grid-cols-4 gap-1">
-                {/* Weather */}
+                {/* File Explorer */}
                 <button
-                  onClick={() => handleAppClick('weather')}
+                  onClick={() => handleAppClick('explorer')}
                   className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-sm">
-                    <span className="text-xl">☀️</span>
-                  </div>
-                  <span className="text-[11px] text-gray-700">Weather</span>
-                </button>
-
-                {/* Discord */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
-                    <span className="text-white text-sm font-bold">D</span>
-                  </div>
-                  <span className="text-[11px] text-gray-700">Discord</span>
-                </button>
-
-                {/* File Explorer */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
                   <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center shadow-sm">
                     <FolderOpen className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-[11px] text-gray-700">Files</span>
                 </button>
 
-                {/* Calendar */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-sm">
-                    <span className="text-lg">📅</span>
+                {/* Edge */}
+                <button
+                  onClick={() => handleAppClick('edge')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-400 via-teal-400 to-green-400 rounded-xl flex items-center justify-center shadow-sm">
+                    <Globe className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-[11px] text-gray-700">Calendar</span>
+                  <span className="text-[11px] text-gray-700">Edge</span>
                 </button>
 
                 {/* Settings */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
+                <button
+                  onClick={() => handleAppClick('settings')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
                   <div className="w-10 h-10 bg-gradient-to-br from-gray-500 to-gray-700 rounded-xl flex items-center justify-center shadow-sm">
                     <Settings className="w-5 h-5 text-white" />
                   </div>
@@ -231,32 +297,63 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                 </button>
 
                 {/* Photos */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
+                <button
+                  onClick={() => handleAppClick('photos')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
                   <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center shadow-sm">
-                    <span className="text-lg">🏞️</span>
+                    <Image className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-[11px] text-gray-700">Photos</span>
                 </button>
 
-                {/* Edge */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-400 via-teal-400 to-green-400 rounded-xl flex items-center justify-center shadow-sm">
-                    <span className="text-white text-sm font-bold">e</span>
+                {/* Calendar */}
+                <button
+                  onClick={() => handleAppClick('calendar')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-sm">
+                    <Calendar className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-[11px] text-gray-700">Edge</span>
+                  <span className="text-[11px] text-gray-700">Calendar</span>
+                </button>
+
+                {/* Notepad */}
+                <button
+                  onClick={() => handleAppClick('notepad')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-[11px] text-gray-700">Notepad</span>
                 </button>
 
                 {/* Clock */}
-                <button className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95">
+                <button
+                  onClick={() => handleAppClick('clock')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
                   <div className="w-10 h-10 bg-gradient-to-br from-slate-500 to-slate-700 rounded-xl flex items-center justify-center shadow-sm">
                     <Clock className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-[11px] text-gray-700">Clock</span>
                 </button>
+
+                {/* Music */}
+                <button
+                  onClick={() => handleAppClick('music')}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-95"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-sm">
+                    <Music className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-[11px] text-gray-700">Music</span>
+                </button>
               </div>
             </div>
 
-            {/* Recommended Section */}
+            {/* Recommended Section - Recent Files */}
             <div className="flex-1 flex flex-col min-h-0">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold text-gray-700">Recommended</h3>
@@ -266,22 +363,22 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
               </div>
 
               <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent space-y-0.5 pr-1">
-                {/* Recent items */}
-                {[
-                  { name: 'Project.tsx', desc: 'Yesterday', icon: '📄', color: 'from-blue-400 to-blue-600' },
-                  { name: 'Design System', desc: '2 days ago', icon: '🎨', color: 'from-pink-400 to-rose-500' },
-                  { name: 'API Documentation', desc: '3 days ago', icon: '📚', color: 'from-emerald-400 to-teal-500' },
-                  { name: 'Meeting Notes', desc: 'Last week', icon: '📝', color: 'from-amber-400 to-orange-500' },
-                  { name: 'Screenshots', desc: 'Last week', icon: '📷', color: 'from-violet-400 to-purple-500' },
-                ].map((item, i) => (
-                  <button key={i} className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-[0.98]">
-                    <div className={`w-8 h-8 bg-gradient-to-br ${item.color} rounded-lg flex items-center justify-center shadow-sm`}>
-                      <span className="text-sm">{item.icon}</span>
+                {/* Recent files from system store */}
+                {recentFiles.slice(0, 6).map((file) => (
+                  <button
+                    key={file.id}
+                    className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 transition-all duration-150 active:scale-[0.98]"
+                  >
+                    <div className={`w-8 h-8 bg-gradient-to-br ${getFileGradient(file.type)} rounded-lg flex items-center justify-center shadow-sm`}>
+                      <span className="text-sm">{getFileIcon(file.type, file.icon)}</span>
                     </div>
-                    <div className="text-left">
-                      <div className="text-xs font-medium text-gray-700">{item.name}</div>
-                      <div className="text-[10px] text-gray-500">{item.desc}</div>
+                    <div className="text-left flex-1 min-w-0">
+                      <div className="text-xs font-medium text-gray-700 truncate">{file.name}</div>
+                      <div className="text-[10px] text-gray-500">{formatRelativeTime(file.lastOpened)}</div>
                     </div>
+                    {file.pinned && (
+                      <span className="text-[10px] text-blue-500 font-medium">Pinned</span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -291,11 +388,11 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
           {/* Right Column - Widgets */}
           <div className="w-[55%] p-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
 
-            {/* Weather Widget */}
+            {/* Weather Widget - Real Data */}
             <div className="bg-gradient-to-br from-white/60 to-white/40 backdrop-blur-sm rounded-xl p-3 border border-white/50 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <h4 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
-                  <span className="text-sm">☀️</span> Weather
+                  <span className="text-sm">{weather.icon}</span> Weather
                 </h4>
                 <button className="text-gray-400 hover:text-gray-600 transition-colors">
                   <MoreHorizontal className="w-4 h-4" />
@@ -304,80 +401,99 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
 
               <div className="flex justify-between items-start mb-3">
                 <div className="text-xs text-gray-500 space-y-0.5">
-                  <div>15 mph winds</div>
-                  <div>Sunset at 7:58 PM</div>
+                  <div>{weather.windSpeed} mph winds</div>
+                  <div>Sunset at {weather.sunset}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-light text-gray-800">60°F</div>
-                  <div className="text-xs text-gray-500">Sunny</div>
+                  <div className="text-2xl font-light text-gray-800">{weather.temperature}°F</div>
+                  <div className="text-xs text-gray-500">{weather.condition}</div>
                 </div>
               </div>
 
               <div className="flex justify-between text-xs bg-black/5 rounded-lg p-2">
-                {[
-                  { temp: '60°', icon: '☀️', time: 'Now' },
-                  { temp: '61°', icon: '☀️', time: '2PM' },
-                  { temp: '62°', icon: '☀️', time: '3PM' },
-                  { temp: '67°', icon: '🌤️', time: '4PM' },
-                  { temp: '66°', icon: '☀️', time: '5PM' },
-                  { temp: '64°', icon: '🌅', time: '6PM' },
-                ].map((hour, i) => (
+                {weather.hourly.map((hour, i) => (
                   <div key={i} className="text-center">
                     <div className="text-[10px] text-gray-500 mb-0.5">{hour.time}</div>
                     <div className="text-sm">{hour.icon}</div>
-                    <div className="text-gray-700 font-medium mt-0.5">{hour.temp}</div>
+                    <div className="text-gray-700 font-medium mt-0.5">{hour.temp}°</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Media Player Widget - Full Width */}
-            <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-xl p-3 border border-white/10 shadow-lg">
-              <div className="flex gap-3">
-                {/* Album Art */}
-                <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center shadow-md flex-shrink-0">
-                  <Music className="w-8 h-8 text-white/80" />
-                </div>
+            {/* Media Player Widget - Real Data */}
+            <div className="bg-gradient-to-br from-white/60 to-white/40 backdrop-blur-sm rounded-xl p-3 border border-white/50 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                  <Music className="w-4 h-4 text-gray-600" />
+                  Now Playing
+                </h4>
+                <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
+              </div>
 
-                <div className="flex-1 min-w-0">
-                  {/* Track Info */}
-                  <div className="mb-2">
-                    <div className="text-sm font-medium text-white truncate">Daydream</div>
-                    <div className="text-xs text-gray-400 truncate">Artist Name • Album</div>
+              {mediaPlayer.currentTrack ? (
+                <div className="flex gap-3 items-center">
+                  {/* Album Art */}
+                  <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center shadow-md flex-shrink-0">
+                    <Music className="w-6 h-6 text-white/90" />
                   </div>
 
-                  {/* Progress Bar */}
-                  <div className="w-full flex items-center gap-2 text-[10px] text-gray-400 mb-2">
-                    <span>1:02</span>
-                    <div className="flex-1 h-1 bg-white/20 rounded-full relative group cursor-pointer">
-                      <div className="absolute h-full w-1/3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
-                      <div className="absolute h-2.5 w-2.5 bg-white rounded-full -top-[3px] left-1/3 -translate-x-1/2 shadow-md opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="flex-1 min-w-0">
+                    {/* Track Info */}
+                    <div className="mb-1.5">
+                      <div className="text-xs font-medium text-gray-800 truncate">{mediaPlayer.currentTrack.title}</div>
+                      <div className="text-[10px] text-gray-500 truncate">{mediaPlayer.currentTrack.artist} • {mediaPlayer.currentTrack.album}</div>
                     </div>
-                    <span>2:49</span>
+
+                    {/* Progress Bar */}
+                    <div className="w-full flex items-center gap-2 text-[10px] text-gray-500">
+                      <span>{formatTime(mediaPlayer.currentTrack.currentTime)}</span>
+                      <div className="flex-1 h-1 bg-gray-300/50 rounded-full relative group cursor-pointer">
+                        <div
+                          className="absolute h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+                          style={{ width: `${(mediaPlayer.currentTrack.currentTime / mediaPlayer.currentTrack.duration) * 100}%` }}
+                        />
+                        <div
+                          className="absolute h-2 w-2 bg-purple-500 rounded-full -top-[2px] shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ left: `${(mediaPlayer.currentTrack.currentTime / mediaPlayer.currentTrack.duration) * 100}%`, transform: 'translateX(-50%)' }}
+                        />
+                      </div>
+                      <span>{formatTime(mediaPlayer.currentTrack.duration)}</span>
+                    </div>
                   </div>
 
                   {/* Controls */}
-                  <div className="flex items-center justify-center gap-4">
-                    <button className="text-gray-400 hover:text-white transition-colors">
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <button onClick={prevTrack} className="text-gray-500 hover:text-gray-700 transition-colors p-1">
                       <SkipBack className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => setIsPlaying(!isPlaying)}
-                      className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-md"
+                      onClick={togglePlayPause}
+                      className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-md"
                     >
-                      <Play className={`w-4 h-4 text-gray-900 ${!isPlaying ? 'ml-0.5' : ''}`} />
+                      {mediaPlayer.isPlaying ? (
+                        <Pause className="w-4 h-4 text-white" />
+                      ) : (
+                        <Play className="w-4 h-4 text-white ml-0.5" />
+                      )}
                     </button>
-                    <button className="text-gray-400 hover:text-white transition-colors">
+                    <button onClick={nextTrack} className="text-gray-500 hover:text-gray-700 transition-colors p-1">
                       <SkipForward className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="text-center py-4 text-gray-500 text-sm">
+                  No track playing
+                </div>
+              )}
             </div>
 
             {/* Two widgets side by side */}
             <div className="grid grid-cols-2 gap-2">
-              {/* Discord Widget */}
+              {/* Discord Widget - Real Data */}
               <div className="bg-gradient-to-br from-white/60 to-white/40 backdrop-blur-sm rounded-xl p-2.5 border border-white/50 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
@@ -392,30 +508,23 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <div className="p-1.5 rounded-lg hover:bg-black/5 transition-colors cursor-pointer">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-gray-700">James</span>
-                      <span className="bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-medium">3</span>
-                    </div>
-                    <div className="text-[11px] text-gray-500 truncate">Yuh I don&apos;t wanna be in...</div>
-                  </div>
-
-                  <div className="p-1.5 rounded-lg hover:bg-black/5 transition-colors cursor-pointer border-t border-gray-100">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <div className="w-3.5 h-3.5 bg-blue-500 rounded flex items-center justify-center">
-                          <span className="text-white" style={{fontSize: '7px'}}>C</span>
-                        </div>
-                        <span className="text-xs font-medium text-gray-700">Concept Central</span>
+                  {discord.messages.slice(0, 2).map((msg) => (
+                    <div key={msg.id} className="p-1.5 rounded-lg hover:bg-black/5 transition-colors cursor-pointer">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-gray-700">{msg.from}</span>
+                        {msg.unread > 0 && (
+                          <span className="bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-medium">
+                            {msg.unread}
+                          </span>
+                        )}
                       </div>
-                      <span className="bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-medium">6</span>
+                      <div className="text-[11px] text-gray-500 truncate">{msg.message}</div>
                     </div>
-                    <div className="text-[11px] text-gray-500 mt-0.5">Link in description</div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Calendar Widget */}
+              {/* Calendar Widget - Real Data */}
               <div className="bg-gradient-to-br from-white/60 to-white/40 backdrop-blur-sm rounded-xl p-2.5 border border-white/50 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
@@ -426,25 +535,52 @@ export default function StartMenu({ isOpen, onClose }: StartMenuProps) {
                   </button>
                 </div>
 
-                <div className="text-lg font-light text-gray-800 mb-2">Jan 22</div>
+                <div className="text-lg font-light text-gray-800 mb-2">
+                  {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </div>
 
                 <div className="space-y-1.5">
-                  <div className="flex gap-2 p-1 rounded hover:bg-black/5 transition-colors cursor-pointer">
-                    <div className="w-1 h-full bg-red-400 rounded-full flex-shrink-0"></div>
-                    <div className="min-w-0">
-                      <div className="text-[11px] font-medium text-gray-800 truncate">Launch merch store</div>
-                      <div className="text-[10px] text-gray-500">2:00 PM</div>
+                  {todayEvents.length > 0 ? (
+                    todayEvents.slice(0, 2).map((event) => (
+                      <div key={event.id} className="flex gap-2 p-1 rounded hover:bg-black/5 transition-colors cursor-pointer">
+                        <div className="w-1 h-full rounded-full flex-shrink-0" style={{ backgroundColor: event.color }}></div>
+                        <div className="min-w-0">
+                          <div className="text-[11px] font-medium text-gray-800 truncate">{event.title}</div>
+                          <div className="text-[10px] text-gray-500">{event.time}</div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-[11px] text-gray-500 text-center py-2">
+                      No events today
                     </div>
-                  </div>
-
-                  <div className="flex gap-2 p-1 rounded hover:bg-black/5 transition-colors cursor-pointer">
-                    <div className="w-1 h-full bg-purple-400 rounded-full flex-shrink-0"></div>
-                    <div className="min-w-0">
-                      <div className="text-[11px] font-medium text-gray-800 truncate">Twitter update</div>
-                      <div className="text-[10px] text-gray-500">5:00 PM</div>
-                    </div>
-                  </div>
+                  )}
                 </div>
+              </div>
+            </div>
+
+            {/* Quick Access Folders */}
+            <div className="bg-gradient-to-br from-white/60 to-white/40 backdrop-blur-sm rounded-xl p-3 border border-white/50 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                  <FolderOpen className="w-4 h-4 text-gray-600" />
+                  Quick Access
+                </h4>
+                <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                {quickAccessFolders.slice(0, 6).map((folder) => (
+                  <button
+                    key={folder.id}
+                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-black/5 transition-colors"
+                  >
+                    <span className="text-lg">{folder.icon}</span>
+                    <span className="text-xs text-gray-700 truncate">{folder.name}</span>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
